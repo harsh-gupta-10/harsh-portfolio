@@ -6,7 +6,7 @@ import certificatesData from "../data/certificates.json";
 const rows = [
   certificatesData.row1,
   certificatesData.row2,
-  certificatesData.row3,
+  
 ];
 
 function ScrollingRow({ certificates, direction, isDark, onSelect }) {

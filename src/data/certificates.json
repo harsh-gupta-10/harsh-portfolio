@@ -14,13 +14,6 @@
     { "title": "Certificate 10", "image": "/demo.png" },
     { "title": "Certificate 11", "image": "/demo.png" },
     { "title": "Certificate 12", "image": "/demo.png" }
-  ],
-  "row3": [
-    { "title": "Certificate 13", "image": "/demo.png" },
-    { "title": "Certificate 14", "image": "/demo.png" },
-    { "title": "Certificate 15", "image": "/demo.png" },
-    { "title": "Certificate 16", "image": "/demo.png" },
-    { "title": "Certificate 17", "image": "/demo.png" },
-    { "title": "Certificate 18", "image": "/demo.png" }
   ]
+  
 }
