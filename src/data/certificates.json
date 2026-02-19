@@ -1,11 +1,11 @@
 {
   "row1": [
-    { "title": "Certificate 1", "image": "/demo.png" },
-    { "title": "Certificate 2", "image": "/demo.png" },
-    { "title": "Certificate 3", "image": "/demo.png" },
-    { "title": "Certificate 4", "image": "/demo.png" },
-    { "title": "Certificate 5", "image": "/demo.png" },
-    { "title": "Certificate 6", "image": "/demo.png" }
+    { "title": "Certificate 1", "image": "src/assets/imgs/certificates/demo.png" },
+    { "title": "Certificate 2", "image": "src/assets/imgs/certificates/demo.png" },
+    { "title": "Certificate 3", "image": "src/assets/imgs/certificates/demo.png" },
+    { "title": "Certificate 4", "image": "src/assets/imgs/certificates/demo.png" },
+    { "title": "Certificate 5", "image": "src/assets/imgs/certificates/demo.png" },
+    { "title": "Certificate 6", "image": "src/assets/imgs/certificates/demo.png" }
   ],
   "row2": [
     { "title": "Certificate 7", "image": "/demo.png" },
