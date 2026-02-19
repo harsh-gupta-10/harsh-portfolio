@@ -167,6 +167,9 @@ export default function Certificates({ isDark }) {
             onClick={() => setSelected(null)}
           >
             <motion.div
+              role="dialog"
+              aria-modal="true"
+              aria-label={selected.title}
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}

@@ -1,19 +1,18 @@
 {
   "row1": [
-    { "title": "Certificate 1", "image": "src/assets/imgs/certificates/demo.png" },
-    { "title": "Certificate 2", "image": "assets/imgs/certificates/demo.png" },
-    { "title": "Certificate 3", "image": "imgs/certificates/demo.png" },
-    { "title": "Certificate 4", "image": "src/assets/imgs/certificates/demo.png" },
-    { "title": "Certificate 5", "image": "src/assets/imgs/certificates/demo.png" },
-    { "title": "Certificate 6", "image": "src/assets/imgs/certificates/demo.png" }
+    { "title": "Certificate 1", "image": "/imgs/certificates/demo.png" },
+    { "title": "Certificate 2", "image": "/imgs/certificates/demo.png" },
+    { "title": "Certificate 3", "image": "/imgs/certificates/demo.png" },
+    { "title": "Certificate 4", "image": "/imgs/certificates/demo.png" },
+    { "title": "Certificate 5", "image": "/imgs/certificates/demo.png" },
+    { "title": "Certificate 6", "image": "/imgs/certificates/demo.png" }
   ],
   "row2": [
-    { "title": "Certificate 7", "image": "/demo.png" },
-    { "title": "Certificate 8", "image": "/demo.png" },
-    { "title": "Certificate 9", "image": "/demo.png" },
-    { "title": "Certificate 10", "image": "/demo.png" },
-    { "title": "Certificate 11", "image": "/demo.png" },
-    { "title": "Certificate 12", "image": "/demo.png" }
+    { "title": "Certificate 7", "image": "/imgs/certificates/demo.png" },
+    { "title": "Certificate 8", "image": "/imgs/certificates/demo.png" },
+    { "title": "Certificate 9", "image": "/imgs/certificates/demo.png" },
+    { "title": "Certificate 10", "image": "/imgs/certificates/demo.png" },
+    { "title": "Certificate 11", "image": "/imgs/certificates/demo.png" },
+    { "title": "Certificate 12", "image": "/imgs/certificates/demo.png" }
   ]
-  
 }

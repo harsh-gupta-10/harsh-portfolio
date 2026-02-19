@@ -15,7 +15,7 @@
   {
     "title": "Vishnushakti Foundation Website",
     "description": "A clean and fully responsive website developed as per client requirements, featuring a custom backend with an admin panel for managing content and data. Includes email integration and secure payment gateway services for seamless communication and online transactions.",
-    "image": "/projects/vishnushakti.png",
+    "image": "/imgs/projects/vishnushaktifoundation.png",
     "tags": ["Php", "JavaScript", "CSS", "Figma Design", "UI/UX"],
     "category": "Front-End / UI",
     "featured": false,

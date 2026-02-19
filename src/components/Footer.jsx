@@ -52,7 +52,7 @@ export default function Footer({ isDark }) {
           </div>
 
           {/* Nav Links */}
-          <nav className="flex flex-wrap items-center justify-center gap-6">
+          <nav aria-label="Footer navigation" className="flex flex-wrap items-center justify-center gap-6">
             {footerLinks.map((link) => (
               <a
                 key={link.name}
