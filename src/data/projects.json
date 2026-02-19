@@ -1,0 +1,80 @@
+[
+  {
+    "title": "IoT Environmental Monitor",
+    "description": "A complete IoT solution with custom sensors, microcontroller firmware, cloud data pipeline, and a real-time React dashboard for environmental monitoring.",
+    "image": null,
+    "tags": ["ESP32", "React", "MQTT", "Node.js", "Sensor Fusion"],
+    "category": "Embedded & IoT",
+    "featured": true,
+    "showLiveDemo": true,
+    "liveDemoLabel": "Live Demo",
+    "liveUrl": "#",
+    "showCode": true,
+    "githubUrl": "#"
+  },
+  {
+    "title": "Vishnushakti Foundation Website",
+    "description": "A clean and fully responsive website developed as per client requirements, featuring a custom backend with an admin panel for managing content and data. Includes email integration and secure payment gateway services for seamless communication and online transactions.",
+    "image": "/projects/vishnushakti.png",
+    "tags": ["Php", "JavaScript", "CSS", "Figma Design", "UI/UX"],
+    "category": "Front-End / UI",
+    "featured": false,
+    "showLiveDemo": true,
+    "liveDemoLabel": "Site Live",
+    "liveUrl": "https://vishnushakti.org/",
+    "showCode": false,
+    "githubUrl": "#"
+  },
+  {
+    "title": "3D Printed Robotics Kit",
+    "description": "An open-source robotics platform combining custom 3D-printed components (FDM/SLA) with Arduino-based control systems and a companion mobile app.",
+    "image": null,
+    "tags": ["Arduino", "C++", "Blender", "FDM/SLA", "3D Printing"],
+    "category": "Hardware & Prototyping",
+    "featured": false,
+    "showLiveDemo": true,
+    "liveDemoLabel": "Live Demo",
+    "liveUrl": "#",
+    "showCode": true,
+    "githubUrl": "#"
+  },
+  {
+    "title": "Smart Home Controller",
+    "description": "Custom PCB design with integrated microcontroller for home automation. Features touch UI, sensor array, and wireless connectivity with a web-based control panel.",
+    "image": null,
+    "tags": ["ESP32", "MicroPython", "PCB Design", "React", "WebSocket"],
+    "category": "Embedded & IoT",
+    "featured": false,
+    "showLiveDemo": true,
+    "liveDemoLabel": "Live Demo",
+    "liveUrl": "#",
+    "showCode": true,
+    "githubUrl": "#"
+  },
+  {
+    "title": "Portfolio UI Kit",
+    "description": "A comprehensive UI component library designed in Figma and implemented in React, featuring 50+ accessible components with dark mode support.",
+    "image": null,
+    "tags": ["React", "Figma", "Storybook", "Accessibility"],
+    "category": "Front-End / UI",
+    "featured": false,
+    "showLiveDemo": true,
+    "liveDemoLabel": "Live Demo",
+    "liveUrl": "#",
+    "showCode": true,
+    "githubUrl": "#"
+  },
+  {
+    "title": "Wearable Health Tracker",
+    "description": "A compact wearable device prototype with custom 3D-printed enclosure, biometric sensors, BLE connectivity, and companion mobile data visualization.",
+    "image": null,
+    "tags": ["nRF52", "CircuitPython", "SLS", "BLE", "React Native"],
+    "category": "Hardware & Prototyping",
+    "featured": false,
+    "showLiveDemo": true,
+    "liveDemoLabel": "Live Demo",
+    "liveUrl": "#",
+    "showCode": true,
+    "githubUrl": "#"
+  }
+]
