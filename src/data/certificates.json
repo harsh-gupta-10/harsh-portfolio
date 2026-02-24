@@ -1,18 +1,20 @@
 {
   "row1": [
-    { "title": "Certificate 1", "image": "/imgs/certificates/demo.png" },
-    { "title": "Certificate 2", "image": "/imgs/certificates/demo.png" },
-    { "title": "Certificate 3", "image": "/imgs/certificates/demo.png" },
-    { "title": "Certificate 4", "image": "/imgs/certificates/demo.png" },
-    { "title": "Certificate 5", "image": "/imgs/certificates/demo.png" },
-    { "title": "Certificate 6", "image": "/imgs/certificates/demo.png" }
+    { "title": "Techpreneur", "image": "/imgs/certificates/Techpreneur.webp" },
+    { "title": "Techmania Win", "image": "/imgs/certificates/techmania-win.webp" },
+    { "title": "Tantavihar Win", "image": "/imgs/certificates/tantavihar win.webp" },
+    { "title": "Navinnya", "image": "/imgs/certificates/NAVINNYA.webp" },
+    { "title": "JMP Participation", "image": "/imgs/certificates/jmp-part.webp" },
+    { "title": "Hibitia Startup", "image": "/imgs/certificates/hibitiastartup.webp" },
+    { "title": "Hibitia Stall", "image": "/imgs/certificates/hibitia-stall.webp" }
   ],
   "row2": [
-    { "title": "Certificate 7", "image": "/imgs/certificates/demo.png" },
-    { "title": "Certificate 8", "image": "/imgs/certificates/demo.png" },
-    { "title": "Certificate 9", "image": "/imgs/certificates/demo.png" },
-    { "title": "Certificate 10", "image": "/imgs/certificates/demo.png" },
-    { "title": "Certificate 11", "image": "/imgs/certificates/demo.png" },
-    { "title": "Certificate 12", "image": "/imgs/certificates/demo.png" }
+    { "title": "Glimpses", "image": "/imgs/certificates/GLIMPSES.webp" },
+    { "title": "Creative Clash Win", "image": "/imgs/certificates/creativeclash-win.webp" },
+    { "title": "Chetana", "image": "/imgs/certificates/chetana.webp" },
+    { "title": "Chetana Startup", "image": "/imgs/certificates/chetana-startup.webp" },
+    { "title": "Chetana Research Paper", "image": "/imgs/certificates/chetana-researchpaper-voluen.webp" },
+    { "title": "Chetana Research", "image": "/imgs/certificates/chetana-research.webp" },
+    { "title": "World Youth Skills Day", "image": "/imgs/certificates/Celebrating-World-Youth-Skills-Day.webp" }
   ]
 }
