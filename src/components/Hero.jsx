@@ -150,7 +150,7 @@ export default function Hero({ isDark }) {
               <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
             </a>
             <a
-              href="/resume.pdf"
+              href="https://drive.google.com/drive/folders/1QsjDgQIb9rnn2SBt4W5WgHpdeZpqym1C?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
               className={`inline-flex items-center gap-2 px-7 py-3.5 font-semibold rounded-xl border-2 transition-all hover:scale-105 ${
