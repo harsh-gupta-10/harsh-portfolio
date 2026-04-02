@@ -42,6 +42,8 @@ import Team from "./pages/admin/Team";
 import TeamPermissions from "./pages/admin/TeamPermissions";
 import AcceptInvite from "./pages/admin/AcceptInvite";
 import Unauthorized from "./pages/admin/Unauthorized";
+import Notes from "./pages/admin/Notes";
+import NoteEditor from "./pages/admin/NoteEditor";
 
 function Portfolio() {
   const { isDark, toggle } = useDarkMode();
@@ -111,6 +113,8 @@ function App() {
             <Route path="settings" element={<Settings />} />
             <Route path="team" element={<Team />} />
             <Route path="team/:id" element={<TeamPermissions />} />
+            <Route path="notes" element={<Notes />} />
+            <Route path="notes/:id" element={<NoteEditor />} />
             <Route path="unauthorized" element={<Unauthorized />} />
           </Route>
         </Routes>

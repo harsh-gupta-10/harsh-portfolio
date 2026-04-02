@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "../../lib/supabase";
+import { usePermissions } from "../../hooks/usePermissions";
 import {
   FileSignature, Plus, Search, Trash2, Edit3, Eye, FileDown, Clock, CheckCircle2, XCircle, ChevronRight, Send
 } from "lucide-react";
@@ -20,6 +21,7 @@ export default function Proposals() {
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [deleting, setDeleting] = useState(false);
   const navigate = useNavigate();
+  const { hasPermission } = usePermissions();
 
   useEffect(() => { fetchAll(); }, []);
 
@@ -100,9 +102,9 @@ export default function Proposals() {
             <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
             <input type="text" value={search} onChange={e => setSearch(e.target.value)} placeholder="Search proposals..." className="w-full pl-9 pr-4 py-2 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50" style={{ background: "#111827", border: "1px solid #334155", color: "#f1f5f9" }} />
           </div>
-          <button onClick={createDraft} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 text-white text-sm font-semibold hover:opacity-90 transition-opacity shadow-lg shadow-blue-500/20 whitespace-nowrap">
+          {hasPermission("proposals", "can_create") && <button onClick={createDraft} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 text-white text-sm font-semibold hover:opacity-90 transition-opacity shadow-lg shadow-blue-500/20 whitespace-nowrap">
             <Plus size={16} /> New Proposal
-          </button>
+          </button>}
         </div>
       </div>
 
@@ -150,7 +152,7 @@ export default function Proposals() {
                   <td className="px-6 py-4 text-right">
                     <div className="flex items-center justify-end gap-2">
                       <Link to={`/admin/proposals/${proposal.id}`} className="p-2 rounded-lg hover:bg-blue-500/10 text-slate-400 hover:text-blue-400 transition-colors"><Edit3 size={16} /></Link>
-                      <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); setDeleteTarget(proposal); }} className="p-2 rounded-lg hover:bg-red-500/10 text-slate-400 hover:text-red-400 transition-colors"><Trash2 size={16} /></button>
+                      {hasPermission("proposals", "can_delete") && <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); setDeleteTarget(proposal); }} className="p-2 rounded-lg hover:bg-red-500/10 text-slate-400 hover:text-red-400 transition-colors"><Trash2 size={16} /></button>}
                     </div>
                   </td>
                 </tr>

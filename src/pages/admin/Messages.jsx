@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabase";
+import { usePermissions } from "../../hooks/usePermissions";
 import { Trash2, Mail, MessageSquare, Circle, CheckCircle2, Calendar, Target } from "lucide-react";
 
 export default function Messages() {
+  const { hasPermission } = usePermissions();
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState(null);
@@ -106,9 +108,9 @@ export default function Messages() {
                     <div className="flex items-center gap-2 mt-1"><Calendar size={12} style={{ color: "#94a3b8" }} /><span className="text-xs" style={{ color: "#94a3b8" }}>{new Date(selected.created_at).toLocaleString()}</span></div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <button onClick={() => convertToLead(selected)} disabled={converting} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/20 disabled:opacity-50"><Target size={14} />Convert to Lead</button>
-                    <button onClick={() => toggleRead(selected.id, selected.is_read)} className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all hover:bg-white/10" style={{ color: "#94a3b8" }}>{selected.is_read ? "Mark Unread" : "Mark Read"}</button>
-                    <button onClick={() => deleteMessage(selected.id)} className="p-2 rounded-lg transition-all hover:bg-red-500/10" style={{ color: "#94a3b8" }}><Trash2 size={16} /></button>
+                    {hasPermission("leads", "can_create") && <button onClick={() => convertToLead(selected)} disabled={converting} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/20 disabled:opacity-50"><Target size={14} />Convert to Lead</button>}
+                    {hasPermission("messages", "can_edit") && <button onClick={() => toggleRead(selected.id, selected.is_read)} className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all hover:bg-white/10" style={{ color: "#94a3b8" }}>{selected.is_read ? "Mark Unread" : "Mark Read"}</button>}
+                    {hasPermission("messages", "can_delete") && <button onClick={() => deleteMessage(selected.id)} className="p-2 rounded-lg transition-all hover:bg-red-500/10" style={{ color: "#94a3b8" }}><Trash2 size={16} /></button>}
                   </div>
                 </div>
                 <hr style={{ borderColor: "#334155" }} />

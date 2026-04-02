@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { supabase } from "../../lib/supabase";
+import { usePermissions } from "../../hooks/usePermissions";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import {
   Plus, LayoutGrid, List, Search, X, Save, Calendar, DollarSign,
@@ -40,6 +41,7 @@ export default function Projects() {
   const [filterStatus, setFilterStatus] = useState("all");
   const [sortBy, setSortBy] = useState("created_at");
   const [sortAsc, setSortAsc] = useState(false);
+  const { hasPermission } = usePermissions();
 
   // Sheet
   const [sheetOpen, setSheetOpen] = useState(false);
@@ -169,9 +171,9 @@ export default function Projects() {
               <List size={14} />List
             </button>
           </div>
-          <button onClick={openAdd} className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 text-white text-sm font-semibold" style={{ boxShadow: "0 4px 16px rgba(59,130,246,0.25)" }}>
+          {hasPermission("projects", "can_create") && <button onClick={openAdd} className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 text-white text-sm font-semibold" style={{ boxShadow: "0 4px 16px rgba(59,130,246,0.25)" }}>
             <Plus size={18} />Add Project
-          </button>
+          </button>}
         </div>
       </div>
 
@@ -234,8 +236,8 @@ export default function Projects() {
                                   <div className="flex items-start justify-between gap-2">
                                     <Link to={`/admin/projects/${proj.id}`} className="text-sm font-medium text-white hover:text-blue-400 transition-colors leading-snug">{proj.title}</Link>
                                     <div className="flex items-center gap-1 shrink-0">
-                                      <button onClick={() => openEdit(proj)} className="p-1.5 rounded-md transition-all hover:bg-white/10" style={{ color: "#475569" }}><Pencil size={12} /></button>
-                                      <button onClick={() => setDeleteTarget(proj)} className="p-1.5 rounded-md transition-all hover:bg-red-500/10 text-[#475569] hover:text-red-400"><Trash2 size={12} /></button>
+                                      {hasPermission("projects", "can_edit") && <button onClick={() => openEdit(proj)} className="p-1.5 rounded-md transition-all hover:bg-white/10" style={{ color: "#475569" }}><Pencil size={12} /></button>}
+                                      {hasPermission("projects", "can_delete") && <button onClick={() => setDeleteTarget(proj)} className="p-1.5 rounded-md transition-all hover:bg-red-500/10 text-[#475569] hover:text-red-400"><Trash2 size={12} /></button>}
                                     </div>
                                   </div>
 
@@ -329,8 +331,8 @@ export default function Projects() {
                     <td className="px-5 py-4 text-xs" style={{ color: "#475569" }}>{new Date(proj.created_at).toLocaleDateString()}</td>
                     <td className="px-5 py-4 text-right">
                       <div className="flex items-center justify-end gap-1">
-                        <button onClick={() => openEdit(proj)} className="p-2 rounded-lg hover:bg-blue-500/10" style={{ color: "#94a3b8" }}><Pencil size={15} /></button>
-                        <button onClick={() => setDeleteTarget(proj)} className="p-2 rounded-lg hover:bg-red-500/10" style={{ color: "#94a3b8" }}><Trash2 size={15} /></button>
+                        {hasPermission("projects", "can_edit") && <button onClick={() => openEdit(proj)} className="p-2 rounded-lg hover:bg-blue-500/10" style={{ color: "#94a3b8" }}><Pencil size={15} /></button>}
+                        {hasPermission("projects", "can_delete") && <button onClick={() => setDeleteTarget(proj)} className="p-2 rounded-lg hover:bg-red-500/10" style={{ color: "#94a3b8" }}><Trash2 size={15} /></button>}
                       </div>
                     </td>
                   </tr>

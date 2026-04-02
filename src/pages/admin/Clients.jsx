@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { supabase } from "../../lib/supabase";
+import { usePermissions } from "../../hooks/usePermissions";
 import {
   Plus, Search, Pencil, Trash2, X, Save, Users, Building2,
   MapPin, Mail, Phone, SlidersHorizontal, ArrowUpDown, ChevronRight,
@@ -16,6 +17,7 @@ const STATUS_COLORS = {
 const EMPTY = { name: "", email: "", phone: "", company: "", city: "", status: "prospect", notes: "" };
 
 export default function Clients() {
+  const { hasPermission } = usePermissions();
   const [clients, setClients] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -119,9 +121,9 @@ export default function Clients() {
           <h1 className="text-2xl font-bold text-white">Clients</h1>
           <p className="text-sm mt-1" style={{ color: "#94a3b8" }}>{clients.length} total clients</p>
         </div>
-        <button onClick={openAdd} className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 text-white text-sm font-semibold transition-all" style={{ boxShadow: "0 4px 16px rgba(59,130,246,0.25)" }}>
+        {hasPermission("clients", "can_create") && <button onClick={openAdd} className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 text-white text-sm font-semibold transition-all" style={{ boxShadow: "0 4px 16px rgba(59,130,246,0.25)" }}>
           <Plus size={18} />Add Client
-        </button>
+        </button>}
       </div>
 
       {/* Search + Filter bar */}
@@ -209,8 +211,8 @@ export default function Clients() {
                   <td className="px-5 py-4 text-sm" style={{ color: "#64748b" }}>{new Date(client.created_at).toLocaleDateString()}</td>
                   <td className="px-5 py-4 text-right">
                     <div className="flex items-center justify-end gap-1">
-                      <button onClick={() => openEdit(client)} className="p-2 rounded-lg transition-all hover:bg-blue-500/10" style={{ color: "#94a3b8" }} title="Edit"><Pencil size={15} /></button>
-                      <button onClick={() => setDeleteTarget(client)} className="p-2 rounded-lg transition-all hover:bg-red-500/10" style={{ color: "#94a3b8" }} title="Delete"><Trash2 size={15} /></button>
+                      {hasPermission("clients", "can_edit") && <button onClick={() => openEdit(client)} className="p-2 rounded-lg transition-all hover:bg-blue-500/10" style={{ color: "#94a3b8" }} title="Edit"><Pencil size={15} /></button>}
+                      {hasPermission("clients", "can_delete") && <button onClick={() => setDeleteTarget(client)} className="p-2 rounded-lg transition-all hover:bg-red-500/10" style={{ color: "#94a3b8" }} title="Delete"><Trash2 size={15} /></button>}
                     </div>
                   </td>
                 </tr>

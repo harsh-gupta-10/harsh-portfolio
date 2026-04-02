@@ -4,7 +4,7 @@ import { usePermissions } from "../../hooks/usePermissions";
 import { useNavigate } from "react-router-dom";
 import {
   UserPlus, Shield, ShieldAlert, ShieldCheck, Eye, MoreVertical,
-  User, Trash2, UserX, UserCheck, Clock, Loader2, ChevronDown
+  User, Trash2, UserX, UserCheck, Clock, Loader2, ChevronDown, Copy
 } from "lucide-react";
 import InviteMemberModal from "../../components/admin/InviteMemberModal";
 import { ROLE_COLORS } from "../../lib/permissions";
@@ -78,7 +78,7 @@ export default function Team() {
       </div>
 
       {/* Members Table */}
-      <div className="rounded-2xl overflow-hidden shadow-xl" style={{ background: "linear-gradient(135deg, #1e293b, #0f172a)", border: "1px solid #334155" }}>
+      <div className="rounded-2xl shadow-xl" style={{ background: "linear-gradient(135deg, #1e293b, #0f172a)", border: "1px solid #334155", overflow: "visible" }}>
         <div className="px-6 py-4" style={{ borderBottom: "1px solid #334155" }}>
           <h2 className="text-sm font-bold text-white uppercase tracking-wider">Active Members ({members.length})</h2>
         </div>
@@ -194,7 +194,10 @@ export default function Team() {
                     <span className="px-2.5 py-1 rounded-lg text-xs font-bold capitalize" style={{ background: rc.bg, color: rc.color, border: `1px solid ${rc.border}` }}>
                       {inv.role}
                     </span>
-                    <button onClick={() => revokeInvite(inv.id)} className="p-2 rounded-lg hover:bg-red-500/10 text-slate-400 hover:text-red-400 transition-colors">
+                    <button onClick={() => { navigator.clipboard.writeText(`${window.location.origin}/invite?token=${inv.token}`); alert("Invite link copied to clipboard!"); }} className="p-2 rounded-lg hover:bg-blue-500/10 text-slate-400 hover:text-blue-400 transition-colors" title="Copy Invite Link">
+                      <Copy size={14} />
+                    </button>
+                    <button onClick={() => revokeInvite(inv.id)} className="p-2 rounded-lg hover:bg-red-500/10 text-slate-400 hover:text-red-400 transition-colors" title="Revoke Invite">
                       <Trash2 size={14} />
                     </button>
                   </div>

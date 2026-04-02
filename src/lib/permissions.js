@@ -13,6 +13,7 @@ export const MODULES = [
   { key: "expenses", label: "Expenses" },
   { key: "settings", label: "Settings" },
   { key: "team_settings", label: "Team Settings" },
+  { key: "notes", label: "Notes & Whiteboard" },
 ];
 
 export const ACTIONS = ["can_view", "can_create", "can_edit", "can_delete"];
@@ -31,7 +32,7 @@ export const ROLE_PRESETS = {
   ])),
   manager: Object.fromEntries(MODULES.map(m => {
     const k = m.key;
-    if (["clients", "projects", "tasks", "messages"].includes(k)) return [k, { ...VCE }];
+    if (["clients", "projects", "tasks", "messages", "notes"].includes(k)) return [k, { ...VCE }];
     if (["invoices", "analytics", "leads", "dashboard", "proposals", "email_tracker", "settings"].includes(k)) return [k, { ...VIEW_ONLY }];
     // expenses, team_settings → no access
     return [k, { ...NONE }];
@@ -67,6 +68,7 @@ export const ROUTE_MODULE_MAP = {
   "/admin/email-tracker": "email_tracker",
   "/admin/settings": "settings",
   "/admin/team": "team_settings",
+  "/admin/notes": "notes",
 };
 
 export const ROLE_COLORS = {

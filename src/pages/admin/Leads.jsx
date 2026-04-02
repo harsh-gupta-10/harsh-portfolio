@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo, useRef } from "react";
 import { supabase } from "../../lib/supabase";
+import { usePermissions } from "../../hooks/usePermissions";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import {
   Plus, Search, X, Save, Calendar, Clock, AlertTriangle,
@@ -30,6 +31,7 @@ function deadlineClass(deadline, status) {
 }
 
 export default function Leads() {
+  const { hasPermission } = usePermissions();
   const [leads, setLeads] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -285,13 +287,13 @@ export default function Leads() {
             <input type="text" value={search} onChange={e => setSearch(e.target.value)} placeholder="Search leads..." className="w-full pl-9 pr-4 py-2 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50" style={inputStyle} />
           </div>
 
-          <button onClick={() => fileInputRef.current?.click()} className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium hover:bg-white/10 transition-colors" style={{ color: "#e2e8f0", border: "1px solid #334155" }}>
+          {hasPermission("leads", "can_create") && <button onClick={() => fileInputRef.current?.click()} className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium hover:bg-white/10 transition-colors" style={{ color: "#e2e8f0", border: "1px solid #334155" }}>
             <Upload size={16} /> <span className="hidden sm:inline">Import CSV</span>
-          </button>
+          </button>}
           
-          <button onClick={openAdd} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 text-white text-sm font-semibold hover:opacity-90 shadow-lg shadow-blue-500/20">
+          {hasPermission("leads", "can_create") && <button onClick={openAdd} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 text-white text-sm font-semibold hover:opacity-90 shadow-lg shadow-blue-500/20">
             <Plus size={16} /> Add Lead
-          </button>
+          </button>}
         </div>
       </div>
 
@@ -377,7 +379,7 @@ export default function Leads() {
                 <h2 className="text-lg font-bold text-white">{editing ? "Lead Details" : "New Lead"}</h2>
               </div>
               <div className="flex items-center gap-2">
-                {editing && <button type="button" onClick={() => setDeleteTarget(editing)} className="p-2 rounded-xl hover:bg-red-500/10 text-red-400 hover:text-red-300 transition-colors"><Trash2 size={16} /></button>}
+                {editing && hasPermission("leads", "can_delete") && <button type="button" onClick={() => setDeleteTarget(editing)} className="p-2 rounded-xl hover:bg-red-500/10 text-red-400 hover:text-red-300 transition-colors"><Trash2 size={16} /></button>}
                 <button type="button" onClick={() => setSheetOpen(false)} className="p-2 rounded-xl hover:bg-white/10 text-[#94a3b8] transition-colors"><X size={16} /></button>
               </div>
             </div>
@@ -391,9 +393,9 @@ export default function Leads() {
                       <h4 className="text-sm font-bold text-white">Convert to Client</h4>
                       <p className="text-[11px] mt-0.5 text-green-400 opacity-80">Close the deal and move them to Client Management.</p>
                     </div>
-                    <button type="button" onClick={handleConvert} disabled={saving} className="shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-lg bg-green-500 hover:bg-green-600 text-white text-xs font-bold transition-colors">
+                    {hasPermission("leads", "can_edit") && <button type="button" onClick={handleConvert} disabled={saving} className="shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-lg bg-green-500 hover:bg-green-600 text-white text-xs font-bold transition-colors">
                       <UserCheck size={14} /> Convert
-                    </button>
+                    </button>}
                   </div>
                 )}
 
@@ -435,7 +437,7 @@ export default function Leads() {
                       <div className="w-8 h-8 rounded-full bg-[#1e293b] shrink-0 border border-[#334155] flex items-center justify-center"><UserCheck size={14} className="text-[#64748b]" /></div>
                       <div className="flex-1 relative">
                         <textarea value={newNote} onChange={e => setNewNote(e.target.value)} rows={2} placeholder="Log a call, email, or note..." className="w-full px-3 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 resize-none" style={inputStyle} />
-                        <button onClick={handleAddNote} disabled={!newNote.trim()} className="absolute right-2 bottom-2 px-2.5 py-1 bg-[#1e293b] hover:bg-blue-600 text-xs font-bold text-white rounded transition-colors disabled:opacity-50">Add</button>
+                        {hasPermission("leads", "can_edit") && <button onClick={handleAddNote} disabled={!newNote.trim()} className="absolute right-2 bottom-2 px-2.5 py-1 bg-[#1e293b] hover:bg-blue-600 text-xs font-bold text-white rounded transition-colors disabled:opacity-50">Add</button>}
                       </div>
                     </div>
 
@@ -462,7 +464,7 @@ export default function Leads() {
 
             <div className="px-6 py-4 flex gap-3 bg-[#0f172a]" style={{ borderTop: "1px solid #334155" }}>
               <button type="button" onClick={() => setSheetOpen(false)} className="flex-1 py-2.5 rounded-xl text-sm font-medium hover:bg-white/5 transition-colors text-[#94a3b8]">Cancel</button>
-              <button type="submit" form="lead-form" disabled={saving} className="flex-1 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold transition-colors disabled:opacity-50">{saving ? "Saving..." : editing ? "Save Changes" : "Create Lead"}</button>
+              {hasPermission("leads", editing ? "can_edit" : "can_create") && <button type="submit" form="lead-form" disabled={saving} className="flex-1 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold transition-colors disabled:opacity-50">{saving ? "Saving..." : editing ? "Save Changes" : "Create Lead"}</button>}
             </div>
 
           </div>

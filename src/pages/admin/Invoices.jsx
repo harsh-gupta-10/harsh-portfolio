@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { supabase } from "../../lib/supabase";
+import { usePermissions } from "../../hooks/usePermissions";
 import {
   Plus, Search, FileText, DollarSign, Clock, AlertTriangle,
   CheckCircle2, XCircle, Send, Eye, SlidersHorizontal, ArrowUpDown,
@@ -16,6 +17,7 @@ const STATUS_META = {
 };
 
 export default function Invoices() {
+  const { hasPermission } = usePermissions();
   const [invoices, setInvoices] = useState([]);
   const [clients, setClients] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -92,9 +94,9 @@ export default function Invoices() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div><h1 className="text-2xl font-bold text-white">Invoices</h1><p className="text-sm mt-1" style={{ color: "#94a3b8" }}>{totalInvoices} total invoices</p></div>
-        <Link to="/admin/invoices/new" className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 text-white text-sm font-semibold" style={{ boxShadow: "0 4px 16px rgba(59,130,246,0.25)" }}>
+        {hasPermission("invoices", "can_create") && <Link to="/admin/invoices/new" className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 text-white text-sm font-semibold" style={{ boxShadow: "0 4px 16px rgba(59,130,246,0.25)" }}>
           <Plus size={18} />Create Invoice
-        </Link>
+        </Link>}
       </div>
 
       {/* Summary Cards */}
@@ -183,7 +185,7 @@ export default function Invoices() {
                       {inv.status !== "paid" && inv.status !== "cancelled" && (
                         <button onClick={() => markPaid(inv.id)} className="p-2 rounded-lg hover:bg-emerald-500/10" style={{ color: "#94a3b8" }} title="Mark Paid"><CheckCircle2 size={15} /></button>
                       )}
-                      <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); setDeleteTarget(inv); }} className="p-2 rounded-lg hover:bg-red-500/10 text-[#94a3b8] hover:text-red-400 transition-colors" title="Delete"><Trash2 size={15} /></button>
+                      {hasPermission("invoices", "can_delete") && <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); setDeleteTarget(inv); }} className="p-2 rounded-lg hover:bg-red-500/10 text-[#94a3b8] hover:text-red-400 transition-colors" title="Delete"><Trash2 size={15} /></button>}
                     </div>
                   </td>
                 </tr>

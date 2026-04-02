@@ -24,10 +24,12 @@ import {
   ShieldAlert,
   ShieldCheck,
   Eye,
+  StickyNote,
 } from "lucide-react";
 import { useAuth } from "../../hooks/useAuth";
 import { usePermissions } from "../../hooks/usePermissions";
 import { ROLE_COLORS } from "../../lib/permissions";
+import QuickNote from "./notes/QuickNote";
 
 // Each link maps to a permission module key
 const links = [
@@ -41,6 +43,7 @@ const links = [
   { to: "/admin/proposals", icon: FileSignature, label: "Proposals", module: "proposals" },
   { to: "/admin/invoices", icon: Receipt, label: "Invoices", module: "invoices" },
   { to: "/admin/expenses", icon: Wallet, label: "Expenses", module: "expenses" },
+  { to: "/admin/notes", icon: StickyNote, label: "Notes & Whiteboard", module: "notes" },
   { to: "/admin/email-tracker", icon: Radar, label: "Email Tracking", module: "email_tracker" },
   { to: "/admin/settings", icon: SettingsIcon, label: "Settings", module: "settings" },
   { to: "/admin/team", icon: Shield, label: "Team", module: "team_settings" },
@@ -207,6 +210,8 @@ export default function AdminLayout() {
           <Outlet />
         </main>
       </div>
+      {/* Global Quick Note Float */}
+      {initialized && profile && <QuickNote profileId={profile.id} />}
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo } from "react";
 import { supabase } from "../../lib/supabase";
+import { usePermissions } from "../../hooks/usePermissions";
 import Papa from "papaparse";
 import { Link, useLocation } from "react-router-dom";
 import {
@@ -25,6 +26,7 @@ const EMPTY_FORM = {
 };
 
 export default function Expenses() {
+  const { hasPermission } = usePermissions();
   const location = useLocation();
   const [expenses, setExpenses] = useState([]);
   const [projects, setProjects] = useState([]);
@@ -198,9 +200,9 @@ export default function Expenses() {
           <button onClick={downloadCSV} className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all hover:bg-white/5" style={{ color: "#e2e8f0", border: "1px solid #334155" }}>
             <DownloadIcon size={16} /> Export CSV
           </button>
-          <button onClick={() => { setForm(EMPTY_FORM); setReceiptFile(null); setSheetOpen(true); }} className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 text-white text-sm font-semibold hover:opacity-90 transition-opacity">
+          {hasPermission("expenses", "can_create") && <button onClick={() => { setForm(EMPTY_FORM); setReceiptFile(null); setSheetOpen(true); }} className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 text-white text-sm font-semibold hover:opacity-90 transition-opacity">
             <Plus size={18} /> Add Expense
-          </button>
+          </button>}
         </div>
       </div>
 
@@ -278,7 +280,7 @@ export default function Expenses() {
                     <td className="px-5 py-4 text-right">
                       <div className="flex items-center justify-end gap-1">
                         {exp.receipt_url && <a href={exp.receipt_url} target="_blank" rel="noreferrer" title="View Receipt" className="p-1.5 rounded-lg hover:bg-slate-700 text-slate-400 hover:text-white transition-colors"><FileText size={15}/></a>}
-                        <button onClick={() => setDeleteTarget(exp)} className="p-1.5 rounded-lg hover:bg-red-500/10 text-slate-400 hover:text-red-400 transition-colors"><Trash2 size={15}/></button>
+                        {hasPermission("expenses", "can_delete") && <button onClick={() => setDeleteTarget(exp)} className="p-1.5 rounded-lg hover:bg-red-500/10 text-slate-400 hover:text-red-400 transition-colors"><Trash2 size={15}/></button>}
                       </div>
                     </td>
                   </tr>

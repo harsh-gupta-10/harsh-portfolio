@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { supabase } from "../../lib/supabase";
+import { usePermissions } from "../../hooks/usePermissions";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import {
   Plus, Search, X, Save, Calendar, AlertTriangle,
@@ -25,6 +26,7 @@ const PRIORITY_META = {
 const EMPTY = { title: "", description: "", project_id: "", status: "todo", priority: "medium", due_date: "" };
 
 export default function Tasks() {
+  const { hasPermission } = usePermissions();
   const [tasks, setTasks] = useState([]);
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -143,9 +145,9 @@ export default function Tasks() {
             <button onClick={() => setView("kanban")} className="px-3.5 py-2 flex gap-1.5 text-xs font-medium transition-all" style={{ background: view === "kanban" ? "#1e293b" : "transparent", color: view === "kanban" ? "#fff" : "#64748b" }}><LayoutGrid size={14} />Kanban</button>
             <button onClick={() => setView("list")} className="px-3.5 py-2 flex gap-1.5 text-xs font-medium transition-all border-l border-[#334155]" style={{ background: view === "list" ? "#1e293b" : "transparent", color: view === "list" ? "#fff" : "#64748b" }}><List size={14} />List</button>
           </div>
-          <button onClick={openAdd} className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 text-white text-sm font-semibold hover:opacity-90">
+          {hasPermission("tasks", "can_create") && <button onClick={openAdd} className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 text-white text-sm font-semibold hover:opacity-90">
             <Plus size={18} />Add Task
-          </button>
+          </button>}
         </div>
       </div>
 
@@ -196,8 +198,8 @@ export default function Tasks() {
                                       <pMeta.icon size={10} /> {pMeta.label}
                                     </div>
                                     <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                      <button onClick={() => openEdit(task)} className="p-1 rounded bg-black/20 text-slate-400 hover:text-blue-400"><Pencil size={12}/></button>
-                                      <button onClick={() => setDeleteTarget(task)} className="p-1 rounded bg-black/20 text-slate-400 hover:text-red-400"><Trash2 size={12}/></button>
+                                      {hasPermission("tasks", "can_edit") && <button onClick={() => openEdit(task)} className="p-1 rounded bg-black/20 text-slate-400 hover:text-blue-400"><Pencil size={12}/></button>}
+                                      {hasPermission("tasks", "can_delete") && <button onClick={() => setDeleteTarget(task)} className="p-1 rounded bg-black/20 text-slate-400 hover:text-red-400"><Trash2 size={12}/></button>}
                                     </div>
                                   </div>
 
@@ -270,8 +272,8 @@ export default function Tasks() {
                     </td>
                     <td className="px-5 py-4 text-right">
                        <div className="flex justify-end gap-1">
-                         <button onClick={() => openEdit(task)} className="p-1.5 rounded hover:bg-white/10 text-slate-400"><Pencil size={14}/></button>
-                         <button onClick={() => setDeleteTarget(task)} className="p-1.5 rounded hover:bg-red-500/10 text-slate-400 hover:text-red-400"><Trash2 size={14}/></button>
+                         {hasPermission("tasks", "can_edit") && <button onClick={() => openEdit(task)} className="p-1.5 rounded hover:bg-white/10 text-slate-400"><Pencil size={14}/></button>}
+                         {hasPermission("tasks", "can_delete") && <button onClick={() => setDeleteTarget(task)} className="p-1.5 rounded hover:bg-red-500/10 text-slate-400 hover:text-red-400"><Trash2 size={14}/></button>}
                        </div>
                     </td>
                   </tr>
