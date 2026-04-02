@@ -1,10 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { ReactSketchCanvas } from "react-sketch-canvas";
-import { Loader2, Lock, ArrowRight, AlertTriangle, Eraser, Pen, Undo, RotateCcw, Trash2 } from "lucide-react";
+import { Tldraw } from "tldraw";
+import "tldraw/tldraw.css";
+import { Loader2, Lock, ArrowRight, AlertTriangle } from "lucide-react";
 import { format } from "date-fns";
-
-const COLORS = ["#ffffff", "#ef4444", "#3b82f6", "#10b981", "#f59e0b", "#8b5cf6"];
 
 export default function PublicWhiteboardView() {
   const { token } = useParams();
@@ -19,12 +18,6 @@ export default function PublicWhiteboardView() {
   const [verifying, setVerifying] = useState(false);
   const [saving, setSaving] = useState(false);
   const saveTimeout = useRef(null);
-
-  // Canvas State
-  const canvasRef = useRef(null);
-  const [isEraser, setIsEraser] = useState(false);
-  const [color, setColor] = useState(COLORS[0]);
-  const isInitialLoad = useRef(true);
 
   useEffect(() => {
     fetchWhiteboard();
@@ -58,18 +51,6 @@ export default function PublicWhiteboardView() {
 
       setRequiresPassword(false);
       setData(result);
-
-      // Load initial paths if they exist
-      if (result.whiteboard && Array.isArray(result.whiteboard)) {
-        setTimeout(() => {
-          if (canvasRef.current && isInitialLoad.current) {
-             canvasRef.current.loadPaths(result.whiteboard);
-             isInitialLoad.current = false;
-          }
-        }, 100);
-      } else {
-        isInitialLoad.current = false; // Flag as done if no paths
-      }
     } catch (err) {
       console.error(err);
       setError(err.message);
@@ -100,21 +81,28 @@ export default function PublicWhiteboardView() {
     }
   };
 
-  const handleChange = async () => {
-    if (!canvasRef.current || isInitialLoad.current) return;
-    try {
-        const paths = await canvasRef.current.exportPaths();
+  const handleMount = (editor) => {
+    if (data.whiteboard && typeof data.whiteboard === 'object' && Object.keys(data.whiteboard).length > 0) {
+      try {
+        if (data.whiteboard.elements || Array.isArray(data.whiteboard)) return; 
+        
+        editor.store.loadSnapshot(data.whiteboard);
+      } catch (e) {
+        console.warn("Failed to load tldraw snapshot", e);
+      }
+    }
+    
+    editor.store.listen(() => {
+      try {
+        const snapshot = editor.store.getSnapshot();
+        const serialized = JSON.parse(JSON.stringify(snapshot));
         if (saveTimeout.current) clearTimeout(saveTimeout.current);
         setSaving(true);
         saveTimeout.current = setTimeout(() => {
-           saveWhiteboardData(paths);
+           saveWhiteboardData(serialized);
         }, 2000);
-    } catch(e) {}
-  };
-
-  const setEraserMode = (mode) => {
-    setIsEraser(mode);
-    canvasRef.current?.eraseMode(mode);
+      } catch (e) {}
+    });
   };
 
   if (loading) {
@@ -203,62 +191,21 @@ export default function PublicWhiteboardView() {
         </div>
       </div>
 
-      {/* Toolbar */}
-      <div className="h-12 bg-[#1e1e1e] border-b border-[#333] flex items-center justify-center px-4 shrink-0">
-        <div className="flex items-center gap-2 bg-[#2d2d2d] rounded-lg p-1 border border-[#444]">
-          <button 
-            onClick={() => setEraserMode(false)}
-            className={`p-1.5 rounded-md transition-colors ${!isEraser ? "bg-blue-500/20 text-blue-400" : "text-slate-400 hover:bg-[#3d3d3d]"}`}
-            title="Pen"
-          >
-            <Pen size={16} />
-          </button>
-          <button 
-            onClick={() => setEraserMode(true)}
-            className={`p-1.5 rounded-md transition-colors ${isEraser ? "bg-blue-500/20 text-blue-400" : "text-slate-400 hover:bg-[#3d3d3d]"}`}
-            title="Eraser"
-          >
-            <Eraser size={16} />
-          </button>
-          
-          <div className="w-px h-5 bg-[#444] mx-1" />
-          
-          <div className="flex gap-1.5 mx-1">
-            {COLORS.map(c => (
-              <button
-                key={c}
-                onClick={() => { setColor(c); setEraserMode(false); }}
-                className={`w-5 h-5 rounded-full border-2 transition-transform ${color === c && !isEraser ? "border-white scale-110" : "border-transparent"}`}
-                style={{ backgroundColor: c }}
-              />
-            ))}
-          </div>
-
-          <div className="w-px h-5 bg-[#444] mx-1" />
-
-          <button onClick={() => canvasRef.current?.undo()} className="p-1.5 text-slate-400 hover:bg-[#3d3d3d] rounded-md" title="Undo">
-            <Undo size={16} />
-          </button>
-          <button onClick={() => canvasRef.current?.redo()} className="p-1.5 text-slate-400 hover:bg-[#3d3d3d] rounded-md" title="Redo">
-            <RotateCcw size={16} />
-          </button>
-          <button onClick={() => { canvasRef.current?.clearCanvas(); handleChange(); }} className="p-1.5 text-red-400 hover:bg-red-500/10 rounded-md ml-1" title="Clear Canvas">
-            <Trash2 size={16} />
-          </button>
-        </div>
-      </div>
-
-      <div className="flex-1 w-full relative" style={{ backgroundColor: "#121212", backgroundImage: "radial-gradient(#333 1px, transparent 1px)", backgroundSize: "20px 20px" }}>
-        <ReactSketchCanvas
-          ref={canvasRef}
-          strokeWidth={4}
-          eraserWidth={16}
-          strokeColor={color}
-          canvasColor="transparent"
-          onChange={handleChange}
-          style={{ border: "none" }}
+      <div className="flex-1 relative tldraw-dark-brand pt-1">
+        <Tldraw
+          onMount={handleMount}
+          inferDarkMode
+          className="tldraw-dark-mode"
         />
       </div>
+
+      <style>{`
+        .tldraw-dark-brand {
+          --color-background: #121212;
+          width: 100%;
+          height: 100%;
+        }
+      `}</style>
     </div>
   );
 }
