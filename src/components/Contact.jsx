@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { supabase } from "../lib/supabase";
 import { motion } from "framer-motion";
 import {
   FiMail,
@@ -17,20 +18,38 @@ export default function Contact({ isDark }) {
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [isSending, setIsSending] = useState(false);
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission here (e.g., send to API, email service)
-    console.log("Form submitted:", formData);
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({ name: "", email: "", subject: "", message: "" });
-    }, 3000);
+    setIsSending(true);
+
+    try {
+      const { error } = await supabase.from("messages").insert([{
+        name: formData.name,
+        email: formData.email,
+        subject: formData.subject,
+        message: formData.message,
+        status: "new"
+      }]);
+
+      if (error) throw error;
+
+      setSubmitted(true);
+      setTimeout(() => {
+        setSubmitted(false);
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      }, 3000);
+    } catch (err) {
+      console.error("Error sending message:", err);
+      alert("Failed to send message. Please try again later.");
+    } finally {
+      setIsSending(false);
+    }
   };
 
   return (
@@ -171,10 +190,12 @@ export default function Contact({ isDark }) {
 
               <button
                 type="submit"
-                disabled={submitted}
+                disabled={isSending || submitted}
                 className={`inline-flex items-center gap-2 px-8 py-3.5 font-semibold rounded-xl transition-all ${
                   submitted
                     ? "bg-green-500 text-white"
+                    : isSending
+                    ? "bg-blue-400 text-white opacity-75 cursor-not-allowed"
                     : "bg-gradient-to-r from-[#1E3A8A] to-[#3B82F6] text-white hover:shadow-xl hover:shadow-blue-500/25 hover:scale-105"
                 }`}
               >
@@ -183,6 +204,8 @@ export default function Contact({ isDark }) {
                     <FiCheck size={18} />
                     Message Sent!
                   </>
+                ) : isSending ? (
+                  "Sending..."
                 ) : (
                   <>
                     <FiSend size={18} />
