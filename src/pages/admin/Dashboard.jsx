@@ -3,7 +3,7 @@ import { supabase } from "../../lib/supabase";
 import { FolderKanban, FileText, MessageSquare, Star, TrendingUp, Clock } from "lucide-react";
 
 export default function Dashboard() {
-  const [stats, setStats] = useState({ totalProjects: 0, totalBlogs: 0, totalMessages: 0, featuredProjects: 0, unreadMessages: 0, publishedBlogs: 0 });
+  const [stats, setStats] = useState({ activeLeads: 0, activeClients: 0, unreadMessages: 0, revenue: 0, pendingProposals: 0 });
   const [recentItems, setRecentItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
