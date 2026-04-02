@@ -65,8 +65,13 @@ export default function AcceptInvite() {
       const userId = authData.user?.id;
       if (!userId) throw new Error("Failed to create user account.");
 
-      // 2. Create profile
-      const { error: profileErr } = await supabase.from("profiles").insert({
+      // If identities is empty, the user already exists (Supabase email enumeration protection)
+      if (authData.user?.identities?.length === 0) {
+        throw new Error("An account with this email already exists. Please return to the login page and sign in, or ask the Admin to reset your password.");
+      }
+
+      // 2. Update/Upsert profile (Trigger might have already created it)
+      const { error: profileErr } = await supabase.from("profiles").upsert({
         id: userId,
         full_name: form.name,
         email: invite.email,

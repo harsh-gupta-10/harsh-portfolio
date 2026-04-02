@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { FileText, Edit3, Image, CheckSquare, Code, Pin, Trash2, Archive, Link as LinkIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
@@ -16,10 +17,11 @@ export default function NoteCard({ note, onDelete, onPin, onArchive }) {
   // Render a tiny preview based on note type
   const renderPreview = () => {
     switch (note.note_type) {
-      case "text":
+      case "text": {
         // Strip HTML tags for preview and show first ~100 chars
         const docText = typeof note.content === "string" ? note.content : (note.content?.content ? JSON.stringify(note.content).replace(/<[^>]+>/g, "").slice(0, 100) : "");
         return <p className="text-sm text-slate-400 line-clamp-3 mt-2">{docText.replace(/[^a-zA-Z0-9.,?!\s]/g, "")}</p>;
+      }
       case "whiteboard":
         // It has a thumbnail or a placeholder
         return (
@@ -31,7 +33,7 @@ export default function NoteCard({ note, onDelete, onPin, onArchive }) {
             )}
           </div>
         );
-      case "checklist":
+      case "checklist": {
         const items = Array.isArray(note.content) ? note.content : [];
         const completed = items.filter(i => i.checked).length;
         return (
@@ -52,6 +54,7 @@ export default function NoteCard({ note, onDelete, onPin, onArchive }) {
             )}
           </div>
         );
+      }
       case "code":
         return (
           <div className="mt-3 p-2 bg-slate-900 rounded-md overflow-hidden text-xs font-mono text-blue-300 line-clamp-3 leading-relaxed">
@@ -63,10 +66,13 @@ export default function NoteCard({ note, onDelete, onPin, onArchive }) {
     }
   };
 
+  const [confirmDelete, setConfirmDelete] = useState(false);
+
   return (
     <div 
       className="group relative flex flex-col bg-slate-800/50 hover:bg-slate-800 rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-black/20 hover:-translate-y-0.5"
       style={{ border: "1px solid #334155" }}
+      onMouseLeave={() => setConfirmDelete(false)}
     >
       {/* Top accent color bar */}
       <div className="h-1.5 w-full" style={{ background: note.color || "#3b82f6" }} />
@@ -116,17 +122,30 @@ export default function NoteCard({ note, onDelete, onPin, onArchive }) {
         
         {/* Floating actions (visible on hover) */}
         <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity bg-slate-800 p-1.5 rounded-lg shadow-lg border border-slate-700">
-          <button onClick={(e) => { e.stopPropagation(); onPin(note.id, !note.is_pinned); }} className="p-1.5 text-slate-400 hover:text-amber-400 hover:bg-slate-700 rounded transition-colors" title={note.is_pinned ? "Unpin" : "Pin"}>
+          <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); onPin(note.id, !note.is_pinned); }} className="p-1.5 text-slate-400 hover:text-amber-400 hover:bg-slate-700 rounded transition-colors" title={note.is_pinned ? "Unpin" : "Pin"}>
             <Pin size={14} className={note.is_pinned ? "fill-amber-400/20 text-amber-400" : ""} />
           </button>
-          <button onClick={(e) => { e.stopPropagation(); navigate(`/admin/notes/${note.id}`); }} className="p-1.5 text-slate-400 hover:text-blue-400 hover:bg-slate-700 rounded transition-colors" title="Edit">
+          <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); navigate(`/admin/notes/${note.id}`); }} className="p-1.5 text-slate-400 hover:text-blue-400 hover:bg-slate-700 rounded transition-colors" title="Edit">
             <Edit3 size={14} />
           </button>
-          <button onClick={(e) => { e.stopPropagation(); onArchive(note.id, !note.is_archived); }} className="p-1.5 text-slate-400 hover:text-indigo-400 hover:bg-slate-700 rounded transition-colors" title={note.is_archived ? "Unarchive" : "Archive"}>
+          <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); onArchive(note.id, !note.is_archived); }} className="p-1.5 text-slate-400 hover:text-indigo-400 hover:bg-slate-700 rounded transition-colors" title={note.is_archived ? "Unarchive" : "Archive"}>
             <Archive size={14} />
           </button>
-          <button onClick={(e) => { e.stopPropagation(); onDelete(note.id); }} className="p-1.5 text-slate-400 hover:text-red-400 hover:bg-slate-700 rounded transition-colors" title="Delete">
-            <Trash2 size={14} />
+          <button 
+            onClick={(e) => { 
+              e.preventDefault(); 
+              e.stopPropagation(); 
+              if (confirmDelete) {
+                onDelete(note.id);
+              } else {
+                setConfirmDelete(true);
+                setTimeout(() => setConfirmDelete(false), 3000);
+              }
+            }} 
+            className={`p-1.5 rounded transition-colors ${confirmDelete ? 'bg-red-500/20 text-red-500 hover:bg-red-500/30' : 'text-slate-400 hover:text-red-400 hover:bg-slate-700'}`} 
+            title={confirmDelete ? "Confirm Delete" : "Delete"}
+          >
+            {confirmDelete ? <CheckSquare size={14} /> : <Trash2 size={14} />}
           </button>
         </div>
       </div>

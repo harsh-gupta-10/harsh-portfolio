@@ -6,16 +6,15 @@ import {
   UserPlus, Shield, ShieldAlert, ShieldCheck, Eye, MoreVertical,
   User, Trash2, UserX, UserCheck, Clock, Loader2, ChevronDown, Copy
 } from "lucide-react";
-import InviteMemberModal from "../../components/admin/InviteMemberModal";
+import AddMemberModal from "../../components/admin/AddMemberModal";
 import { ROLE_COLORS } from "../../lib/permissions";
 
 export default function Team() {
   const { profile, isOwner, isAdmin, hasPermission } = usePermissions();
   const navigate = useNavigate();
   const [members, setMembers] = useState([]);
-  const [invites, setInvites] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showInvite, setShowInvite] = useState(false);
+  const [showAdd, setShowAdd] = useState(false);
   const [actionMenu, setActionMenu] = useState(null);
   const [confirmDelete, setConfirmDelete] = useState(null);
 
@@ -23,12 +22,8 @@ export default function Team() {
 
   async function fetchData() {
     setLoading(true);
-    const [mRes, iRes] = await Promise.all([
-      supabase.from("profiles").select("*").order("created_at"),
-      supabase.from("team_invites").select("*").eq("accepted", false).order("created_at", { ascending: false }),
-    ]);
-    if (mRes.data) setMembers(mRes.data);
-    if (iRes.data) setInvites(iRes.data);
+    const { data } = await supabase.from("profiles").select("*").order("created_at");
+    if (data) setMembers(data);
     setLoading(false);
   }
 
@@ -43,11 +38,6 @@ export default function Team() {
     // Remove profile + permissions (cascade) - keep auth.users for audit
     await supabase.from("profiles").delete().eq("id", member.id);
     setConfirmDelete(null);
-    fetchData();
-  }
-
-  async function revokeInvite(inviteId) {
-    await supabase.from("team_invites").delete().eq("id", inviteId);
     fetchData();
   }
 
@@ -67,14 +57,17 @@ export default function Team() {
           <h1 className="text-2xl font-bold text-white">Team Management</h1>
           <p className="text-sm mt-1 text-slate-400">Manage team members and their access permissions.</p>
         </div>
-        {(isOwner || isAdmin) && (
-          <button
-            onClick={() => setShowInvite(true)}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 text-white text-sm font-bold shadow-lg shadow-blue-500/25 hover:opacity-90 transition-opacity"
-          >
-            <UserPlus size={16} /> Invite Member
-          </button>
-        )}
+        <div className="flex gap-3">
+          {isAdmin && (
+            <button
+              onClick={() => setShowAdd(true)}
+              className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-blue-500/20"
+            >
+              <UserPlus size={18} />
+              Add Member Directly
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Members Table */}
@@ -164,50 +157,6 @@ export default function Team() {
         </div>
       </div>
 
-      {/* Pending Invites */}
-      {invites.length > 0 && (
-        <div className="rounded-2xl overflow-hidden shadow-xl" style={{ background: "linear-gradient(135deg, #1e293b, #0f172a)", border: "1px solid #334155" }}>
-          <div className="px-6 py-4" style={{ borderBottom: "1px solid #334155" }}>
-            <h2 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
-              <Clock size={14} className="text-amber-400" /> Pending Invites ({invites.length})
-            </h2>
-          </div>
-          <div className="divide-y" style={{ borderColor: "#334155" }}>
-            {invites.map(inv => {
-              const rc = ROLE_COLORS[inv.role] || ROLE_COLORS.viewer;
-              const isExpired = new Date(inv.expires_at) < new Date();
-              return (
-                <div key={inv.id} className="flex items-center justify-between px-6 py-4">
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-slate-400">
-                      <User size={18} />
-                    </div>
-                    <div>
-                      <span className="text-sm font-medium text-white">{inv.email}</span>
-                      <div className="text-xs text-slate-400 mt-0.5">
-                        Invited {new Date(inv.created_at).toLocaleDateString()} • 
-                        {isExpired ? <span className="text-red-400 ml-1">Expired</span> : <span className="text-amber-400 ml-1">Pending</span>}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <span className="px-2.5 py-1 rounded-lg text-xs font-bold capitalize" style={{ background: rc.bg, color: rc.color, border: `1px solid ${rc.border}` }}>
-                      {inv.role}
-                    </span>
-                    <button onClick={() => { navigator.clipboard.writeText(`${window.location.origin}/invite?token=${inv.token}`); alert("Invite link copied to clipboard!"); }} className="p-2 rounded-lg hover:bg-blue-500/10 text-slate-400 hover:text-blue-400 transition-colors" title="Copy Invite Link">
-                      <Copy size={14} />
-                    </button>
-                    <button onClick={() => revokeInvite(inv.id)} className="p-2 rounded-lg hover:bg-red-500/10 text-slate-400 hover:text-red-400 transition-colors" title="Revoke Invite">
-                      <Trash2 size={14} />
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
       {/* Delete Confirmation */}
       {confirmDelete && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center">
@@ -223,11 +172,10 @@ export default function Team() {
         </div>
       )}
 
-      <InviteMemberModal
-        open={showInvite}
-        onClose={() => setShowInvite(false)}
-        onInvited={fetchData}
-        currentUserProfileId={profile?.id}
+      <AddMemberModal
+        open={showAdd}
+        onClose={() => setShowAdd(false)}
+        onAdded={fetchData}
       />
     </div>
   );

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
-import { GripVertical, Plus, Trash2, CheckCircle2, Circle } from "lucide-react";
+import { GripVertical, Plus, Trash2, CheckCircle2, Circle, CheckSquare } from "lucide-react";
 
 export default function ChecklistEditor({ initialContent, onChange }) {
   const [items, setItems] = useState(() => {

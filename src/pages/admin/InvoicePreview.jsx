@@ -3,9 +3,10 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { supabase } from "../../lib/supabase";
 import { BlobProvider } from "@react-pdf/renderer";
 import {
-  ArrowLeft, Download, Mail, CheckCircle2, Pencil, Send, Printer,
+  ArrowLeft, Download, Mail, CheckCircle2, Pencil, Send, Printer, Radar
 } from "lucide-react";
 import InvoicePDF from "./InvoicePDF";
+import TrackingPixelModal from "../../components/admin/TrackingPixelModal";
 
 const STATUS_META = {
   draft: { label: "Draft", color: "#94a3b8", bg: "rgba(148,163,184,0.1)" },
@@ -25,6 +26,7 @@ export default function InvoicePreview() {
   const [settings, setSettings] = useState(null);
   const [loading, setLoading] = useState(true);
   const [exporting, setExporting] = useState(false);
+  const [showTracker, setShowTracker] = useState(false);
 
   useEffect(() => { fetchInvoice(); }, [id]);
 
@@ -88,6 +90,14 @@ export default function InvoicePreview() {
           {invoice.status !== "paid" && invoice.status !== "cancelled" && (
             <button onClick={markPaid} className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-sm font-medium transition-all" style={{ color: "#4ade80", background: "rgba(34,197,94,0.1)", border: "1px solid rgba(34,197,94,0.2)" }}><CheckCircle2 size={14} />Mark Paid</button>
           )}
+          <button 
+            onClick={() => setShowTracker(true)}
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-sm font-medium transition-all" 
+            style={{ color: "#f59e0b", background: "rgba(245,158,11,0.1)", border: "1px solid rgba(245,158,11,0.2)" }}
+            title="Generate Tracking Pixel"
+          >
+            <Radar size={14} />Track
+          </button>
           <button onClick={handleEmailSend} className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-sm font-medium transition-all" style={{ color: "#94a3b8", border: "1px solid #334155" }}><Mail size={14} />Email</button>
           <BlobProvider document={<InvoicePDF invoice={invoice} items={items} client={client} project={project} settings={settings} />}>
             {({ url, loading }) => (
@@ -216,6 +226,16 @@ export default function InvoicePreview() {
           .print\\:hidden { display: none !important; }
         }
       `}</style>
+
+      <TrackingPixelModal 
+        isOpen={showTracker}
+        onClose={() => setShowTracker(false)}
+        recipientEmail={client?.email || ""}
+        subject={`Invoice ${invoice.invoice_number} from Harsh Gupta`}
+        type="invoice"
+        sourceId={id}
+        sourceType="invoice"
+      />
     </div>
   );
 }

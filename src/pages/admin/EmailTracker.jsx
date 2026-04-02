@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "../../lib/supabase";
 import {
   Mail, Radar, Copy, Check, Eye, EyeOff, Search, Clock, Trash2, 
-  BarChart, Activity, X, List, Link2, RefreshCcw
+  BarChart, Activity, X, List, Link2, RefreshCcw, FileText, ScrollText
 } from "lucide-react";
 
 export default function EmailTracker() {
@@ -18,6 +18,7 @@ export default function EmailTracker() {
   const [copiedHtml, setCopiedHtml] = useState(false);
   const [copiedUrl, setCopiedUrl] = useState(false);
   const [copiedRowId, setCopiedRowId] = useState(null);
+  const [sourceFilter, setSourceFilter] = useState("all"); // 'all', 'invoice', 'proposal', 'email'
 
   // Logs Modal
   const [selectedEmail, setSelectedEmail] = useState(null);
@@ -130,6 +131,7 @@ export default function EmailTracker() {
 
   const filtered = emails
     .filter(e => filter === "all" || (filter === "opened" ? e.opened : !e.opened))
+    .filter(e => sourceFilter === "all" || (e.source_type || "email") === sourceFilter)
     .filter(e => {
       if (!search) return true;
       const s = search.toLowerCase();
@@ -235,12 +237,23 @@ export default function EmailTracker() {
               <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: "#64748b" }} />
               <input type="text" value={search} onChange={e => setSearch(e.target.value)} placeholder="Search recipient..." className="w-full pl-9 pr-3 py-1.5 rounded-lg text-xs focus:outline-none" style={inputStyle} />
             </div>
-            <div className="flex bg-[#111827] rounded-lg p-1" style={{ border: "1px solid #334155" }}>
-               {["all", "opened", "unopened"].map(f => (
-                 <button key={f} onClick={() => setFilter(f)} className="px-3 py-1 rounded-md text-[11px] font-medium capitalize transition-colors" style={{ background: filter === f ? "#1e293b" : "transparent", color: filter === f ? "#fff" : "#64748b" }}>
-                   {f}
-                 </button>
-               ))}
+            <div className="flex items-center gap-3">
+              {/* Source Type Filter */}
+              <div className="flex bg-[#111827] rounded-lg p-1" style={{ border: "1px solid #334155" }}>
+                {["all", "invoice", "proposal", "email"].map(f => (
+                  <button key={f} onClick={() => setSourceFilter(f)} className="px-2.5 py-1 rounded-md text-[11px] font-medium capitalize transition-colors" style={{ background: sourceFilter === f ? "#1e293b" : "transparent", color: sourceFilter === f ? "#fff" : "#64748b" }}>
+                    {f === "all" ? "All Sources" : f}
+                  </button>
+                ))}
+              </div>
+              {/* Open Status Filter */}
+              <div className="flex bg-[#111827] rounded-lg p-1" style={{ border: "1px solid #334155" }}>
+                {["all", "opened", "unopened"].map(f => (
+                  <button key={f} onClick={() => setFilter(f)} className="px-3 py-1 rounded-md text-[11px] font-medium capitalize transition-colors" style={{ background: filter === f ? "#1e293b" : "transparent", color: filter === f ? "#fff" : "#64748b" }}>
+                    {f}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
 
@@ -261,7 +274,25 @@ export default function EmailTracker() {
                   <td className="px-5 py-4">
                     <p className="text-sm font-medium text-white">{email.recipient_email}</p>
                     <p className="text-xs truncate max-w-[200px] mt-0.5" style={{ color: "#94a3b8" }}>{email.subject}</p>
-                    <div className="flex items-center gap-1 mt-1 text-[10px]" style={{ color: "#64748b" }}><Clock size={10} /> Created: {new Date(email.created_at).toLocaleDateString()}</div>
+                    <div className="flex items-center gap-2 mt-1.5">
+                      {/* Source type badge */}
+                      {email.source_type === "invoice" && (
+                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wide" style={{ background: "rgba(59,130,246,0.12)", color: "#60a5fa", border: "1px solid rgba(59,130,246,0.25)" }}>
+                          <FileText size={9} /> Invoice
+                        </span>
+                      )}
+                      {email.source_type === "proposal" && (
+                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wide" style={{ background: "rgba(168,85,247,0.12)", color: "#c084fc", border: "1px solid rgba(168,85,247,0.25)" }}>
+                          <ScrollText size={9} /> Proposal
+                        </span>
+                      )}
+                      {(!email.source_type || email.source_type === "email") && (
+                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wide" style={{ background: "rgba(100,116,139,0.12)", color: "#94a3b8", border: "1px solid rgba(100,116,139,0.25)" }}>
+                          <Mail size={9} /> Manual
+                        </span>
+                      )}
+                      <div className="flex items-center gap-1 text-[10px]" style={{ color: "#64748b" }}><Clock size={10} />{new Date(email.created_at).toLocaleDateString()}</div>
+                    </div>
                   </td>
                   <td className="px-5 py-4">
                     {email.opened ? (

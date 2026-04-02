@@ -101,9 +101,20 @@ export default function Notes() {
   };
 
   const handleDelete = async (id) => {
-    if (!confirm("Are you sure you want to delete this note?")) return;
+    
+    // Store previous in case we need to revert
+    const previousNotes = [...notes];
     setNotes(prev => prev.filter(n => n.id !== id));
-    await supabase.from("notes").delete().eq("id", id);
+    
+    try {
+      const { error } = await supabase.from("notes").delete().eq("id", id);
+      if (error) throw error;
+    } catch (err) {
+      console.error("Error deleting note:", err);
+      const msg = err?.message || err?.error_description || "Unknown error";
+      alert(`Failed to delete note. \n\nReason: ${msg}\n\nIf you see Auth or Token errors, try logging out and logging back in.`);
+      setNotes(previousNotes); // Revert optimistic update
+    }
   };
 
   // Render Grid Layout

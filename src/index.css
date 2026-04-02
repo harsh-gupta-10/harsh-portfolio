@@ -132,3 +132,12 @@ html.dark {
     linear-gradient(to right, rgba(59, 130, 246, 0.06) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(59, 130, 246, 0.06) 1px, transparent 1px);
 }
+
+/* Quick fix for Excalidraw SVGs inheriting Tailwind preflight styles */
+.excalidraw svg {
+  width: auto;
+  height: auto;
+  display: inline;
+  max-width: none;
+  max-height: none;
+}

@@ -2,10 +2,11 @@ import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { supabase } from "../../lib/supabase";
 import {
-  ArrowLeft, Save, Send, Printer, Plus, Trash2, CheckCircle2, ChevronDown, AlignLeft, Download, DollarSign
+  ArrowLeft, Save, Send, Printer, Plus, Trash2, CheckCircle2, ChevronDown, AlignLeft, Download, DollarSign, Radar
 } from "lucide-react";
 import { BlobProvider } from "@react-pdf/renderer";
 import ProposalPDF from "./ProposalPDF";
+import TrackingPixelModal from "../../components/admin/TrackingPixelModal";
 
 export default function ProposalBuilder() {
   const { id } = useParams();
@@ -14,7 +15,8 @@ export default function ProposalBuilder() {
   const [clients, setClients] = useState([]);
   const [settings, setSettings] = useState(null);
   const [saving, setSaving] = useState(false);
-  
+  const [showTracker, setShowTracker] = useState(false);
+
   // Split pane state
   const [activeTab, setActiveTab] = useState("editor"); // 'editor' or 'preview' on mobile
 
@@ -116,6 +118,14 @@ export default function ProposalBuilder() {
               <DollarSign size={14} /> Generate Invoice
             </Link>
           )}
+          <button
+            onClick={() => setShowTracker(true)}
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm transition-all"
+            style={{ color: "#f59e0b", background: "rgba(245,158,11,0.1)", border: "1px solid rgba(245,158,11,0.2)" }}
+            title="Generate Tracking Pixel for this Proposal"
+          >
+            <Radar size={14} /> Track
+          </button>
           <button onClick={handleSend} className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm bg-slate-800 text-slate-300 hover:bg-slate-700 border border-[#334155]"><Send size={14} /> Email</button>
           
           <BlobProvider document={<ProposalPDF proposal={proposal} client={clients.find(c => c.id === proposal.client_id)} settings={settings} />}>
@@ -394,6 +404,17 @@ export default function ProposalBuilder() {
           .print\\:hidden { display: none !important; }
         }
       `}</style>
+
+      {/* Tracking Pixel Modal */}
+      <TrackingPixelModal
+        isOpen={showTracker}
+        onClose={() => setShowTracker(false)}
+        recipientEmail={clients.find(c => c.id === proposal?.client_id)?.email || ""}
+        subject={`Proposal: ${proposal?.title}`}
+        type="proposal"
+        sourceId={id}
+        sourceType="proposal"
+      />
     </div>
   );
 }

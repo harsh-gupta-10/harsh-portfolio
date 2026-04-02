@@ -1,12 +1,13 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "../../lib/supabase";
-import { ArrowLeft, Save, Loader2, Pin, Clock, MoreVertical, LayoutPanelLeft, Hash, Trash2 } from "lucide-react";
+import { ArrowLeft, Save, Loader2, Pin, Clock, MoreVertical, LayoutPanelLeft, Hash, Trash2, X, Share2 } from "lucide-react";
 import TextEditor from "../../components/admin/notes/TextEditor";
 import WhiteboardEditor from "../../components/admin/notes/WhiteboardEditor";
 import ChecklistEditor from "../../components/admin/notes/ChecklistEditor";
 import CodeEditor from "../../components/admin/notes/CodeEditor";
 import VersionHistory from "../../components/admin/notes/VersionHistory";
+import ShareModal from "../../components/admin/notes/ShareModal";
 
 const COLORS = [
   "#3b82f6", "#8b5cf6", "#ec4899", "#ef4444", 
@@ -27,6 +28,7 @@ export default function NoteEditor() {
   // Versions
   const [showVersions, setShowVersions] = useState(false);
   const [versions, setVersions] = useState([]);
+  const [showShareModal, setShowShareModal] = useState(false);
   
   // Unsaved Content Reference
   const unsavedContent = useRef(null);
@@ -53,8 +55,7 @@ export default function NoteEditor() {
     setNote(n);
     unsavedContent.current = n.content;
     setLastSaved(new Date(n.updated_at));
-    setLoading(false);
-    
+
     // Also load whiteboard data if it's a whiteboard note
     if (n.note_type === "whiteboard") {
       const { data: wb } = await supabase.from("whiteboards").select("*").eq("note_id", id).maybeSingle();
@@ -62,6 +63,8 @@ export default function NoteEditor() {
         unsavedContent.current = wb.excalidraw_data;
       }
     }
+    
+    setLoading(false);
   };
 
   // Auto-save logic
@@ -106,9 +109,11 @@ export default function NoteEditor() {
         if (thumbUrl) wbUpdate.thumbnail_url = thumbUrl;
 
         if (existingWb) {
-          await supabase.from("whiteboards").update(wbUpdate).eq("id", existingWb.id);
+          const { error: updateErr } = await supabase.from("whiteboards").update(wbUpdate).eq("id", existingWb.id);
+          if (updateErr) console.error("Update whiteboard failed:", updateErr);
         } else {
-          await supabase.from("whiteboards").insert(wbUpdate);
+          const { error: insertErr } = await supabase.from("whiteboards").insert(wbUpdate);
+          if (insertErr) console.error("Insert whiteboard failed:", insertErr);
         }
         
         // Update updated_at of main note
@@ -177,7 +182,7 @@ export default function NoteEditor() {
         return <CodeEditor initialContent={unsavedContent.current} onChange={handleContentChange} />;
       case "whiteboard":
         // Whiteboard auto-generates thumbnails when saving
-        return <WhiteboardEditor initialContent={unsavedContent.current} onChange={(d) => handleContentChange(d)} setThumbnailBlob={(b) => performSave(unsavedContent.current, b)} />;
+        return <WhiteboardEditor initialData={unsavedContent.current} onChange={(d) => handleContentChange(d)} setThumbnailBlob={(b) => performSave(unsavedContent.current, b)} />;
       default:
         return null;
     }
@@ -212,6 +217,13 @@ export default function NoteEditor() {
           <span className="text-xs text-slate-500 hidden sm:inline-block">
             {saving ? <span className="flex items-center gap-1"><Loader2 size={12} className="animate-spin"/> Saving...</span> : (lastSaved ? `Saved ${lastSaved.toLocaleTimeString()}` : '')}
           </span>
+          <button 
+            onClick={() => performSave(unsavedContent.current)}
+            disabled={saving}
+            className="hidden sm:flex items-center gap-2 px-3 py-1.5 ml-2 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white rounded-lg text-xs font-bold transition-colors shadow-lg shadow-blue-500/20"
+          >
+            {saving ? <Loader2 size={14} className="animate-spin" /> : "Save Note"}
+          </button>
 
           <div className="flex items-center gap-1 border-l pl-3 border-slate-800 ml-1">
             {COLORS.map(c => (
@@ -225,6 +237,11 @@ export default function NoteEditor() {
           </div>
 
           <div className="flex items-center gap-1 border-l pl-3 border-slate-800 ml-1">
+            {note.note_type === "whiteboard" && (
+              <button onClick={() => setShowShareModal(true)} className="p-2 rounded-lg text-blue-400 hover:text-white hover:bg-blue-500/20 transition-colors mx-1 bg-blue-500/10" title="Share Whiteboard">
+                <Share2 size={18} />
+              </button>
+            )}
             <button onClick={() => updateMeta({ is_pinned: !note.is_pinned })} className={`p-2 rounded-lg transition-colors ${note.is_pinned ? 'bg-amber-500/10 text-amber-500' : 'text-slate-400 hover:text-white hover:bg-slate-800'}`} title="Pin Note">
               <Pin size={18} className={note.is_pinned ? "fill-amber-500/20" : ""} />
             </button>
@@ -272,7 +289,7 @@ export default function NoteEditor() {
           
           <button 
             onClick={async () => {
-              if (confirm("Move to Trash?")) {
+              if (window.confirm("Move to Trash?")) {
                 await supabase.from("notes").delete().eq("id", id);
                 navigate('/admin/notes');
               }
@@ -293,6 +310,13 @@ export default function NoteEditor() {
           unsavedContent.current = content;
           setShowVersions(false);
         }}
+      />
+
+      <ShareModal 
+        note={note}
+        open={showShareModal}
+        onClose={() => setShowShareModal(false)}
+        onUpdate={(updates) => setNote(prev => ({ ...prev, ...updates }))}
       />
     </div>
   );

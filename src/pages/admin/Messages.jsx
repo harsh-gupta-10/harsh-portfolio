@@ -25,7 +25,7 @@ export default function Messages() {
   }
 
   async function deleteMessage(id) {
-    if (!confirm("Delete this message?")) return;
+    if (!window.confirm("Delete this message?")) return;
     await supabase.from("messages").delete().eq("id", id);
     setMessages(prev => prev.filter(m => m.id !== id));
     if (selected?.id === id) setSelected(null);
