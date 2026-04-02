@@ -1,4 +1,4 @@
-import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+import { Document, Page, Text, View, StyleSheet, Image } from "@react-pdf/renderer";
 
 const styles = StyleSheet.create({
   page: { padding: 40, fontSize: 11, fontFamily: "Helvetica", color: "#111" },
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   footerText: { fontSize: 8, color: "#9ca3af" },
 });
 
-export default function ProposalPDF({ proposal, client }) {
+export default function ProposalPDF({ proposal, client, settings }) {
   const content = proposal.content || {};
   return (
     <Document>
@@ -35,10 +35,11 @@ export default function ProposalPDF({ proposal, client }) {
             <Text style={styles.title}>PROPOSAL</Text>
             <Text style={styles.subTitle}>{proposal.title || "Untitled"}</Text>
           </View>
-          <View>
-            <Text style={styles.brandName}>Harsh Gupta</Text>
-            <Text style={styles.brandSub}>Frontend Developer & Designer</Text>
-            <Text style={styles.brandSub}>harshgupta24716@gmail.com</Text>
+          <View style={{ alignItems: "flex-end" }}>
+            {settings?.logo_url && <Image src={settings.logo_url} style={{ width: 60, height: 60, marginBottom: 8, objectFit: "contain" }} />}
+            <Text style={styles.brandName}>{settings?.full_name || "Harsh Gupta"}</Text>
+            <Text style={styles.brandSub}>{settings?.company_name || "Frontend Developer & Designer"}</Text>
+            <Text style={styles.brandSub}>{settings?.email || "harshgupta24716@gmail.com"}</Text>
           </View>
         </View>
 
@@ -127,7 +128,7 @@ export default function ProposalPDF({ proposal, client }) {
 
         {/* Footer */}
         <View style={styles.footer}>
-          <Text style={styles.footerText}>Thank you for your business! • Harsh Gupta • harshgupta24716@gmail.com</Text>
+          <Text style={styles.footerText}>{settings?.invoice_footer_note || "Thank you for your business!"} • {settings?.full_name || "Harsh Gupta"} • {settings?.email || "harshgupta24716@gmail.com"}</Text>
         </View>
       </Page>
     </Document>

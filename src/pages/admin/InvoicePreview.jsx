@@ -22,6 +22,7 @@ export default function InvoicePreview() {
   const [items, setItems] = useState([]);
   const [client, setClient] = useState(null);
   const [project, setProject] = useState(null);
+  const [settings, setSettings] = useState(null);
   const [loading, setLoading] = useState(true);
   const [exporting, setExporting] = useState(false);
 
@@ -32,14 +33,17 @@ export default function InvoicePreview() {
     if (!inv) { setLoading(false); return; }
     setInvoice(inv);
 
-    const [itemsRes, clientRes, projRes] = await Promise.all([
+    const { data: { user } } = await supabase.auth.getUser();
+    const [itemsRes, clientRes, projRes, settingsRes] = await Promise.all([
       supabase.from("invoice_items").select("*").eq("invoice_id", id),
       inv.client_id ? supabase.from("clients").select("*").eq("id", inv.client_id).single() : Promise.resolve({ data: null }),
       inv.project_id ? supabase.from("projects").select("id, title").eq("id", inv.project_id).single() : Promise.resolve({ data: null }),
+      user ? supabase.from("settings").select("*").eq("user_id", user.id).single() : Promise.resolve({ data: null }),
     ]);
     if (itemsRes.data) setItems(itemsRes.data);
     if (clientRes.data) setClient(clientRes.data);
     if (projRes.data) setProject(projRes.data);
+    if (settingsRes.data) setSettings(settingsRes.data);
     setLoading(false);
   }
 
@@ -85,7 +89,7 @@ export default function InvoicePreview() {
             <button onClick={markPaid} className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-sm font-medium transition-all" style={{ color: "#4ade80", background: "rgba(34,197,94,0.1)", border: "1px solid rgba(34,197,94,0.2)" }}><CheckCircle2 size={14} />Mark Paid</button>
           )}
           <button onClick={handleEmailSend} className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-sm font-medium transition-all" style={{ color: "#94a3b8", border: "1px solid #334155" }}><Mail size={14} />Email</button>
-          <BlobProvider document={<InvoicePDF invoice={invoice} items={items} client={client} project={project} />}>
+          <BlobProvider document={<InvoicePDF invoice={invoice} items={items} client={client} project={project} settings={settings} />}>
             {({ url, loading }) => (
               <a
                 href={url}
@@ -109,9 +113,9 @@ export default function InvoicePreview() {
               <p style={{ fontSize: 14, opacity: 0.7, marginTop: 4 }}>{invoice.invoice_number}</p>
             </div>
             <div style={{ textAlign: "right" }}>
-              <h3 style={{ fontSize: 20, fontWeight: 700 }}>Harsh Gupta</h3>
-              <p style={{ fontSize: 12, opacity: 0.6, marginTop: 2 }}>Frontend Developer & Designer</p>
-              <p style={{ fontSize: 12, opacity: 0.6 }}>harshgupta24716@gmail.com</p>
+              <h3 style={{ fontSize: 20, fontWeight: 700 }}>{settings?.full_name || "Harsh Gupta"}</h3>
+              <p style={{ fontSize: 12, opacity: 0.6, marginTop: 2 }}>{settings?.company_name || "Frontend Developer & Designer"}</p>
+              <p style={{ fontSize: 12, opacity: 0.6 }}>{settings?.email || "harshgupta24716@gmail.com"}</p>
             </div>
           </div>
         </div>
@@ -187,7 +191,7 @@ export default function InvoicePreview() {
         )}
 
         <div style={{ padding: "20px 48px", background: "#f9fafb", textAlign: "center", borderTop: "1px solid #e5e7eb" }}>
-          <p style={{ fontSize: 11, color: "#9ca3af" }}>Thank you for your business! • Harsh Gupta • harshgupta24716@gmail.com</p>
+          <p style={{ fontSize: 11, color: "#9ca3af" }}>{settings?.invoice_footer_note || "Thank you for your business!"} • {settings?.full_name || "Harsh Gupta"} • {settings?.email || "harshgupta24716@gmail.com"}</p>
         </div>
       </div>
 

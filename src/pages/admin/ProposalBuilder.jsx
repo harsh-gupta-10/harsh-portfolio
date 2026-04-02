@@ -12,6 +12,7 @@ export default function ProposalBuilder() {
   const navigate = useNavigate();
   const [proposal, setProposal] = useState(null);
   const [clients, setClients] = useState([]);
+  const [settings, setSettings] = useState(null);
   const [saving, setSaving] = useState(false);
   
   // Split pane state
@@ -22,9 +23,11 @@ export default function ProposalBuilder() {
   }, [id]);
 
   async function fetchData() {
-    const [pRes, cRes] = await Promise.all([
+    const { data: { user } } = await supabase.auth.getUser();
+    const [pRes, cRes, sRes] = await Promise.all([
       supabase.from("proposals").select("*").eq("id", id).single(),
-      supabase.from("clients").select("*").order("name")
+      supabase.from("clients").select("*").order("name"),
+      user ? supabase.from("settings").select("*").eq("user_id", user.id).single() : Promise.resolve({ data: null })
     ]);
     if (pRes.data) {
       if (!pRes.data.content) {
@@ -33,6 +36,7 @@ export default function ProposalBuilder() {
       setProposal(pRes.data);
     }
     if (cRes.data) setClients(cRes.data);
+    if (sRes.data) setSettings(sRes.data);
   }
 
   const updateField = (field, value) => {
@@ -114,7 +118,7 @@ export default function ProposalBuilder() {
           )}
           <button onClick={handleSend} className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm bg-slate-800 text-slate-300 hover:bg-slate-700 border border-[#334155]"><Send size={14} /> Email</button>
           
-          <BlobProvider document={<ProposalPDF proposal={proposal} client={clients.find(c => c.id === proposal.client_id)} />}>
+          <BlobProvider document={<ProposalPDF proposal={proposal} client={clients.find(c => c.id === proposal.client_id)} settings={settings} />}>
             {({ url, loading }) => (
               <a
                 href={url}
@@ -259,9 +263,9 @@ export default function ProposalBuilder() {
                   <p className="text-xl text-slate-400 mt-2">{proposal.title}</p>
                 </div>
                 <div className="text-right">
-                  <h3 className="text-lg font-bold">Harsh Gupta</h3>
-                  <p className="text-sm text-slate-400">Frontend Developer & Designer</p>
-                  <p className="text-sm text-slate-400">harshgupta24716@gmail.com</p>
+                  <h3 className="text-lg font-bold">{settings?.full_name || "Harsh Gupta"}</h3>
+                  <p className="text-sm text-slate-400">{settings?.company_name || "Frontend Developer & Designer"}</p>
+                  <p className="text-sm text-slate-400">{settings?.email || "harshgupta24716@gmail.com"}</p>
                 </div>
               </div>
               

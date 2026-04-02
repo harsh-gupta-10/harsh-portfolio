@@ -1,8 +1,9 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
+import { PermissionsProvider } from "../../hooks/usePermissions";
 
 export default function ProtectedRoute({ children }) {
-  const { user, loading, isAdmin } = useAuth();
+  const { user, loading } = useAuth();
 
   if (loading) {
     return (
@@ -15,9 +16,13 @@ export default function ProtectedRoute({ children }) {
     );
   }
 
-  if (!user || !isAdmin) {
+  if (!user) {
     return <Navigate to="/login" replace />;
   }
 
-  return <>{children}</>;
+  return (
+    <PermissionsProvider>
+      {children}
+    </PermissionsProvider>
+  );
 }

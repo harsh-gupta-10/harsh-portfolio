@@ -1,4 +1,4 @@
-import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+import { Document, Page, Text, View, StyleSheet, Image } from "@react-pdf/renderer";
 
 const styles = StyleSheet.create({
   page: { padding: 40, fontSize: 11, fontFamily: "Helvetica", color: "#111" },
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   footerText: { fontSize: 8, color: "#9ca3af" },
 });
 
-export default function InvoicePDF({ invoice, items, client, project }) {
+export default function InvoicePDF({ invoice, items, client, project, settings }) {
   return (
     <Document>
       <Page size="A4" style={{ ...styles.page, padding: 0 }}>
@@ -41,10 +41,11 @@ export default function InvoicePDF({ invoice, items, client, project }) {
             <Text style={styles.title}>INVOICE</Text>
             <Text style={styles.invoiceNum}>{invoice.invoice_number}</Text>
           </View>
-          <View>
-            <Text style={styles.brandName}>Harsh Gupta</Text>
-            <Text style={styles.brandSub}>Frontend Developer & Designer</Text>
-            <Text style={styles.brandSub}>harshgupta24716@gmail.com</Text>
+          <View style={{ alignItems: "flex-end" }}>
+            {settings?.logo_url && <Image src={settings.logo_url} style={{ width: 60, height: 60, marginBottom: 8, objectFit: "contain" }} />}
+            <Text style={styles.brandName}>{settings?.full_name || "Harsh Gupta"}</Text>
+            <Text style={styles.brandSub}>{settings?.company_name || "Frontend Developer & Designer"}</Text>
+            <Text style={styles.brandSub}>{settings?.email || "harshgupta24716@gmail.com"}</Text>
           </View>
         </View>
         <View style={{ padding: "0 40px" }}>
@@ -101,9 +102,20 @@ export default function InvoicePDF({ invoice, items, client, project }) {
           </View>
         </View>
 
+        {/* Payment Details */}
+        {(settings?.bank_name || settings?.upi_id) && (
+          <View style={styles.notes}>
+            <Text style={styles.label}>Payment Information</Text>
+            {settings?.bank_name && <Text style={styles.notesText}>Bank: {settings.bank_name}</Text>}
+            {settings?.account_number && <Text style={styles.notesText}>Account No: {settings.account_number}</Text>}
+            {settings?.ifsc_code && <Text style={styles.notesText}>IFSC: {settings.ifsc_code}</Text>}
+            {settings?.upi_id && <Text style={styles.notesText}>UPI ID: {settings.upi_id}</Text>}
+          </View>
+        )}
+
         {/* Notes */}
         {invoice.notes && (
-          <View style={styles.notes}>
+          <View style={{ marginTop: 12 }}>
             <Text style={styles.label}>Notes</Text>
             <Text style={styles.notesText}>{invoice.notes}</Text>
           </View>
@@ -111,7 +123,7 @@ export default function InvoicePDF({ invoice, items, client, project }) {
 
           {/* Footer */}
           <View style={styles.footer}>
-            <Text style={styles.footerText}>Thank you for your business! • Harsh Gupta • harshgupta24716@gmail.com</Text>
+            <Text style={styles.footerText}>{settings?.invoice_footer_note || "Thank you for your business!"} • {settings?.full_name || "Harsh Gupta"} • {settings?.email || "harshgupta24716@gmail.com"}</Text>
           </View>
         </View>
       </Page>

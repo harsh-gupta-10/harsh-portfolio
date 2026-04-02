@@ -37,6 +37,11 @@ import ProposalBuilder from "./pages/admin/ProposalBuilder";
 import Expenses from "./pages/admin/Expenses";
 import Tasks from "./pages/admin/Tasks";
 import Analytics from "./pages/admin/Analytics";
+import Settings from "./pages/admin/Settings";
+import Team from "./pages/admin/Team";
+import TeamPermissions from "./pages/admin/TeamPermissions";
+import AcceptInvite from "./pages/admin/AcceptInvite";
+import Unauthorized from "./pages/admin/Unauthorized";
 
 function Portfolio() {
   const { isDark, toggle } = useDarkMode();
@@ -70,6 +75,9 @@ function App() {
           {/* Admin Login */}
           <Route path="/login" element={<Login />} />
 
+          {/* Accept Invite (public, no auth) */}
+          <Route path="/invite" element={<AcceptInvite />} />
+
           {/* Admin Panel */}
           <Route
             path="/admin"
@@ -100,6 +108,10 @@ function App() {
             <Route path="leads" element={<Leads />} />
             <Route path="proposals" element={<Proposals />} />
             <Route path="proposals/:id" element={<ProposalBuilder />} />
+            <Route path="settings" element={<Settings />} />
+            <Route path="team" element={<Team />} />
+            <Route path="team/:id" element={<TeamPermissions />} />
+            <Route path="unauthorized" element={<Unauthorized />} />
           </Route>
         </Routes>
       </AuthProvider>

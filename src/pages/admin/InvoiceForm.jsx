@@ -25,12 +25,19 @@ export default function InvoiceForm() {
   useEffect(() => { fetchInit(); }, []);
 
   async function fetchInit() {
-    const [cRes, pRes] = await Promise.all([
+    const { data: { user } } = await supabase.auth.getUser();
+    
+    const [cRes, pRes, sRes] = await Promise.all([
       supabase.from("clients").select("id, name"),
       supabase.from("projects").select("id, title, client_id"),
+      user ? supabase.from("settings").select("*").eq("user_id", user.id).single() : Promise.resolve({ data: null })
     ]);
+    
     if (cRes.data) setClients(cRes.data);
     if (pRes.data) setProjects(pRes.data);
+    
+    const defaultTax = sRes.data?.default_tax_percent ?? 18;
+    const prefix = sRes.data?.invoice_prefix || "INV";
 
     if (isEditing) {
       const { data: inv } = await supabase.from("invoices").select("*").eq("id", id).single();
@@ -39,7 +46,7 @@ export default function InvoiceForm() {
           invoice_number: inv.invoice_number || "", client_id: inv.client_id || "",
           project_id: inv.project_id || "", status: inv.status || "draft",
           issue_date: inv.issue_date || "", due_date: inv.due_date || "",
-          tax_percent: inv.tax_percent ?? 18, notes: inv.notes || "",
+          tax_percent: inv.tax_percent ?? defaultTax, notes: inv.notes || "",
         });
         const { data: lineItems } = await supabase.from("invoice_items").select("*").eq("invoice_id", id);
         if (lineItems?.length) setItems(lineItems.map(li => ({ description: li.description, quantity: li.quantity, rate: li.rate, amount: li.amount })));
@@ -59,7 +66,8 @@ export default function InvoiceForm() {
 
       setForm(prev => ({ 
         ...prev, 
-        invoice_number: `INV-${String(next).padStart(3, "0")}`,
+        tax_percent: defaultTax,
+        invoice_number: `${prefix}-${String(next).padStart(3, "0")}`,
         client_id: initialClient
       }));
 
