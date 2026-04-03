@@ -182,7 +182,7 @@ export default function NoteEditor() {
         return <CodeEditor initialContent={unsavedContent.current} onChange={handleContentChange} />;
       case "whiteboard":
         // Whiteboard auto-generates thumbnails when saving
-        return <WhiteboardEditor initialData={unsavedContent.current} onChange={(d) => handleContentChange(d)} setThumbnailBlob={(b) => performSave(unsavedContent.current, b)} />;
+        return <WhiteboardEditor noteId={id} initialData={unsavedContent.current} onChange={(d) => handleContentChange(d)} setThumbnailBlob={(b) => performSave(unsavedContent.current, b)} />;
       default:
         return null;
     }

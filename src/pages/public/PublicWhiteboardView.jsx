@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { fabric } from "fabric";
-import { Loader2, Lock, ArrowRight, AlertTriangle, Pen, MousePointer2, Trash2, Square, Circle } from "lucide-react";
+import { Loader2, Lock, ArrowRight, AlertTriangle } from "lucide-react";
+import WhiteboardEditor from "../../components/admin/notes/WhiteboardEditor";
 
 export default function PublicWhiteboardView() {
   const { token } = useParams();
@@ -14,20 +15,17 @@ export default function PublicWhiteboardView() {
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [verifying, setVerifying] = useState(false);
+  
+  // Save state
   const [saving, setSaving] = useState(false);
+  const unsavedContent = useRef(null);
   const saveTimeout = useRef(null);
-
-  // Fabric State
-  const canvasRef = useRef(null);
-  const containerRef = useRef(null);
-  const canvasInstance = useRef(null);
-  const [activeTool, setActiveTool] = useState("draw");
-  const [color, setColor] = useState("#3b82f6");
-  const [brushSize, setBrushSize] = useState(3);
-  const isInitializing = useRef(true);
 
   useEffect(() => {
     fetchWhiteboard();
+    return () => {
+      if (saveTimeout.current) clearTimeout(saveTimeout.current);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
@@ -59,6 +57,9 @@ export default function PublicWhiteboardView() {
 
       setRequiresPassword(false);
       setData(result);
+      if (result.whiteboard) {
+        unsavedContent.current = result.whiteboard;
+      }
     } catch (err) {
       console.error(err);
       setError(err.message);
@@ -71,7 +72,10 @@ export default function PublicWhiteboardView() {
   const saveWhiteboardData = async (snapshot) => {
     try {
       const edgeUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/view-whiteboard?token=${token}`;
-      const payload = { action: "SAVE", whiteboard_data: snapshot };
+      const payload = { 
+        action: "SAVE", 
+        whiteboard_data: snapshot 
+      };
       if (password) payload.password = password; 
       
       const response = await fetch(edgeUrl, {
@@ -89,131 +93,13 @@ export default function PublicWhiteboardView() {
     }
   };
 
-  // Initialize Fabric once data is loaded
-  useEffect(() => {
-    if (!data || !canvasRef.current || !containerRef.current || canvasInstance.current) return;
-
-    const initCanvas = new fabric.Canvas(canvasRef.current, {
-      isDrawingMode: true,
-      backgroundColor: "#121212", 
-      width: containerRef.current.clientWidth,
-      height: containerRef.current.clientHeight || 800,
-    });
-
-    initCanvas.freeDrawingBrush.color = color;
-    initCanvas.freeDrawingBrush.width = brushSize;
-
-    if (data.whiteboard && typeof data.whiteboard === 'object' && Object.keys(data.whiteboard).length > 0) {
-      if (!data.whiteboard.elements && !Array.isArray(data.whiteboard) && data.whiteboard.objects) {
-        initCanvas.loadFromJSON(data.whiteboard, () => {
-          initCanvas.renderAll();
-          isInitializing.current = false;
-        });
-      } else {
-        isInitializing.current = false;
-      }
-    } else {
-      isInitializing.current = false;
-    }
-
-    canvasInstance.current = initCanvas;
-
-    const handleResize = () => {
-      if (containerRef.current && initCanvas) {
-        initCanvas.setWidth(containerRef.current.clientWidth);
-        initCanvas.setHeight(containerRef.current.clientHeight);
-        initCanvas.renderAll();
-      }
-    };
-    window.addEventListener("resize", handleResize);
-
-    const handleCanvasChange = () => {
-      if (isInitializing.current) return;
-      const snapshot = initCanvas.toJSON();
-      
-      if (saveTimeout.current) clearTimeout(saveTimeout.current);
-      setSaving(true);
-      saveTimeout.current = setTimeout(() => {
-         saveWhiteboardData(snapshot);
-      }, 2000);
-    };
-
-    initCanvas.on("path:created", handleCanvasChange);
-    initCanvas.on("object:modified", handleCanvasChange);
-    initCanvas.on("object:added", handleCanvasChange);
-    initCanvas.on("object:removed", handleCanvasChange);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      initCanvas.dispose();
-    };
-  }, [data]);
-
-  // Tool effects
-  useEffect(() => {
-    if (!canvasInstance.current) return;
-    if (activeTool === "draw") {
-      canvasInstance.current.isDrawingMode = true;
-    } else {
-      canvasInstance.current.isDrawingMode = false;
-    }
-  }, [activeTool]);
-
-  // Color & brush size effects
-  useEffect(() => {
-    if (!canvasInstance.current) return;
-    canvasInstance.current.freeDrawingBrush.color = color;
-    canvasInstance.current.freeDrawingBrush.width = brushSize;
-  }, [color, brushSize]);
-
-  const clearCanvas = () => {
-    if (!canvasInstance.current) return;
-    if (confirm("Are you sure you want to clear the whiteboard?")) {
-      canvasInstance.current.clear();
-      canvasInstance.current.backgroundColor = "#121212"; 
-      canvasInstance.current.renderAll();
-      const snapshot = canvasInstance.current.toJSON();
-      if (saveTimeout.current) clearTimeout(saveTimeout.current);
-      setSaving(true);
-      saveWhiteboardData(snapshot);
-    }
-  };
-  
-  const addRect = () => {
-    if (!canvasInstance.current) return;
-    setActiveTool("select");
-    const rect = new fabric.Rect({
-      left: 100,
-      top: 100,
-      fill: "transparent",
-      stroke: color,
-      strokeWidth: brushSize,
-      width: 100,
-      height: 100,
-      cornerColor: "#3b82f6",
-      transparentCorners: false,
-    });
-    canvasInstance.current.add(rect);
-    canvasInstance.current.setActiveObject(rect);
-    canvasInstance.current.renderAll();
-  };
-  
-  const addCircle = () => {
-    if (!canvasInstance.current) return;
-    setActiveTool("select");
-    const circle = new fabric.Circle({
-      left: 150,
-      top: 150,
-      fill: "transparent",
-      stroke: color,
-      strokeWidth: brushSize,
-      radius: 50,
-      cornerColor: "#3b82f6",
-      transparentCorners: false,
-    });
-    canvasInstance.current.add(circle);
-    canvasInstance.current.setActiveObject(circle);
-    canvasInstance.current.renderAll();
+  const handleContentChange = (contentData) => {
+    unsavedContent.current = contentData;
+    if (saveTimeout.current) clearTimeout(saveTimeout.current);
+    setSaving(true);
+    saveTimeout.current = setTimeout(() => {
+      saveWhiteboardData(contentData);
+    }, 2000);
   };
 
   if (loading) {
@@ -302,78 +188,12 @@ export default function PublicWhiteboardView() {
         </div>
       </div>
 
-      <div className="flex-1 relative w-full h-full" ref={containerRef}>
-        
-        {/* Custom Toolbar */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-[#1a1a1a]/90 backdrop-blur-md border border-[#333] p-2 rounded-2xl shadow-2xl z-20">
-          <button
-            onClick={() => setActiveTool("select")}
-            className={`p-3 rounded-xl transition-all ${activeTool === "select" ? "bg-blue-600 text-white shadow-[0_0_15px_rgba(37,99,235,0.4)]" : "text-gray-400 hover:text-white hover:bg-[#333]"}`}
-            title="Select / Move"
-          >
-            <MousePointer2 size={20} />
-          </button>
-          <button
-            onClick={() => setActiveTool("draw")}
-            className={`p-3 rounded-xl transition-all ${activeTool === "draw" ? "bg-blue-600 text-white shadow-[0_0_15px_rgba(37,99,235,0.4)]" : "text-gray-400 hover:text-white hover:bg-[#333]"}`}
-            title="Draw"
-          >
-            <Pen size={20} />
-          </button>
-          
-          <div className="w-px h-8 bg-[#333] mx-1"></div>
-          
-          <button
-            onClick={addRect}
-            className="p-3 rounded-xl text-gray-400 hover:text-white hover:bg-[#333] transition-all"
-            title="Add Rectangle"
-          >
-            <Square size={20} />
-          </button>
-          <button
-            onClick={addCircle}
-            className="p-3 rounded-xl text-gray-400 hover:text-white hover:bg-[#333] transition-all"
-            title="Add Circle"
-          >
-            <Circle size={20} />
-          </button>
-
-          <div className="w-px h-8 bg-[#333] mx-1"></div>
-
-          <div className="relative flex items-center group px-1">
-            <input
-              type="color"
-              value={color}
-              onChange={(e) => setColor(e.target.value)}
-              className="w-8 h-8 rounded-full border-2 border-gray-600 cursor-pointer overflow-hidden p-0 bg-transparent"
-              title="Stroke Color"
-            />
-          </div>
-
-          <div className="flex items-center px-2 w-24">
-            <input
-              type="range"
-              min="1"
-              max="30"
-              value={brushSize}
-              onChange={(e) => setBrushSize(parseInt(e.target.value))}
-              className="w-full accent-blue-500"
-              title="Brush Size"
-            />
-          </div>
-
-          <div className="w-px h-8 bg-[#333] mx-1"></div>
-          
-          <button
-            onClick={clearCanvas}
-            className="p-3 rounded-xl text-gray-400 hover:text-red-400 hover:bg-red-500/10 transition-all"
-            title="Clear Board"
-          >
-            <Trash2 size={20} />
-          </button>
-        </div>
-
-        <canvas ref={canvasRef} />
+      <div className="flex-1 relative w-full h-full">
+        <WhiteboardEditor 
+          noteId={data.note_id || data.id}
+          initialData={data.whiteboard} 
+          onChange={handleContentChange}
+        />
       </div>
     </div>
   );
