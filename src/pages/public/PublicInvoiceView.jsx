@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import UPIPayment from "../../components/admin/UPIPayment";
 
 const STATUS_META = {
   draft: { label: "Draft", color: "#94a3b8", bg: "rgba(148,163,184,0.15)" },
@@ -175,6 +176,13 @@ export default function PublicInvoiceView() {
               {settings.ifsc_code && <div style={{ fontSize: 13 }}><span style={{ color: "#64748b" }}>IFSC: </span><strong>{settings.ifsc_code}</strong></div>}
               {settings.upi_id && <div style={{ fontSize: 13 }}><span style={{ color: "#64748b" }}>UPI: </span><strong>{settings.upi_id}</strong></div>}
             </div>
+          </div>
+        )}
+
+        {/* UPI Payment Section */}
+        {settings?.upi_id && settings?.show_qr_invoice && (
+          <div style={{ padding: "0 48px" }}>
+            <UPIPayment invoice={invoice} settings={settings} />
           </div>
         )}
 

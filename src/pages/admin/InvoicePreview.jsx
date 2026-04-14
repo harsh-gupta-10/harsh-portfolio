@@ -7,6 +7,9 @@ import {
 } from "lucide-react";
 import InvoicePDF from "./InvoicePDF";
 import TrackingPixelModal from "../../components/admin/TrackingPixelModal";
+import UPIPayment from "../../components/admin/UPIPayment";
+import { buildUPILink } from "../../lib/upi";
+import QRCode from "qrcode";
 
 const STATUS_META = {
   draft: { label: "Draft", color: "#94a3b8", bg: "rgba(148,163,184,0.1)" },
@@ -27,6 +30,7 @@ export default function InvoicePreview() {
   const [loading, setLoading] = useState(true);
   const [exporting, setExporting] = useState(false);
   const [showTracker, setShowTracker] = useState(false);
+  const [qrCodeDataUrl, setQrCodeDataUrl] = useState(null);
 
   useEffect(() => { fetchInvoice(); }, [id]);
 
@@ -45,7 +49,18 @@ export default function InvoicePreview() {
     if (itemsRes.data) setItems(itemsRes.data);
     if (clientRes.data) setClient(clientRes.data);
     if (projRes.data) setProject(projRes.data);
-    if (settingsRes.data) setSettings(settingsRes.data);
+    if (settingsRes.data) {
+      setSettings(settingsRes.data);
+      if (settingsRes.data.upi_id && settingsRes.data.show_qr_pdf) {
+        const upiLink = buildUPILink({
+          amount: inv.total,
+          invoiceNumber: inv.invoice_number,
+          upiId: settingsRes.data.upi_id,
+          name: settingsRes.data.upi_name || settingsRes.data.full_name
+        });
+        QRCode.toDataURL(upiLink, { margin: 2, width: 200 }).then(setQrCodeDataUrl);
+      }
+    }
     setLoading(false);
   }
 
@@ -99,7 +114,7 @@ export default function InvoicePreview() {
             <Radar size={14} />Track
           </button>
           <button onClick={handleEmailSend} className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-sm font-medium transition-all" style={{ color: "#94a3b8", border: "1px solid #334155" }}><Mail size={14} />Email</button>
-          <BlobProvider document={<InvoicePDF invoice={invoice} items={items} client={client} project={project} settings={settings} />}>
+          <BlobProvider document={<InvoicePDF invoice={invoice} items={items} client={client} project={project} settings={settings} qrCodeDataUrl={qrCodeDataUrl} />}>
             {({ url, loading }) => (
               <a
                 href={url}
@@ -183,20 +198,21 @@ export default function InvoicePreview() {
             <div style={{ display: "flex", justifyContent: "space-between", padding: "8px 0", fontSize: 14, color: "#6b7280" }}>
               <span>Subtotal</span><span style={{ color: "#111", fontWeight: 500 }}>₹{Number(invoice.subtotal || 0).toLocaleString()}</span>
             </div>
-            <div style={{ display: "flex", justifyContent: "space-between", padding: "8px 0", fontSize: 14, color: "#6b7280" }}>
-              <span>GST ({invoice.tax_percent}%)</span><span style={{ color: "#111", fontWeight: 500 }}>₹{Number(invoice.tax_amount || 0).toLocaleString()}</span>
-            </div>
+            {!settings?.hide_gst && (
+              <div style={{ display: "flex", justifyContent: "space-between", padding: "8px 0", fontSize: 14, color: "#6b7280" }}>
+                <span>GST ({invoice.tax_percent}%)</span><span style={{ color: "#111", fontWeight: 500 }}>₹{Number(invoice.tax_amount || 0).toLocaleString()}</span>
+              </div>
+            )}
             <div style={{ display: "flex", justifyContent: "space-between", padding: "12px 0", fontSize: 18, fontWeight: 700, borderTop: "2px solid #111", marginTop: 8 }}>
               <span>Total</span><span>₹{Number(invoice.total || 0).toLocaleString()}</span>
             </div>
           </div>
         </div>
 
-        {/* Notes + Footer */}
-        {invoice.notes && (
-          <div style={{ padding: "0 48px 32px" }}>
-            <p style={{ fontSize: 10, textTransform: "uppercase", fontWeight: 600, color: "#6b7280", letterSpacing: 1, marginBottom: 4 }}>Notes</p>
-            <p style={{ fontSize: 13, color: "#6b7280", whiteSpace: "pre-wrap" }}>{invoice.notes}</p>
+        {/* UPI Payment Section */}
+        {settings?.upi_id && settings?.show_qr_invoice && (
+          <div style={{ padding: "0 48px" }}>
+            <UPIPayment invoice={invoice} settings={settings} />
           </div>
         )}
 

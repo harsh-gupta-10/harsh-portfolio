@@ -29,9 +29,14 @@ const styles = StyleSheet.create({
   notesText: { fontSize: 10, color: "#6b7280", whiteSpace: "pre-wrap" },
   footer: { position: "absolute", bottom: 30, left: 40, right: 40, textAlign: "center" },
   footerText: { fontSize: 8, color: "#9ca3af" },
+  paymentRow: { flexDirection: "row", marginTop: 24, paddingTop: 12, borderTopWidth: 1, borderTopColor: "#e5e7eb", gap: 20 },
+  paymentCol: { flex: 1 },
+  qrCol: { width: 100, alignItems: "center" },
+  qrImage: { width: 80, height: 80, marginBottom: 4 },
+  qrText: { fontSize: 7, color: "#64748b", fontWeight: "bold", textTransform: "uppercase" },
 });
 
-export default function InvoicePDF({ invoice, items, client, project, settings }) {
+export default function InvoicePDF({ invoice, items, client, project, settings, qrCodeDataUrl }) {
   return (
     <Document>
       <Page size="A4" style={{ ...styles.page, padding: 0 }}>
@@ -92,24 +97,35 @@ export default function InvoicePDF({ invoice, items, client, project, settings }
             <Text style={styles.totalLabel}>Subtotal</Text>
             <Text style={styles.totalValue}>Rs. {Number(invoice.subtotal || 0).toLocaleString("en-IN")}</Text>
           </View>
-          <View style={styles.totalRow}>
-            <Text style={styles.totalLabel}>GST ({invoice.tax_percent || 0}%)</Text>
-            <Text style={styles.totalValue}>Rs. {Number(invoice.tax_amount || 0).toLocaleString("en-IN")}</Text>
-          </View>
+          {!settings?.hide_gst && (
+            <View style={styles.totalRow}>
+              <Text style={styles.totalLabel}>GST ({invoice.tax_percent || 0}%)</Text>
+              <Text style={styles.totalValue}>Rs. {Number(invoice.tax_amount || 0).toLocaleString("en-IN")}</Text>
+            </View>
+          )}
           <View style={styles.grandRow}>
             <Text style={styles.grandLabel}>Total</Text>
             <Text style={styles.grandValue}>Rs. {Number(invoice.total || 0).toLocaleString("en-IN")}</Text>
           </View>
         </View>
 
-        {/* Payment Details */}
+        {/* Payment Details + QR */}
         {(settings?.bank_name || settings?.upi_id) && (
-          <View style={styles.notes}>
-            <Text style={styles.label}>Payment Information</Text>
-            {settings?.bank_name && <Text style={styles.notesText}>Bank: {settings.bank_name}</Text>}
-            {settings?.account_number && <Text style={styles.notesText}>Account No: {settings.account_number}</Text>}
-            {settings?.ifsc_code && <Text style={styles.notesText}>IFSC: {settings.ifsc_code}</Text>}
-            {settings?.upi_id && <Text style={styles.notesText}>UPI ID: {settings.upi_id}</Text>}
+          <View style={styles.paymentRow}>
+            <View style={styles.paymentCol}>
+              <Text style={styles.label}>Payment Information</Text>
+              {settings?.bank_name && <Text style={styles.notesText}>Bank: {settings.bank_name}</Text>}
+              {settings?.account_number && <Text style={styles.notesText}>Account No: {settings.account_number}</Text>}
+              {settings?.ifsc_code && <Text style={styles.notesText}>IFSC: {settings.ifsc_code}</Text>}
+              {settings?.upi_id && <Text style={styles.notesText}>UPI ID: {settings.upi_id}</Text>}
+              {settings?.upi_name && <Text style={styles.notesText}>Name: {settings.upi_name}</Text>}
+            </View>
+            {qrCodeDataUrl && settings?.show_qr_pdf && (
+              <View style={styles.qrCol}>
+                <Image src={qrCodeDataUrl} style={styles.qrImage} />
+                <Text style={styles.qrText}>Scan to Pay</Text>
+              </View>
+            )}
           </View>
         )}
 

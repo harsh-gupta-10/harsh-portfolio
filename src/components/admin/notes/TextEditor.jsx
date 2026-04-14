@@ -43,7 +43,7 @@ const MenuBar = ({ editor }) => {
   );
 };
 
-export default function TextEditor({ initialContent, onChange }) {
+export default function TextEditor({ initialContent, onChange, format = "json" }) {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -63,8 +63,7 @@ export default function TextEditor({ initialContent, onChange }) {
       }
     },
     onUpdate: ({ editor }) => {
-      // Pass back JSON
-      onChange(editor.getJSON());
+      onChange(format === "html" ? editor.getHTML() : editor.getJSON());
     }
   });
 

@@ -3,7 +3,6 @@ import { useState, useRef, useEffect } from "react";
 import {
   LayoutDashboard,
   FolderKanban,
-  FileText,
   Zap,
   MessageSquare,
   Users,

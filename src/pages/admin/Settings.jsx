@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabase";
 import { useAuth } from "../../hooks/useAuth";
-import { Save, Upload, User, Building2, Landmark, FileText, ImageIcon, Loader2 } from "lucide-react";
+import { Save, Upload, User, Building2, Landmark, FileText, ImageIcon, Loader2, QrCode } from "lucide-react";
+import { QRCodeSVG } from "qrcode.react";
 
 const INITIAL_STATE = {
   full_name: "",
@@ -15,12 +16,52 @@ const INITIAL_STATE = {
   account_number: "",
   ifsc_code: "",
   upi_id: "",
+  upi_name: "",
+  show_qr_invoice: true,
+  show_qr_pdf: true,
+  show_qr_email: true,
   logo_url: "",
   invoice_prefix: "INV",
   invoice_footer_note: "",
   default_currency: "INR",
-  default_tax_percent: 18
+  default_tax_percent: 18,
+  hide_gst: false
 };
+
+const SectionForm = ({ title, icon: Icon, children }) => (
+  <div className="p-6 rounded-2xl mb-6 shadow-xl" style={{ background: "linear-gradient(135deg, #1e293b, #0f172a)", border: "1px solid #334155" }}>
+    <div className="flex items-center gap-3 mb-6 pb-4" style={{ borderBottom: "1px solid #334155" }}>
+      <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-blue-500/10 text-blue-400">
+        <Icon size={20} />
+      </div>
+      <h2 className="text-lg font-bold text-white tracking-wide">{title}</h2>
+    </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {children}
+    </div>
+  </div>
+);
+
+const FormInput = ({ label, name, type = "text", placeholder, options, span2, form, handleChange }) => (
+  <div className={span2 ? "md:col-span-2" : ""}>
+    <label className="block text-xs font-semibold uppercase tracking-wider mb-2 text-slate-400">{label}</label>
+    {type === "textarea" ? (
+       <textarea name={name} value={form[name] || ""} onChange={handleChange} rows={3} className="w-full px-4 py-3 rounded-xl text-sm bg-slate-900 border border-slate-700 text-white focus:outline-none focus:border-blue-500 resize-none" placeholder={placeholder} />
+    ) : type === "checkbox" ? (
+      <label className="relative inline-flex items-center cursor-pointer group">
+        <input type="checkbox" name={name} checked={!!form[name]} onChange={handleChange} className="sr-only peer" />
+        <div className="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+        <span className="ms-3 text-sm font-medium text-slate-300 group-hover:text-white transition-colors">{placeholder}</span>
+      </label>
+    ) : options ? (
+       <select name={name} value={form[name] || ""} onChange={handleChange} className="w-full px-4 py-3 rounded-xl text-sm bg-slate-900 border border-slate-700 text-white focus:outline-none focus:border-blue-500">
+         {options.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+       </select>
+    ) : (
+      <input type={type} name={name} value={form[name] || ""} onChange={handleChange} className="w-full px-4 py-3 rounded-xl text-sm bg-slate-900 border border-slate-700 text-white focus:outline-none focus:border-blue-500 placeholder-slate-600" placeholder={placeholder} />
+    )}
+  </div>
+);
 
 export default function Settings() {
   const { user } = useAuth();
@@ -45,8 +86,8 @@ export default function Settings() {
   }
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm(p => ({ ...p, [name]: value }));
+    const { name, value, type, checked } = e.target;
+    setForm(p => ({ ...p, [name]: type === "checkbox" ? checked : value }));
   };
 
   const handleLogoChange = (e) => {
@@ -100,35 +141,6 @@ export default function Settings() {
     }
   };
 
-  const SectionForm = ({ title, icon: Icon, children }) => (
-    <div className="p-6 rounded-2xl mb-6 shadow-xl" style={{ background: "linear-gradient(135deg, #1e293b, #0f172a)", border: "1px solid #334155" }}>
-      <div className="flex items-center gap-3 mb-6 pb-4" style={{ borderBottom: "1px solid #334155" }}>
-        <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-blue-500/10 text-blue-400">
-          <Icon size={20} />
-        </div>
-        <h2 className="text-lg font-bold text-white tracking-wide">{title}</h2>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {children}
-      </div>
-    </div>
-  );
-
-  const FormInput = ({ label, name, type = "text", placeholder, options, span2 }) => (
-    <div className={span2 ? "md:col-span-2" : ""}>
-      <label className="block text-xs font-semibold uppercase tracking-wider mb-2 text-slate-400">{label}</label>
-      {type === "textarea" ? (
-         <textarea name={name} value={form[name]} onChange={handleChange} rows={3} className="w-full px-4 py-3 rounded-xl text-sm bg-slate-900 border border-slate-700 text-white focus:outline-none focus:border-blue-500 resize-none" placeholder={placeholder} />
-      ) : options ? (
-         <select name={name} value={form[name]} onChange={handleChange} className="w-full px-4 py-3 rounded-xl text-sm bg-slate-900 border border-slate-700 text-white focus:outline-none focus:border-blue-500">
-           {options.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
-         </select>
-      ) : (
-        <input type={type} name={name} value={form[name]} onChange={handleChange} className="w-full px-4 py-3 rounded-xl text-sm bg-slate-900 border border-slate-700 text-white focus:outline-none focus:border-blue-500 placeholder-slate-600" placeholder={placeholder} />
-      )}
-    </div>
-  );
-
   if (loading) return <div className="flex justify-center py-20"><Loader2 className="animate-spin text-blue-500" size={32} /></div>;
 
   return (
@@ -173,34 +185,66 @@ export default function Settings() {
 
         {/* Personal & Business Info */}
         <SectionForm title="Personal & Business Info" icon={User}>
-          <FormInput label="Full Name" name="full_name" placeholder="John Doe" />
-          <FormInput label="Company Name" name="company_name" placeholder="Acme Corp" />
-          <FormInput label="Email Address" name="email" type="email" placeholder="john@example.com" />
-          <FormInput label="Phone Number" name="phone" placeholder="+91 9876543210" />
-          <FormInput label="City" name="city" placeholder="Mumbai, IN" />
-          <FormInput label="GSTIN" name="gstin" placeholder="22AAAAA0000A1Z5" />
-          <FormInput label="Full Address" name="address" type="textarea" span2 placeholder="123 Business Avenue..." />
+          <FormInput label="Full Name" name="full_name" placeholder="John Doe" form={form} handleChange={handleChange} />
+          <FormInput label="Company Name" name="company_name" placeholder="Acme Corp" form={form} handleChange={handleChange} />
+          <FormInput label="Email Address" name="email" type="email" placeholder="john@example.com" form={form} handleChange={handleChange} />
+          <FormInput label="Phone Number" name="phone" placeholder="+91 9876543210" form={form} handleChange={handleChange} />
+          <FormInput label="City" name="city" placeholder="Mumbai, IN" form={form} handleChange={handleChange} />
+          <FormInput label="GSTIN" name="gstin" placeholder="22AAAAA0000A1Z5" form={form} handleChange={handleChange} />
+          <FormInput label="Full Address" name="address" type="textarea" span2 placeholder="123 Business Avenue..." form={form} handleChange={handleChange} />
         </SectionForm>
 
         {/* Bank & Payment Details */}
         <SectionForm title="Bank & Payment Details" icon={Landmark}>
-          <FormInput label="Bank Name" name="bank_name" placeholder="HDFC Bank" />
-          <FormInput label="Account Number" name="account_number" placeholder="5010000000000" />
-          <FormInput label="IFSC Code" name="ifsc_code" placeholder="HDFC0001234" />
-          <FormInput label="UPI ID" name="upi_id" placeholder="john@upi" />
+          <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6 p-6 rounded-xl bg-slate-900/50 border border-slate-800">
+            <div className="space-y-6">
+              <FormInput label="Bank Name" name="bank_name" placeholder="HDFC Bank" form={form} handleChange={handleChange} />
+              <FormInput label="Account Number" name="account_number" placeholder="5010000000000" form={form} handleChange={handleChange} />
+              <FormInput label="IFSC Code" name="ifsc_code" placeholder="HDFC0001234" form={form} handleChange={handleChange} />
+            </div>
+            <div className="space-y-6 border-l border-slate-800 md:pl-6">
+              <div className="flex items-center gap-2 mb-2">
+                <QrCode size={16} className="text-blue-400" />
+                <h3 className="text-xs font-bold text-white uppercase tracking-widest">UPI Configuration</h3>
+              </div>
+              <FormInput label="UPI ID" name="upi_id" placeholder="john@upi" form={form} handleChange={handleChange} />
+              <FormInput label="UPI Merchant Name" name="upi_name" placeholder="John Doe (Store)" form={form} handleChange={handleChange} />
+              <div className="space-y-3 pt-2">
+                <FormInput label="QR Options" name="show_qr_invoice" type="checkbox" placeholder="Show QR on Preview" form={form} handleChange={handleChange} />
+                <FormInput label="" name="show_qr_pdf" type="checkbox" placeholder="Show QR in PDF" form={form} handleChange={handleChange} />
+                <FormInput label="" name="show_qr_email" type="checkbox" placeholder="Show QR in Email" form={form} handleChange={handleChange} />
+              </div>
+            </div>
+          </div>
+
+          {/* Live QR Preview */}
+          {form.upi_id && (
+            <div className="md:col-span-2 flex flex-col items-center justify-center p-8 bg-white rounded-2xl shadow-inner border border-slate-200 mt-2">
+              <p className="text-[10px] font-black uppercase text-slate-400 tracking-[0.2em] mb-4">Live UPI QR Preview</p>
+              <div className="p-4 bg-white rounded-2xl shadow-xl border border-slate-100 mb-4">
+                <QRCodeSVG
+                  value={`upi://pay?pa=${form.upi_id}&pn=${encodeURIComponent(form.upi_name || form.full_name)}&cu=INR&am=1.00&tn=Verification&mode=02&purpose=00`}
+                  size={140}
+                />
+              </div>
+              <p className="text-xs font-bold text-slate-800">{form.upi_name || form.full_name || "Merchant Name"}</p>
+              <p className="text-[10px] text-slate-500 mt-1">{form.upi_id}</p>
+            </div>
+          )}
         </SectionForm>
 
         {/* Invoice Preferences */}
         <SectionForm title="Invoice Preferences" icon={FileText}>
-          <FormInput label="Invoice Prefix" name="invoice_prefix" placeholder="INV" />
+          <FormInput label="Invoice Prefix" name="invoice_prefix" placeholder="INV" form={form} handleChange={handleChange} />
           <FormInput label="Default Currency" name="default_currency" options={[
             {value: "INR", label: "INR (₹)"},
             {value: "USD", label: "USD ($)"},
             {value: "EUR", label: "EUR (€)"},
             {value: "GBP", label: "GBP (£)"}
-          ]} />
-          <FormInput label="Default Tax (%)" name="default_tax_percent" type="number" placeholder="18" />
-          <FormInput label="Invoice Footer Note" name="invoice_footer_note" type="textarea" span2 placeholder="Thank you for your business!" />
+          ]} form={form} handleChange={handleChange} />
+          <FormInput label="Default Tax (%)" name="default_tax_percent" type="number" placeholder="18" form={form} handleChange={handleChange} />
+          <FormInput label="Hide Tax/GST" name="hide_gst" type="checkbox" placeholder="Hide tax globally on all invoices" form={form} handleChange={handleChange} />
+          <FormInput label="Invoice Footer Note" name="invoice_footer_note" type="textarea" span2 placeholder="Thank you for your business!" form={form} handleChange={handleChange} />
         </SectionForm>
 
         <div className="flex justify-end pt-4 sticky bottom-6 z-10">

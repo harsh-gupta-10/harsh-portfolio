@@ -14,6 +14,7 @@ export default function InvoiceForm() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [settings, setSettings] = useState(null);
 
   const [form, setForm] = useState({
     invoice_number: "", client_id: "", project_id: "", status: "draft",
@@ -35,6 +36,7 @@ export default function InvoiceForm() {
     
     if (cRes.data) setClients(cRes.data);
     if (pRes.data) setProjects(pRes.data);
+    if (sRes.data) setSettings(sRes.data);
     
     const defaultTax = sRes.data?.default_tax_percent ?? 18;
     const prefix = sRes.data?.invoice_prefix || "INV";
@@ -219,12 +221,14 @@ export default function InvoiceForm() {
               <span className="text-sm" style={{ color: "#94a3b8" }}>Subtotal</span>
               <span className="text-sm font-medium text-white w-28 text-right">₹{subtotal.toLocaleString()}</span>
             </div>
-            <div className="flex justify-end items-center gap-4">
-              <span className="text-sm" style={{ color: "#94a3b8" }}>GST</span>
-              <input type="number" min="0" step="0.5" value={form.tax_percent} onChange={e => setForm(p => ({ ...p, tax_percent: e.target.value }))} className="w-16 px-2 py-1 rounded-lg text-sm text-center focus:outline-none" style={inputStyle} />
-              <span className="text-sm" style={{ color: "#94a3b8" }}>%</span>
-              <span className="text-sm font-medium text-white w-28 text-right">₹{taxAmount.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
-            </div>
+            {!settings?.hide_gst && (
+              <div className="flex justify-end items-center gap-4">
+                <span className="text-sm" style={{ color: "#94a3b8" }}>GST</span>
+                <input type="number" min="0" step="0.5" value={form.tax_percent} onChange={e => setForm(p => ({ ...p, tax_percent: e.target.value }))} className="w-16 px-2 py-1 rounded-lg text-sm text-center focus:outline-none" style={inputStyle} />
+                <span className="text-sm" style={{ color: "#94a3b8" }}>%</span>
+                <span className="text-sm font-medium text-white w-28 text-right">₹{taxAmount.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
+              </div>
+            )}
             <div className="flex justify-end gap-16 pt-2" style={{ borderTop: "1px solid #334155" }}>
               <span className="text-base font-bold text-white">Total</span>
               <span className="text-base font-bold text-white w-28 text-right">₹{total.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
