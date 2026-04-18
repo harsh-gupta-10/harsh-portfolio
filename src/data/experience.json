@@ -1,0 +1,35 @@
+[
+  {
+    "role": "Freelance Full Stack Web Developer",
+    "company": "A3Distributor",
+    "location": "Remote",
+    "date": "Mar. 2026 - Apr. 2026",
+    "description": [
+      "Developed a Next.js and Supabase platform (www.a3distributor.com) featuring a comprehensive suite for invoice generation, product management, and order tracking."
+    ],
+    "technologies": ["Next.js", "Supabase", "React", "TypeScript", "PostgreSQL"]
+  },
+  {
+    "role": "Technical Head / Co-Founder",
+    "company": "Austrange Solutions Pvt Ltd",
+    "location": "Mumbai, India",
+    "date": "Dec. 2025 - Apr. 2026",
+    "description": [
+      "Architected the technical vision and product roadmap for IoT hardware solutions, including a smart blind stick for the visually impaired utilizing real-time obstacle detection.",
+      "Designed and deployed embedded systems featuring wireless sensor integration and real-time data processing.",
+      "Established efficient hardware prototyping workflows (3D printing, component sourcing) that accelerated prototype cycle time by 40%."
+    ],
+    "technologies": ["C/C++", "MicroPython", "IoT", "Sensors", "3D Printing"]
+  },
+  {
+    "role": "Web Developer",
+    "company": "Vishnushakti Foundation",
+    "location": "Mumbai, India",
+    "date": "Jan. 2024 - Jan. 2025",
+    "description": [
+      "Built a responsive, accessible website that boosted user engagement by 35% within three months of launch.",
+      "Automated internal administrative workflows using Google Apps Script, eliminating 80% of manual data entry tasks for non-technical staff."
+    ],
+    "technologies": ["HTML5", "JavaScript", "PHP", "SQL", "Google Apps Script"]
+  }
+]

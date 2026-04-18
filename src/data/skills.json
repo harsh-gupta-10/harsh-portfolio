@@ -1,0 +1,67 @@
+[
+  {
+    "title": "Programming Languages",
+    "iconKey": "FiCode",
+    "color": "from-blue-500 to-blue-700",
+    "skills": [
+      { "name": "Python", "iconKey": "SiPython" },
+      { "name": "JavaScript", "iconKey": "SiJavascript" },
+      { "name": "TypeScript", "iconKey": "SiTypescript" },
+      { "name": "SQL", "iconKey": "FaDatabase" },
+      { "name": "Java", "iconKey": "FaJava" },
+      { "name": "C++", "iconKey": "SiCplusplus" },
+      { "name": "CircuitPython", "iconKey": "SiPython" },
+      { "name": "MicroPython", "iconKey": "SiPython" }
+    ]
+  },
+  {
+    "title": "Developer Tools & Platforms",
+    "iconKey": "FiTool",
+    "color": "from-purple-500 to-purple-700",
+    "skills": [
+      { "name": "Git", "iconKey": "SiGit" },
+      { "name": "GitHub", "iconKey": "SiGithub" },
+      { "name": "Node.js", "iconKey": "SiNodedotjs" },
+      { "name": "Android Studio", "iconKey": "FiSmartphone" },
+      { "name": "Apps Script", "iconKey": "FiFileText" },
+      { "name": "Linux", "iconKey": "SiLinux" }
+    ]
+  },
+  {
+    "title": "Embedded, Electronics & Hardware",
+    "iconKey": "FiCpu",
+    "color": "from-emerald-500 to-emerald-700",
+    "skills": [
+      { "name": "Embedded Systems", "iconKey": "FaMicrochip" },
+      { "name": "IoT Prototyping", "iconKey": "FiCpu" },
+      { "name": "Electronics Integration", "iconKey": "FaMicrochip" },
+      { "name": "Microcontrollers", "iconKey": "FaMicrochip" },
+      { "name": "Sensor Interfacing", "iconKey": "FiCpu" }
+    ]
+  },
+  {
+    "title": "Prototyping & Manufacturing",
+    "iconKey": "FiBox",
+    "color": "from-orange-500 to-orange-700",
+    "skills": [
+      { "name": "Rapid Prototyping", "iconKey": "FiBox" },
+      { "name": "3D Printing (FDM)", "iconKey": "FiBox" },
+      { "name": "3D Printing (SLA)", "iconKey": "FiBox" },
+      { "name": "3D Printing (SLS)", "iconKey": "FiBox" }
+    ]
+  },
+  {
+    "title": "Software & Design Tools",
+    "iconKey": "FiPenTool",
+    "color": "from-pink-500 to-pink-700",
+    "skills": [
+      { "name": "Figma", "iconKey": "SiFigma" },
+      { "name": "Photoshop", "iconKey": "SiAdobephotoshop" },
+      { "name": "Blender", "iconKey": "SiBlender" },
+      { "name": "Premiere Pro", "iconKey": "SiAdobepremierepro" },
+      { "name": "Arduino IDE", "iconKey": "SiArduino" },
+      { "name": "MS Office", "iconKey": "FiFileText" },
+      { "name": "Google Workspace", "iconKey": "FiGrid" }
+    ]
+  }
+]

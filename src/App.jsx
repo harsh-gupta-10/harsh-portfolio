@@ -27,6 +27,9 @@ const PublicProposalView = lazy(() => import("./pages/public/PublicProposalView"
 const PublicWhiteboardView = lazy(() => import("./pages/public/PublicWhiteboardView"));
 const AllProjects = lazy(() => import("./pages/public/AllProjects"));
 
+// ── PORTFOLIO ADMIN (offline-first, PIN protected) ──
+const PortfolioAdminApp = lazy(() => import("./pages/portfolio-admin/PortfolioAdminApp"));
+
 // ── LAZY ADMIN PAGES ──────────────────────────────
 const Login           = lazy(() => import("./pages/admin/Login"));
 const Dashboard       = lazy(() => import("./pages/admin/Dashboard"));
@@ -89,6 +92,11 @@ function App() {
               } />
               <Route path="/projects" element={
                 <ErrorBoundary><AllProjects /></ErrorBoundary>
+              } />
+
+              {/* ── Portfolio Admin (offline-first, PIN protected) ── */}
+              <Route path="/portfolio-admin/*" element={
+                <ErrorBoundary><PortfolioAdminApp /></ErrorBoundary>
               } />
 
               {/* ── Auth (public) ── */}

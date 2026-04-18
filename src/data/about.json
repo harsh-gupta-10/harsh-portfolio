@@ -1,0 +1,20 @@
+{
+  "bio": [
+    "I'm a multi-disciplinary technologist who works at the intersection of software, hardware, and physical product design. I don't just write code or design screens — I build complete, functional products from concept to reality.",
+    "On the software side, I design intuitive user interfaces and write clean, production-ready front-end code using modern frameworks. I care deeply about user experience, performance, and accessible design.",
+    "On the hardware side, I architect embedded systems, integrate sensors and microcontrollers for IoT applications, and bring ideas into the physical world through rapid prototyping and 3D printing — including FDM, SLA, and SLS technologies.",
+    "This cross-domain expertise allows me to bridge the gap between digital and physical product development, delivering solutions that work seamlessly across both worlds."
+  ],
+  "stats": [
+    { "num": "3+", "label": "Years Exp." },
+    { "num": "10+", "label": "Projects Shipped" },
+    { "num": "4", "label": "Awards Won" }
+  ],
+  "highlights": [
+    { "iconKey": "FiMonitor", "label": "UI/UX Design", "desc": "User-centered interfaces" },
+    { "iconKey": "FiCode", "label": "Front-End Dev", "desc": "Production-ready code" },
+    { "iconKey": "FiCpu", "label": "Embedded & IoT", "desc": "Connected hardware systems" },
+    { "iconKey": "FiLayers", "label": "Electronics", "desc": "Circuit design & integration" },
+    { "iconKey": "FiBox", "label": "3D Printing", "desc": "Physical prototyping" }
+  ]
+}
