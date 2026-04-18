@@ -3,61 +3,37 @@ import { FiBriefcase, FiMapPin } from "react-icons/fi";
 
 const experiences = [
   {
-    role: "Front-End Developer & IoT Engineer",
-    company: "Tech Startup",
+    role: "Freelance Full Stack Web Developer",
+    company: "A3Distributor",
     location: "Remote",
+    date: "Mar. 2026 - Apr. 2026",
     description: [
-      "Architected and developed responsive web applications using React and TypeScript, improving user engagement by 40%.",
-      "Designed and built IoT prototypes with ESP32 microcontrollers and custom sensor arrays for real-time data collection.",
-      "Led end-to-end product development from UI design in Figma to embedded firmware and 3D-printed enclosures.",
-      "Implemented CI/CD pipelines and automated testing, reducing deployment time by 60%.",
+      "Developed a Next.js and Supabase platform (www.a3distributor.com) featuring a comprehensive suite for invoice generation, product management, and order tracking."
     ],
-    technologies: [
-      "React",
-      "TypeScript",
-      "ESP32",
-      "Node.js",
-      "Figma",
-      "3D Printing",
-    ],
+    technologies: ["Next.js", "Supabase", "React", "TypeScript", "PostgreSQL"],
   },
   {
-    role: "UI/UX Designer & Prototyping Engineer",
-    company: "Design Studio",
-    location: "Hybrid",
+    role: "Technical Head / Co-Founder",
+    company: "Austrange Solutions Pvt Ltd",
+    location: "Mumbai, India",
+    date: "Dec. 2025 - Apr. 2026",
     description: [
-      "Created user-centered interfaces for web and mobile applications, conducting user research and usability testing.",
-      "Developed interactive prototypes using Figma and implemented production-ready front-end components.",
-      "Designed custom 3D-printed fixtures and product enclosures for client hardware projects.",
-      "Collaborated cross-functionally with engineering teams to bridge design and implementation.",
+      "Architected the technical vision and product roadmap for IoT hardware solutions, including a smart blind stick for the visually impaired utilizing real-time obstacle detection.",
+      "Designed and deployed embedded systems featuring wireless sensor integration and real-time data processing.",
+      "Established efficient hardware prototyping workflows (3D printing, component sourcing) that accelerated prototype cycle time by 40%."
     ],
-    technologies: [
-      "Figma",
-      "React",
-      "JavaScript",
-      "Blender",
-      "Arduino",
-      "FDM Printing",
-    ],
+    technologies: ["C/C++", "MicroPython", "IoT", "Sensors", "3D Printing"],
   },
   {
-    role: "Embedded Systems Intern",
-    company: "Hardware Company",
-    location: "On-site",
+    role: "Web Developer",
+    company: "Vishnushakti Foundation",
+    location: "Mumbai, India",
+    date: "Jan. 2024 - Jan. 2025",
     description: [
-      "Developed firmware for microcontroller-based products using C++ and MicroPython.",
-      "Integrated various sensors and communication protocols (I2C, SPI, UART, MQTT) for IoT applications.",
-      "Contributed to PCB layout reviews and hardware testing for production units.",
-      "Created technical documentation and internal tools using Python and Google Apps Script.",
+      "Built a responsive, accessible website that boosted user engagement by 35% within three months of launch.",
+      "Automated internal administrative workflows using Google Apps Script, eliminating 80% of manual data entry tasks for non-technical staff."
     ],
-    technologies: [
-      "C++",
-      "MicroPython",
-      "MQTT",
-      "PCB Design",
-      "Python",
-      "Linux",
-    ],
+    technologies: ["HTML5", "JavaScript", "PHP", "SQL", "Google Apps Script"],
   },
 ];
 
@@ -90,106 +66,76 @@ export default function Experience({ isDark }) {
         </motion.div>
 
         {/* Timeline */}
-        <div className="relative">
-          {/* Timeline Line */}
-          <div
-            className={`absolute left-0 md:left-1/2 top-0 bottom-0 w-px ${
-              isDark ? "bg-[#334155]" : "bg-[#E2E8F0]"
-            } hidden md:block`}
-            style={{ transform: "translateX(-50%)" }}
-          />
-
-          <div className="space-y-12">
+        <div className="max-w-4xl mx-auto px-2 sm:px-6">
+          <div className="relative border-l-2 border-slate-200 dark:border-slate-800 space-y-12 ml-3 lg:ml-0">
             {experiences.map((exp, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.15 }}
-                className={`relative flex flex-col md:flex-row gap-8 ${
-                  index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-                }`}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="relative pl-8 md:pl-12"
               >
                 {/* Timeline Dot */}
-                <div
-                  className="absolute left-0 md:left-1/2 top-0 w-4 h-4 rounded-full bg-gradient-to-br from-[#1E3A8A] to-[#3B82F6] border-4 border-white dark:border-[#0B1120] hidden md:block"
-                  style={{ transform: "translate(-50%, 0)" }}
-                />
+                <div className="absolute -left-[7px] top-10 w-3 h-3 rounded-full bg-gradient-to-br from-[#1E3A8A] to-[#3B82F6] ring-4 ring-[#F8FAFC] dark:ring-[#0B1120]" />
 
                 {/* Content */}
                 <div
-                  className={`md:w-1/2 ${index % 2 === 0 ? "md:pr-12 md:text-right" : "md:pl-12"}`}
+                  className={`p-6 sm:p-8 rounded-2xl border transition-all hover:-translate-y-1 ${
+                    isDark
+                      ? "bg-[#1E293B] border-[#334155] hover:border-[#3B82F6]/30"
+                      : "bg-white border-[#E2E8F0] hover:border-[#3B82F6]/30 hover:shadow-xl hover:shadow-blue-500/5"
+                  }`}
                 >
-                  <div
-                    className={`p-6 rounded-2xl border transition-all hover:scale-[1.01] ${
-                      isDark
-                        ? "bg-[#1E293B] border-[#334155] hover:border-[#3B82F6]/30"
-                        : "bg-white border-[#E2E8F0] hover:border-[#3B82F6]/30 hover:shadow-xl hover:shadow-blue-500/5"
-                    }`}
-                  >
-                    <h3
-                      className={`mt-2 text-lg font-display font-bold ${isDark ? "text-white" : "text-[#1E293B]"}`}
-                    >
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <h3 className={`text-xl font-display font-bold ${isDark ? "text-white" : "text-[#1E293B]"}`}>
                       {exp.role}
                     </h3>
+                    <span className={`inline-flex items-center px-4 py-1.5 rounded-full text-xs font-semibold ${isDark ? "bg-[#0F172A] border border-[#334155] text-[#3B82F6]" : "bg-[#EFF6FF] border border-[#BFDBFE] text-[#1E3A8A]"}`}>
+                      {exp.date}
+                    </span>
+                  </div>
 
-                    <div
-                      className={`flex items-center gap-4 mt-1 text-sm ${isDark ? "text-[#94A3B8]" : "text-[#64748B]"} ${index % 2 === 0 ? "md:justify-end" : ""}`}
-                    >
-                      <span className="flex items-center gap-1">
-                        <FiBriefcase size={13} />
-                        {exp.company}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <FiMapPin size={13} />
-                        {exp.location}
-                      </span>
-                    </div>
+                  <div className={`flex flex-wrap items-center gap-x-6 gap-y-2 mt-4 text-sm ${isDark ? "text-[#94A3B8]" : "text-[#64748B]"}`}>
+                    <span className="flex items-center gap-1.5 font-medium">
+                      <FiBriefcase size={14} />
+                      {exp.company}
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <FiMapPin size={14} />
+                      {exp.location}
+                    </span>
+                  </div>
 
-                    {/* Achievements */}
-                    <ul
-                      className={`mt-4 space-y-2 text-sm ${isDark ? "text-[#94A3B8]" : "text-[#64748B]"}`}
-                    >
-                      {exp.description.map((point, i) => (
-                        <li
-                          key={i}
-                          className={`flex gap-2 ${index % 2 === 0 ? "md:justify-end" : ""}`}
-                        >
-                          <span className="text-[#3B82F6] mt-1 flex-shrink-0">
-                            &#8226;
-                          </span>
-                          <span
-                            className={index % 2 === 0 ? "md:text-right" : ""}
-                          >
-                            {point}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-
-                    {/* Technologies */}
-                    <div
-                      className={`mt-4 flex flex-wrap gap-2 ${index % 2 === 0 ? "md:justify-end" : ""}`}
-                    >
-                      {exp.technologies.map((tech) => (
-                        <span
-                          key={tech}
-                          className={`px-2.5 py-1 text-xs font-medium rounded-md ${
-                            isDark
-                              ? "bg-[#0F172A] text-[#94A3B8]"
-                              : "bg-[#F1F5F9] text-[#475569]"
-                          }`}
-                        >
-                          {tech}
+                  {/* Achievements */}
+                  <ul className={`mt-6 space-y-3 text-sm leading-relaxed ${isDark ? "text-[#94A3B8]" : "text-[#475569]"}`}>
+                    {exp.description.map((point, i) => (
+                      <li key={i} className="flex gap-3 items-start">
+                        <span className="text-[#3B82F6] mt-1 shrink-0 text-[10px]">
+                          &#9670;
                         </span>
-                      ))}
-                    </div>
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* Technologies */}
+                  <div className="mt-8 pt-6 border-t border-dashed border-gray-200 dark:border-gray-700/50 flex flex-wrap gap-2">
+                    {exp.technologies.map((tech) => (
+                      <span
+                        key={tech}
+                        className={`px-3 py-1.5 text-xs font-medium rounded-lg ${
+                          isDark
+                            ? "bg-[#0F172A] text-[#94A3B8] border border-[#334155]"
+                            : "bg-[#F8FAFC] text-[#475569] border border-[#E2E8F0]"
+                        }`}
+                      >
+                        {tech}
+                      </span>
+                    ))}
                   </div>
                 </div>
-
-                {/* Spacer for opposite side */}
-                <div className="hidden md:block md:w-1/2" />
               </motion.div>
             ))}
           </div>

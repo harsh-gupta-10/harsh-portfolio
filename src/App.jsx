@@ -25,6 +25,7 @@ const Certificates = lazy(() => import("./components/Certificates"));
 const PublicInvoiceView  = lazy(() => import("./pages/public/PublicInvoiceView"));
 const PublicProposalView = lazy(() => import("./pages/public/PublicProposalView"));
 const PublicWhiteboardView = lazy(() => import("./pages/public/PublicWhiteboardView"));
+const AllProjects = lazy(() => import("./pages/public/AllProjects"));
 
 // ── LAZY ADMIN PAGES ──────────────────────────────
 const Login           = lazy(() => import("./pages/admin/Login"));
@@ -85,6 +86,9 @@ function App() {
               {/* ── Portfolio ── */}
               <Route path="/" element={
                 <ErrorBoundary><Portfolio /></ErrorBoundary>
+              } />
+              <Route path="/projects" element={
+                <ErrorBoundary><AllProjects /></ErrorBoundary>
               } />
 
               {/* ── Auth (public) ── */}

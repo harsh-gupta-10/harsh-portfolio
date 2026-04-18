@@ -1,23 +1,34 @@
 import { FiGithub, FiLinkedin, FiMail, FiHeart } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 const footerLinks = [
   { name: "Home", href: "#home" },
   { name: "About", href: "#about" },
   { name: "Skills", href: "#skills" },
-  { name: "Projects", href: "#projects" },
+  { name: "Projects", href: "/projects" },
   { name: "Experience", href: "#experience" },
   { name: "Certificates", href: "#certificates" },
   { name: "Contact", href: "#contact" },
 ];
 
 export default function Footer({ isDark }) {
+  const navigate = useNavigate();
+
   const handleClick = (e, href) => {
     e.preventDefault();
-    const el = document.querySelector(href);
-    if (el) {
-      const offset = 80;
-      const top = el.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top, behavior: "smooth" });
+
+    if (href.startsWith("/")) {
+      navigate(href);
+      return;
+    }
+
+    if (href.startsWith("#")) {
+      const el = document.querySelector(href);
+      if (el) {
+        const offset = 80;
+        const top = el.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: "smooth" });
+      }
     }
   };
 

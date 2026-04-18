@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiSun, FiMoon, FiMenu, FiX } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 const navLinks = [
   { name: "Home", href: "#home" },
   { name: "About", href: "#about" },
   { name: "Skills", href: "#skills" },
-  { name: "Projects", href: "#projects" },
+  { name: "Projects", href: "/projects" },
   { name: "Experience", href: "#experience" },
   { name: "Certificates", href: "#certificates" },
   { name: "Contact", href: "#contact" },
@@ -16,6 +17,7 @@ export default function Navbar({ isDark, toggleDark }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -36,8 +38,10 @@ export default function Navbar({ isDark, toggleDark }) {
     );
 
     navLinks.forEach(({ href }) => {
-      const el = document.querySelector(href);
-      if (el) observer.observe(el);
+      if (href.startsWith("#")) {
+        const el = document.querySelector(href);
+        if (el) observer.observe(el);
+      }
     });
 
     return () => observer.disconnect();
@@ -46,11 +50,19 @@ export default function Navbar({ isDark, toggleDark }) {
   const handleClick = (e, href) => {
     e.preventDefault();
     setMobileOpen(false);
-    const el = document.querySelector(href);
-    if (el) {
-      const offset = 80;
-      const top = el.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top, behavior: "smooth" });
+
+    if (href.startsWith("/")) {
+      navigate(href);
+      return;
+    }
+
+    if (href.startsWith("#")) {
+      const el = document.querySelector(href);
+      if (el) {
+        const offset = 80;
+        const top = el.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: "smooth" });
+      }
     }
   };
 
