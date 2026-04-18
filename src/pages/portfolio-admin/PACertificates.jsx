@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Plus, Trash2, Save, X, Check } from "lucide-react";
 import initialData from "../../data/certificates.json";
 import { saveDataFile } from "../../lib/localAdmin";
+import ImageUpload from "./components/ImageUpload";
 
 function CertCard({ cert, onDelete, showDelete }) {
   return (
@@ -45,11 +46,12 @@ function AddCertForm({ onAdd, onClose }) {
             <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Certificate Title *</label>
             <input className={inputCls} style={inputStyle} value={form.title} onChange={(e) => setForm((p) => ({ ...p, title: e.target.value }))} placeholder="e.g. Techpreneur Award" />
           </div>
-          <div>
-            <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Image Path *</label>
-            <input className={inputCls} style={inputStyle} value={form.image} onChange={(e) => setForm((p) => ({ ...p, image: e.target.value }))} placeholder="/imgs/certificates/filename.webp" />
-            <p className="text-xs text-slate-500 mt-1">Put the image in /public/imgs/certificates/ first</p>
-          </div>
+          <ImageUpload 
+            value={form.image} 
+            onChange={(url) => setForm((p) => ({ ...p, image: url }))} 
+            label="Certificate Image"
+            bucket="portfolio-images"
+          />
           {form.image && (
             <div className="rounded-xl overflow-hidden aspect-video" style={{ background: "#0f172a" }}>
               <img src={form.image} alt="preview" className="w-full h-full object-cover" onError={(e) => { e.target.src = ""; }} />

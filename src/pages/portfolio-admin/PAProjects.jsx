@@ -3,6 +3,7 @@ import { Plus, Pencil, Trash2, Save, X, Star, ExternalLink, GripVertical, Check 
 import { FiGithub as Github } from "react-icons/fi";
 import initialProjects from "../../data/allProjects.json";
 import { saveDataFile } from "../../lib/localAdmin";
+import ImageUpload from "./components/ImageUpload";
 
 const CATEGORIES = ["Front-End Web Dev", "Full Stack Web Dev", "Embedded & IoT", "UI/UX Design", "Other"];
 
@@ -73,10 +74,14 @@ function ProjectModal({ project, onSave, onClose }) {
                 {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
               </select>
             </div>
-            <div>
-              <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Image Path</label>
-              <input className={inputCls} style={inputStyle} value={form.image} onChange={(e) => set("image", e.target.value)} placeholder="/imgs/projects/..." />
-            </div>
+          <div className="grid grid-cols-1 gap-4">
+            <ImageUpload 
+              value={form.image} 
+              onChange={(url) => set("image", url)} 
+              label="Project Image"
+              bucket="portfolio-images"
+            />
+          </div>
           </div>
 
           {/* Tags */}
