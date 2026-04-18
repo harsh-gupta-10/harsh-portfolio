@@ -41,7 +41,7 @@
   {
     "title": "A3Distributor Website",
     "description": "A business website for a water and cold drink distributor, featuring product listings, distributor information, inquiry forms, and a clean, mobile-friendly layout designed for local business operations.",
-    "image": "/imgs/projects/a3distributor.webp",
+    "image": "/imgs/projects/a3distributor-1.webp",
     "tags": ["Next.js", "React","Tailwind CSS", "JavaScript", "Business Website", "UI/UX"],
     "category": "Full Stack Web Dev",
     "featured": false,

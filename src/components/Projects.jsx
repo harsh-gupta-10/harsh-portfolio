@@ -10,6 +10,12 @@ const categoryColors = {
     "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
   "Hardware & Prototyping":
     "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400",
+  "Full Stack Web Dev":
+    "bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400",
+  "Front-End Web Dev":
+    "bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-400",
+  "UI/UX Design":
+    "bg-fuchsia-100 text-fuchsia-700 dark:bg-fuchsia-900/30 dark:text-fuchsia-400",
 };
 
 function ProjectCard({ project, isDark, index }) {
@@ -101,7 +107,7 @@ function ProjectCard({ project, isDark, index }) {
 
         {/* Actions */}
         {(project.showLiveDemo || project.showCode) && (
-          <div className="mt-auto pt-6 flex items-center gap-3">
+          <div className="mt-auto pt-6 flex items-center justify-center gap-3">
             {project.showLiveDemo && (
               <a
                 href={project.liveUrl}

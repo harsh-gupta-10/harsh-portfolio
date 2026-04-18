@@ -80,9 +80,9 @@ export default function About({ isDark }) {
             {/* Quick Stats */}
             <div className="mt-10 grid grid-cols-3 gap-4">
               {[
-                { num: "10+", label: "Projects" },
-                { num: "5+", label: "Technologies" },
-                { num: "3+", label: "Domains" },
+                { num: "3+", label: "Years Exp." },
+                { num: "10+", label: "Projects Shipped" },
+                { num: "4", label: "Awards Won" },
               ].map((stat) => (
                 <div
                   key={stat.label}

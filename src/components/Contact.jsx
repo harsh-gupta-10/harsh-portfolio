@@ -19,6 +19,7 @@ export default function Contact({ isDark }) {
   });
   const [submitted, setSubmitted] = useState(false);
   const [isSending, setIsSending] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -29,6 +30,7 @@ export default function Contact({ isDark }) {
     setIsSending(true);
 
     try {
+      setErrorMsg("");
       const { error } = await supabase.from("messages").insert([{
         name: formData.name,
         email: formData.email,
@@ -46,7 +48,7 @@ export default function Contact({ isDark }) {
       }, 3000);
     } catch (err) {
       console.error("Error sending message:", err);
-      alert("Failed to send message. Please try again later.");
+      setErrorMsg("Failed to send message. Please try again later.");
     } finally {
       setIsSending(false);
     }
@@ -107,6 +109,7 @@ export default function Contact({ isDark }) {
                     type="text"
                     id="name"
                     name="name"
+                    autoComplete="name"
                     value={formData.name}
                     onChange={handleChange}
                     required
@@ -129,6 +132,7 @@ export default function Contact({ isDark }) {
                     type="email"
                     id="email"
                     name="email"
+                    autoComplete="email"
                     value={formData.email}
                     onChange={handleChange}
                     required
@@ -213,6 +217,14 @@ export default function Contact({ isDark }) {
                   </>
                 )}
               </button>
+
+              {/* Inline Error Message */}
+              {errorMsg && (
+                <p className="mt-3 text-sm text-red-500 flex items-center gap-1.5" role="alert">
+                  <span className="shrink-0">⚠</span>
+                  {errorMsg}
+                </p>
+              )}
             </form>
           </motion.div>
 

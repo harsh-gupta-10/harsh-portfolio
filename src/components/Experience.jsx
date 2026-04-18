@@ -66,8 +66,8 @@ export default function Experience({ isDark }) {
         </motion.div>
 
         {/* Timeline */}
-        <div className="max-w-4xl mx-auto px-2 sm:px-6">
-          <div className="relative border-l-2 border-slate-200 dark:border-slate-800 space-y-12 ml-3 lg:ml-0">
+        <div className="max-w-3xl mx-auto">
+          <div className="relative border-l-2 border-slate-200 dark:border-slate-800 space-y-12 ml-3 sm:ml-6">
             {experiences.map((exp, index) => (
               <motion.div
                 key={index}

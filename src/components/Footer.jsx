@@ -69,7 +69,7 @@ export default function Footer({ isDark }) {
                 key={link.name}
                 href={link.href}
                 onClick={(e) => handleClick(e, link.href)}
-                className={`text-sm transition-colors ${
+                className={`text-sm cursor-pointer transition-colors ${
                   isDark
                     ? "text-[#64748B] hover:text-white"
                     : "text-[#94A3B8] hover:text-[#1E293B]"

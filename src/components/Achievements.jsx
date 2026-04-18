@@ -1,34 +1,27 @@
 import { motion } from "framer-motion";
-import { FiAward, FiZap, FiStar, FiTrendingUp } from "react-icons/fi";
+import { FiAward, FiZap, FiStar } from "react-icons/fi";
 
 const achievements = [
   {
     icon: FiAward,
-    title: "Hackathon Winner",
+    title: "MSSU i-SPARK Foundation",
     description:
-      "First place at a national hardware hackathon for building an IoT-based smart agriculture system within 48 hours.",
+      "Won 1st place and ₹3 Lakhs funding at the State-Level Startup Competition for an innovative hardware-software startup concept.",
     color: "from-yellow-500 to-amber-600",
   },
   {
     icon: FiZap,
-    title: "Innovation Award",
+    title: "VSIT IoT / Embedded Systems",
     description:
-      "Recognized for developing a novel approach to rapid prototyping that reduced product iteration cycles by 50%.",
+      "Recognized with 3rd Prize for exceptional embedded systems design and innovation with the Macro Keyboard project.",
     color: "from-purple-500 to-violet-600",
   },
   {
     icon: FiStar,
-    title: "Open Source Contributor",
+    title: "Glimpses by CIMR & IES College",
     description:
-      "Active contributor to embedded systems libraries and React component frameworks used by thousands of developers.",
+      "Secured 1st Place in both Creative Clash 1.0 events, demonstrating creative excellence in technical innovation and entrepreneurship.",
     color: "from-blue-500 to-cyan-600",
-  },
-  {
-    icon: FiTrendingUp,
-    title: "Startup Builder",
-    description:
-      "Co-founded a hardware startup focused on IoT solutions for sustainable living, from MVP to early adopter stage.",
-    color: "from-emerald-500 to-teal-600",
   },
 ];
 
@@ -58,7 +51,7 @@ export default function Achievements({ isDark }) {
         </motion.div>
 
         {/* Achievement Cards */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="flex flex-wrap justify-center gap-6">
           {achievements.map((item, i) => (
             <motion.div
               key={item.title}
@@ -66,7 +59,7 @@ export default function Achievements({ isDark }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.1 }}
-              className={`p-6 rounded-2xl border text-center transition-all hover:scale-105 ${
+              className={`w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] p-6 rounded-2xl border text-center transition-all hover:scale-105 ${
                 isDark
                   ? "bg-[#1E293B] border-[#334155] hover:border-[#3B82F6]/30"
                   : "bg-white border-[#E2E8F0] hover:border-[#3B82F6]/30 hover:shadow-xl hover:shadow-blue-500/5"

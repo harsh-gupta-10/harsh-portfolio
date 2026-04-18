@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiX } from "react-icons/fi";
+import { FiX, FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import Hammer from "hammerjs";
 import certificatesData from "../data/certificates.json";
 
 const rows = [
@@ -11,10 +12,14 @@ const rows = [
 
 function ScrollingRow({ certificates, direction, isDark, onSelect }) {
   const containerRef = useRef(null);
+  const wrapperRef = useRef(null);
   const [animX, setAnimX] = useState(0);
   const speedRef = useRef(direction === "left" ? -0.5 : 0.5);
   const rafRef = useRef(null);
   const pausedRef = useRef(false);
+  const dragOffsetRef = useRef(0);
+  const isDraggingRef = useRef(false);
+  const xRef = useRef(0); // mutable x for the rAF loop
 
   // Duplicate items for seamless loop
   const items = [...certificates, ...certificates];
@@ -26,10 +31,11 @@ function ScrollingRow({ certificates, direction, isDark, onSelect }) {
 
     let x = 0;
     const animate = () => {
-      if (!pausedRef.current) {
+      if (!pausedRef.current && !isDraggingRef.current) {
         x += speedRef.current;
         if (direction === "left" && x <= -singleWidth) x += singleWidth;
         if (direction === "right" && x >= 0) x -= singleWidth;
+        xRef.current = x;
         setAnimX(x);
       }
       rafRef.current = requestAnimationFrame(animate);
@@ -38,25 +44,75 @@ function ScrollingRow({ certificates, direction, isDark, onSelect }) {
     // Start right-moving rows offset so they scroll from the other side
     if (direction === "right") x = -singleWidth;
 
+    xRef.current = x;
     rafRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(rafRef.current);
   }, [direction]);
 
+  // Hammer.js touch gesture integration
+  useEffect(() => {
+    const el = wrapperRef.current;
+    if (!el) return;
+
+    const hammer = new Hammer(el, {
+      recognizers: [
+        [Hammer.Pan, { direction: Hammer.DIRECTION_HORIZONTAL, threshold: 10 }],
+        [Hammer.Swipe, { direction: Hammer.DIRECTION_HORIZONTAL }],
+      ],
+    });
+
+    hammer.on("panstart", () => {
+      isDraggingRef.current = true;
+      dragOffsetRef.current = xRef.current;
+    });
+
+    hammer.on("panmove", (e) => {
+      const newX = dragOffsetRef.current + e.deltaX;
+      xRef.current = newX;
+      setAnimX(newX);
+    });
+
+    hammer.on("panend pancancel", (e) => {
+      // Apply momentum: add velocity-based offset
+      const momentum = e.velocityX * 150;
+      xRef.current = xRef.current + momentum;
+      setAnimX(xRef.current);
+      isDraggingRef.current = false;
+    });
+
+    hammer.on("swipeleft swiperight", (e) => {
+      const boost = e.velocityX * 200;
+      xRef.current = xRef.current + boost;
+      setAnimX(xRef.current);
+    });
+
+    return () => {
+      hammer.destroy();
+    };
+  }, []);
+
   return (
     <div
-      className="overflow-hidden"
+      ref={wrapperRef}
+      className="overflow-hidden cursor-grab active:cursor-grabbing touch-pan-y"
       onMouseEnter={() => (pausedRef.current = true)}
-      onMouseLeave={() => (pausedRef.current = false)}
+      onMouseLeave={() => {
+        pausedRef.current = false;
+        isDraggingRef.current = false;
+      }}
     >
       <div
         ref={containerRef}
-        className="flex gap-5 w-max"
+        className="flex gap-5 w-max will-change-transform"
         style={{ transform: `translateX(${animX}px)` }}
       >
         {items.map((cert, i) => (
           <button
             key={`${cert.title}-${i}`}
-            onClick={() => onSelect(cert)}
+            onClick={() => {
+              // Don't open modal if the user was dragging
+              if (!isDraggingRef.current) onSelect(cert);
+            }}
             className={`flex-shrink-0 w-72 h-48 rounded-2xl border overflow-hidden transition-all hover:scale-105 hover:shadow-xl cursor-pointer group ${
               isDark
                 ? "bg-[#1E293B] border-[#334155] hover:border-[#3B82F6]/40"
@@ -78,6 +134,8 @@ function ScrollingRow({ certificates, direction, isDark, onSelect }) {
 
 export default function Certificates({ isDark }) {
   const [selected, setSelected] = useState(null);
+  const allCerts = [...(certificatesData.row1 || []), ...(certificatesData.row2 || [])];
+  const modalRef = useRef(null);
 
   // Close modal on Escape key
   useEffect(() => {
@@ -99,6 +157,41 @@ export default function Certificates({ isDark }) {
       document.body.style.overflow = "";
     };
   }, [selected]);
+
+  // Hammer.js swipe navigation in modal
+  useEffect(() => {
+    const el = modalRef.current;
+    if (!el || !selected) return;
+
+    const hammer = new Hammer(el, {
+      recognizers: [
+        [Hammer.Swipe, { direction: Hammer.DIRECTION_HORIZONTAL, threshold: 50 }],
+      ],
+    });
+
+    hammer.on("swipeleft", () => {
+      const idx = allCerts.findIndex((c) => c.title === selected.title);
+      if (idx < allCerts.length - 1) setSelected(allCerts[idx + 1]);
+    });
+
+    hammer.on("swiperight", () => {
+      const idx = allCerts.findIndex((c) => c.title === selected.title);
+      if (idx > 0) setSelected(allCerts[idx - 1]);
+    });
+
+    return () => hammer.destroy();
+  }, [selected, allCerts]);
+
+  // Navigate modal with arrows
+  const navigateModal = useCallback(
+    (dir) => {
+      if (!selected) return;
+      const idx = allCerts.findIndex((c) => c.title === selected.title);
+      const next = idx + dir;
+      if (next >= 0 && next < allCerts.length) setSelected(allCerts[next]);
+    },
+    [selected, allCerts]
+  );
 
   const directions = ["left", "right", "left"];
 
@@ -131,7 +224,7 @@ export default function Certificates({ isDark }) {
             className={`mt-4 max-w-2xl mx-auto ${isDark ? "text-[#94A3B8]" : "text-[#64748B]"}`}
           >
             Professional certifications and credentials earned across various
-            technology domains.
+            technology domains. Swipe or drag to browse.
           </p>
         </motion.div>
       </div>
@@ -156,7 +249,7 @@ export default function Certificates({ isDark }) {
         ))}
       </div>
 
-      {/* Modal */}
+      {/* Modal with swipe navigation */}
       <AnimatePresence>
         {selected && (
           <motion.div
@@ -167,6 +260,7 @@ export default function Certificates({ isDark }) {
             onClick={() => setSelected(null)}
           >
             <motion.div
+              ref={modalRef}
               role="dialog"
               aria-modal="true"
               aria-label={selected.title}
@@ -192,6 +286,27 @@ export default function Certificates({ isDark }) {
                 <FiX size={20} />
               </button>
 
+              {/* Prev / Next arrows */}
+              {allCerts.findIndex((c) => c.title === selected.title) > 0 && (
+                <button
+                  onClick={() => navigateModal(-1)}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-2.5 rounded-full bg-black/40 text-white hover:bg-black/60 transition-colors backdrop-blur-sm"
+                  aria-label="Previous certificate"
+                >
+                  <FiChevronLeft size={22} />
+                </button>
+              )}
+              {allCerts.findIndex((c) => c.title === selected.title) <
+                allCerts.length - 1 && (
+                <button
+                  onClick={() => navigateModal(1)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2.5 rounded-full bg-black/40 text-white hover:bg-black/60 transition-colors backdrop-blur-sm"
+                  aria-label="Next certificate"
+                >
+                  <FiChevronRight size={22} />
+                </button>
+              )}
+
               {/* Certificate Image */}
               <img
                 src={selected.image}
@@ -207,7 +322,7 @@ export default function Certificates({ isDark }) {
                     : "border-[#E2E8F0] text-[#1E293B]"
                 }`}
               >
-                <h3 className="font-display font-semibold text-lg">
+                <h3 className="font-display font-semibold text-lg text-center">
                   {selected.title}
                 </h3>
               </div>

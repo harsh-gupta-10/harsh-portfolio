@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { FiCode, FiTool, FiCpu, FiBox, FiPenTool } from "react-icons/fi";
+import { FiCode, FiTool, FiCpu, FiBox, FiPenTool, FiSmartphone, FiFileText, FiGrid } from "react-icons/fi";
 import {
   SiPython,
   SiJavascript,
@@ -41,8 +41,8 @@ const categories = [
       { name: "Git", icon: SiGit },
       { name: "GitHub", icon: SiGithub },
       { name: "Node.js", icon: SiNodedotjs },
-      { name: "Android Studio", icon: FiCode },
-      { name: "Apps Script", icon: FiCode },
+      { name: "Android Studio", icon: FiSmartphone },
+      { name: "Apps Script", icon: FiFileText },
       { name: "Linux", icon: SiLinux },
     ],
   },
@@ -79,8 +79,8 @@ const categories = [
       { name: "Blender", icon: SiBlender },
       { name: "Premiere Pro", icon: SiAdobepremierepro },
       { name: "Arduino IDE", icon: SiArduino },
-      { name: "MS Office", icon: FiCode },
-      { name: "Google Workspace", icon: FiCode },
+      { name: "MS Office", icon: FiFileText },
+      { name: "Google Workspace", icon: FiGrid },
     ],
   },
 ];
@@ -120,7 +120,7 @@ export default function Skills({ isDark }) {
         </motion.div>
 
         {/* Skill Categories */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="flex flex-wrap justify-center gap-6">
           {categories.map((cat, catIndex) => (
             <motion.div
               key={cat.title}
@@ -128,7 +128,7 @@ export default function Skills({ isDark }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: catIndex * 0.1 }}
-              className={`p-6 rounded-2xl border transition-all hover:scale-[1.02] ${
+              className={`w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] p-6 rounded-2xl border transition-all hover:scale-[1.02] ${
                 isDark
                   ? "bg-[#1E293B] border-[#334155] hover:border-[#3B82F6]/30"
                   : "bg-white border-[#E2E8F0] hover:border-[#3B82F6]/30 hover:shadow-xl hover:shadow-blue-500/5"
