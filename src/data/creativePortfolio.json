@@ -1,0 +1,247 @@
+{
+  "creator": {
+    "name": "Harsh Gupta",
+    "channelName": "IzooG10",
+    "handle": "@IzooG10",
+    "channelUrl": "https://www.youtube.com/@IzooG10",
+    "subscribers": "7.5K+",
+    "peakSubscribers": "8,000+",
+    "tagline": "Graphic Designer, Video Editor & Multimedia Producer",
+    "bio": "Results-driven Graphic Designer and Video Editor with a track record of building an 8,000-subscriber community, leading collegiate design teams, and directing live event broadcasts. Specializing in high-CTR visual marketing, end-to-end video post-production, and brand identity systems."
+  },
+  "stats": [
+    {
+      "value": "8,000+",
+      "label": "Peak YouTube Audience",
+      "sub": "Channel: @IzooG10"
+    },
+    {
+      "value": "9+",
+      "label": "Creative Suites Mastered",
+      "sub": "Figma, Premiere, Photoshop & more"
+    },
+    {
+      "value": "50+",
+      "label": "Educational & Social Posters",
+      "sub": "Bi-weekly IT concept series"
+    },
+    {
+      "value": "3+",
+      "label": "Major Live Event Broadcasts",
+      "sub": "Annual Day, NEP & College Streams"
+    }
+  ],
+  "software": [
+    {
+      "name": "Figma",
+      "category": "Vector & Brand Identity",
+      "proficiency": 95,
+      "icon": "SiFigma",
+      "color": "#F24E1E",
+      "summary": "Brand identity systems, AI-concept vector re-creations, social media templates, and UI/UX design."
+    },
+    {
+      "name": "Canva",
+      "category": "Rapid Visuals & Marketing",
+      "proficiency": 95,
+      "icon": "SiCanva",
+      "color": "#00C4CC",
+      "summary": "Fast marketing graphics, social media asset creation, pitch deck layouts, and typography."
+    },
+    {
+      "name": "Adobe Photoshop",
+      "category": "Raster & Thumbnail Art",
+      "proficiency": 90,
+      "icon": "SiAdobephotoshop",
+      "color": "#31A8FF",
+      "summary": "High-impact YouTube thumbnails, composite poster art, color correction, and photo manipulation."
+    },
+    {
+      "name": "Adobe Premiere Pro",
+      "category": "Video Editing & Timeline",
+      "proficiency": 85,
+      "icon": "SiAdobepremierepro",
+      "color": "#EA77FF",
+      "summary": "Long-form pacing, unboxing b-roll montage, jump-cut editing, multi-track audio mixing, and render pipelines."
+    },
+    {
+      "name": "KineMaster",
+      "category": "Mobile Video Editing",
+      "proficiency": 100,
+      "icon": "KineMaster",
+      "color": "#E52945",
+      "summary": "Multi-layer mobile video editing, chroma key, instant turnaround production, and viral tutorial pacing."
+    },
+    {
+      "name": "Affinity Photo",
+      "category": "Asset Optimization & Vector",
+      "proficiency": 80,
+      "icon": "SiAffinityphoto",
+      "color": "#C95F9C",
+      "summary": "Lightweight vector/raster manipulation, fast asset exporting, precise pen masking, and layout polishing."
+    },
+    {
+      "name": "DaVinci Resolve",
+      "category": "Color Grading & Editing",
+      "proficiency": 75,
+      "icon": "SiDavinciresolve",
+      "color": "#FF4500",
+      "summary": "Color science, node-based grading for high-fidelity unboxings, skin-tone balancing, and audio master."
+    },
+    {
+      "name": "CapCut",
+      "category": "Short-Form & Reels",
+      "proficiency": 70,
+      "icon": "CapCut",
+      "color": "#00D4C8",
+      "summary": "Vertical video pacing, kinetic captions, beat-synchronized cuts, and trending audio dynamics."
+    },
+    {
+      "name": "Adobe After Effects",
+      "category": "Motion Graphics & VFX",
+      "proficiency": 60,
+      "icon": "SiAdobeaftereffects",
+      "color": "#9999FF",
+      "summary": "Title animation, lower thirds, smooth kinetic typography, zoom transitions, and screen overlays."
+    }
+  ],
+  "storyMilestones": [
+    {
+      "id": "youtube-genesis",
+      "tag": "Origin Story",
+      "period": "Post-10th Grade",
+      "title": "The IzooG10 Genesis & Building an 8K Community",
+      "story": "Immediately after my 10th grade, I launched my own YouTube channel named IzooG10. Working with a modest, entry-level mobile phone with limited processing capability, I pushed past every hardware constraint to script, record, and edit gaming and tech tutorials. The content gained massive viral momentum, quickly climbing to over 8,000 subscribers. Through consistency and active community engagement, I developed valuable connections with creators boasting 100K, 200K, and even 1 Million+ subscribers, gaining deep first-hand insights into audience retention, algorithmic packaging, and digital branding.",
+      "highlights": [
+        "Organic surge to 8,000+ loyal subscribers",
+        "Overcame limited hardware constraints through sheer resourcefulness",
+        "Built lasting networks with creators with 100K–1M+ audiences",
+        "Learned viewer psychology, pacing, and retention early on"
+      ],
+      "badge": "8K Subscribers",
+      "accentColor": "from-red-500 to-rose-600"
+    },
+    {
+      "id": "tool-mastery",
+      "tag": "Skill Acceleration",
+      "period": "College Year 1",
+      "title": "Laptop Acquisition & Deep Creative Tool Mastery",
+      "story": "During my early college days, getting my first laptop gave me the firepower to take digital creation to a professional level. Although my initial channel had paused during the transition, my passion for visual media escalated. I immersed myself in learning professional desktop suites: Photoshop for photo composites and thumbnails, Premiere Pro for multi-track timeline editing, After Effects for motion graphics, Figma for clean vectors, DaVinci Resolve for filmic color grading, and Affinity Photo for rapid graphics rendering.",
+      "highlights": [
+        "Mastered complete Adobe Creative Cloud & DaVinci suites",
+        "Pioneered vector conversion and layout systems in Figma",
+        "Built an end-to-end post-production workflow from raw footage to final render"
+      ],
+      "badge": "6+ Pro Suites",
+      "accentColor": "from-indigo-500 to-blue-600"
+    },
+    {
+      "id": "college-posters",
+      "tag": "Creative Direction",
+      "period": "College Year 2",
+      "title": "Head of IT Educational Poster Series",
+      "story": "During my second year of college, I took charge as the Head of our creative group for a bi-weekly IT Educational Series. Every alternate week, our mission was to take intricate, intimidating computer science and engineering topics (cloud computing, networking, protocols, security) and break them down into visually striking, easily digestible infographics. I led the ideation, typography rules, color palettes, and visual hierarchy, turning complex technical literature into memorable graphic design.",
+      "highlights": [
+        "Led the creative team for bi-weekly departmental tech posters",
+        "Distilled high-level engineering and IT concepts into intuitive visual stories",
+        "Established consistent typographic guidelines and visual hierarchy"
+      ],
+      "badge": "Team Lead & Head Designer",
+      "accentColor": "from-amber-500 to-orange-600"
+    },
+    {
+      "id": "live-broadcasting",
+      "tag": "Live Media Production",
+      "period": "College Year 2 - 3",
+      "title": "Collegiate Live Stream & Broadcast Director",
+      "story": "Entrusted with the official college YouTube channel's live production, I handled technical live streaming for major college milestones: the prestigious College Annual Day, the National Education Policy (NEP) announcement assembly, and the Farewell event. Beyond monitoring bitrates, camera feeds, and real-time audio mixers, I personally designed the official promotional posters and YouTube stream thumbnails that were watched by hundreds of students, faculty, and alumni.",
+      "highlights": [
+        "Directed multi-feed live broadcasts for Annual Day & NEP Assembly",
+        "Crafted high-click-through live stream thumbnails and promotional banners",
+        "Managed live encoding, multi-cam switching, and audio balance under pressure"
+      ],
+      "badge": "Live Broadcast Director",
+      "accentColor": "from-purple-500 to-violet-600"
+    },
+    {
+      "id": "startup-branding",
+      "tag": "Brand Identity",
+      "period": "College Year 3 - 4",
+      "title": "Austrange Solutions: Brand Identity & Social Media",
+      "story": "Following my third year, I co-founded Austrange Solutions Pvt Ltd with my friends to develop cutting-edge IoT products like smart assistive hardware. Before diving deep into physical R&D, the startup needed a face. I initiated the logo design by generating conceptual AI variations, then manually rebuilt and perfected the logo in Figma as a pristine, scalable vector mark. In the startup's crucial early stages, I also took on the mantle of Head Social Media Manager, creating all promotional posts, visual assets, and content schedules before later onboarding and mentoring creative interns.",
+      "highlights": [
+        "Designed and vectorized Austrange Solutions company logo in Figma",
+        "Spearheaded initial social media presence, branding guidelines & post graphics",
+        "Handled dual role of hardware R&D and creative brand design"
+      ],
+      "badge": "Co-Founder & Brand Creator",
+      "accentColor": "from-emerald-500 to-teal-600"
+    },
+    {
+      "id": "current-content",
+      "tag": "Production & Video Editing",
+      "period": "November 10th - Present",
+      "title": "Advanced Video Production: Unboxings & Tech Reviews",
+      "story": "Starting November 10th, I began producing high-fidelity unboxing videos and hardware reviews. Leveraging studio lighting, multi-angle camera setups, and macro product shots, I handle the complete production lifecycle: script breakdown, shooting, Premiere Pro timeline pacing, DaVinci Resolve color grading, audio leveling, and designing high-CTR thumbnail graphics for an audience of 7,500+ subscribers.",
+      "highlights": [
+        "End-to-end studio workflow: shooting, editing, color grading & audio master",
+        "Expertise in macro product videography, pacing, and visual storytelling",
+        "High-CTR thumbnail packaging designed for maximum audience engagement"
+      ],
+      "badge": "Video Producer & Editor",
+      "accentColor": "from-blue-600 to-indigo-600"
+    }
+  ],
+  "gallery": [
+    {
+      "id": "branding-austrange-identity",
+      "title": "Austrange Solutions & e-Sight: Complete Brand Identity & Design System",
+      "category": "branding",
+      "categoryLabel": "Brand Identity & Logos",
+      "description": "Comprehensive visual architecture for IoT hardware startup Austrange Solutions and its flagship assistive device, e-Sight. Traces the entire design evolution from initial AI concept exploration to mathematical vector recreation in Figma. Includes light and dark mode badge lockups, corporate and high-contrast color palettes (electric blue, crimson, safety neon), typographic rules, and circular product iconography.",
+      "tools": ["Figma", "AI Ideation", "Vector Design", "Design Systems"],
+      "image": "/portfolio/branding/austrange-brand-identity-system.webp",
+      "aspectRatio": "16/9"
+    },
+    {
+      "id": "social-austrange-msins-award",
+      "title": "Austrange Solutions: ₹3,00,000 State Innovation Grant Announcement",
+      "category": "social",
+      "categoryLabel": "Social Media & Campaigns",
+      "description": "High-impact social media announcement creative published across official channels in collaboration with Chetana's SFC, celebrating Austrange Solutions winning a ₹3 Lakh grant from the Maharashtra State Innovation Society. Directed visual post hierarchy, branded photo frame styling, avatar integrations, and celebratory corporate messaging.",
+      "tools": ["Figma", "Photoshop", "Social Media Strategy", "Content Curation"],
+      "image": "/portfolio/social/austrange-msins-grant-post.webp",
+      "aspectRatio": "4/5"
+    },
+    {
+      "id": "social-austrange-techmania-win",
+      "title": "Austrange e-Sight: TECHMANIA State Competition Win Announcement",
+      "category": "social",
+      "categoryLabel": "Social Media & Campaigns",
+      "description": "Engaging social post creative designed for Austrange Solutions commemorating our team's win at TECHMANIA (L.S. Raheja College). Engineered with branded header lockup ('AUSTRANGE e-Sight'), official college badges, event date/venue pill metadata, and an inspiring community slogan ('Powered by passion, led by Teamwork!').",
+      "tools": ["Figma", "Photoshop", "Brand Guidelines"],
+      "image": "/portfolio/social/austrange-techmania-post.webp",
+      "aspectRatio": "4/5"
+    },
+    {
+      "id": "uiux-science-academy",
+      "title": "The Science Academy (TSA): Responsive EdTech Web Platform",
+      "category": "uiux",
+      "categoryLabel": "UI/UX & Web Design",
+      "description": "Full-scale UI/UX design in Figma for 'The Science Academy' (TSA), an educational institute in Vasai. Features dual viewport architecture demonstrating seamless responsiveness across Desktop ('INDEX') and Mobile ('Android Index') viewports. Designed with chalkboard-textured hero photography, direct WhatsApp/Call lead-generation CTAs, and modular curriculum cards.",
+      "tools": ["Figma", "Wireframing", "Responsive UI/UX", "Mobile-First Design"],
+      "image": "/portfolio/uiux/the-science-academy-uiux.webp",
+      "aspectRatio": "16/9"
+    },
+    {
+      "id": "uiux-dental-clinic",
+      "title": "'Your Smile is Your Superpower': Modern Dental Clinic Landing Page",
+      "category": "uiux",
+      "categoryLabel": "UI/UX & Web Design",
+      "description": "Modern healthcare digital interface designed in Figma centering on patient comfort and trust. Crafted with custom tooth vector iconography, interactive patient requirement selector ('HOW CAN WE HELP YOU TODAY?'), clinic photography, high-visibility booking buttons, and a patient loyalty profile indicator.",
+      "tools": ["Figma", "UI/UX Design", "Component Design", "Healthcare Branding"],
+      "image": "/portfolio/uiux/dental-care-landing-uiux.webp",
+      "aspectRatio": "16/9"
+    }
+  ]
+}
