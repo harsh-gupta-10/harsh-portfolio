@@ -28,6 +28,7 @@ import {
   SiAffinityphoto,
   SiCanva,
   SiYoutube,
+  SiInstagram,
 } from "react-icons/si";
 
 import creativeData from "../../data/creativePortfolio.json";
@@ -313,7 +314,7 @@ export default function CreativePortfolio() {
             </div>
           </section>
 
-          {/* ── 2. CURATED DESIGN & VIDEO WORKS (BELOW HERO) ────── */}
+          {/* ── 2. CURATED DESIGN & VIDEO WORKS (DIRECTLY BELOW HERO) ── */}
           <section id="gallery" className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-2xl mx-auto mb-10">
               <span className="text-blue-500 font-semibold text-xs uppercase tracking-wider">
@@ -328,7 +329,7 @@ export default function CreativePortfolio() {
                 }`}
               >
                 Explore real brand identity design systems, high-engagement social media
-                campaigns, and responsive UI/UX platforms.
+                campaigns, and responsive UI/UX platforms with working live links.
               </p>
             </div>
 
@@ -351,7 +352,7 @@ export default function CreativePortfolio() {
               ))}
             </div>
 
-            {/* Media Grid - Improved Container View */}
+            {/* Media Grid - Improved Container View with Working Links */}
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {filteredGallery.map((item, index) => {
                 return (
@@ -383,12 +384,33 @@ export default function CreativePortfolio() {
                         className="w-full h-full object-contain rounded-xl drop-shadow-lg transition-transform duration-500 group-hover:scale-105"
                       />
 
-                      {/* Overlay On Hover */}
-                      <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white backdrop-blur-[2px]">
-                        <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600/90 text-white text-xs font-semibold shadow-xl hover:bg-blue-600 transition-colors">
-                          <FiMaximize2 size={14} />
-                          <span>Inspect Case Study</span>
-                        </div>
+                      {/* Overlay On Hover with Dual Action Buttons */}
+                      <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col sm:flex-row items-center justify-center gap-2.5 p-4 text-white backdrop-blur-[2px]">
+                        <button
+                          type="button"
+                          onClick={() => setSelectedItem(item)}
+                          className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-white text-xs font-semibold shadow-lg backdrop-blur-md transition-all border border-white/10 hover:scale-105"
+                        >
+                          <FiMaximize2 size={13} />
+                          <span>Inspect</span>
+                        </button>
+                        {item.projectUrl && (
+                          <a
+                            href={item.projectUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-lg transition-all hover:scale-105"
+                          >
+                            {item.linkLabel?.includes("Figma") ? (
+                              <SiFigma size={13} />
+                            ) : (
+                              <SiInstagram size={13} />
+                            )}
+                            <span>{item.linkLabel}</span>
+                            <FiExternalLink size={13} />
+                          </a>
+                        )}
                       </div>
 
                       {/* Category Badge */}
@@ -412,10 +434,10 @@ export default function CreativePortfolio() {
                         </p>
                       </div>
 
-                      {/* Tools & Footer Info */}
-                      <div className="mt-5 pt-3.5 border-t border-slate-100 dark:border-slate-800/90 flex items-center justify-between">
+                      {/* Tools & Working Action Button */}
+                      <div className="mt-5 pt-3.5 border-t border-slate-100 dark:border-slate-800/90 flex items-center justify-between gap-2">
                         <div className="flex flex-wrap gap-1.5">
-                          {item.tools.slice(0, 3).map((tool) => (
+                          {item.tools.slice(0, 2).map((tool) => (
                             <span
                               key={tool}
                               className={`text-[11px] px-2.5 py-0.5 rounded-md font-medium ${
@@ -427,21 +449,41 @@ export default function CreativePortfolio() {
                               {tool}
                             </span>
                           ))}
-                          {item.tools.length > 3 && (
+                          {item.tools.length > 2 && (
                             <span
                               className={`text-[11px] px-1.5 py-0.5 rounded-md font-medium ${
                                 isDark ? "text-slate-400" : "text-slate-500"
                               }`}
                             >
-                              +{item.tools.length - 3}
+                              +{item.tools.length - 2}
                             </span>
                           )}
                         </div>
 
-                        <span className="text-xs font-bold text-blue-500 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                          <span>Details</span>
-                          <FiExternalLink size={12} />
-                        </span>
+                        {/* Working Link Button */}
+                        {item.projectUrl ? (
+                          <a
+                            href={item.projectUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-sm hover:shadow-md transition-all hover:scale-105 shrink-0"
+                            title={`Open ${item.linkLabel}`}
+                          >
+                            {item.linkLabel?.includes("Figma") ? (
+                              <SiFigma size={12} />
+                            ) : (
+                              <SiInstagram size={12} />
+                            )}
+                            <span>{item.linkLabel}</span>
+                            <FiExternalLink size={12} />
+                          </a>
+                        ) : (
+                          <span className="text-xs font-bold text-blue-500 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                            <span>Details</span>
+                            <FiExternalLink size={12} />
+                          </span>
+                        )}
                       </div>
                     </div>
                   </motion.div>
@@ -450,7 +492,96 @@ export default function CreativePortfolio() {
             </div>
           </section>
 
-          {/* ── 3. THE STORY & JOURNEY CHAPTERS ─────────────────── */}
+          {/* ── 3. SOFTWARE & TOOL MASTERY (BELOW CURATED WORKS) ── */}
+          <section id="skills" className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-2xl mx-auto mb-10">
+              <span className="text-blue-500 font-semibold text-xs uppercase tracking-wider">
+                Creative Arsenal
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-bold mt-2">
+                Software & Tool Mastery
+              </h2>
+              <p
+                className={`mt-2 text-sm sm:text-base ${
+                  isDark ? "text-slate-400" : "text-slate-600"
+                }`}
+              >
+                Production-proven workflows across design, timeline pacing, and motion graphics.
+              </p>
+            </div>
+
+            {/* Compact Grid: 2 columns on mobile, 3x3 on PC fitting in single viewport */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 max-w-6xl mx-auto">
+              {software.map((s, index) => {
+                const IconComponent = softwareIcons[s.icon] || SiFigma;
+                return (
+                  <motion.div
+                    key={s.name}
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.3, delay: index * 0.04 }}
+                    className={`p-3.5 sm:p-4 rounded-2xl border transition-all hover:scale-[1.02] flex flex-col justify-between h-[96px] sm:h-[102px] ${
+                      isDark
+                        ? "bg-[#11192E] border-[#1E293B] hover:border-slate-700"
+                        : "bg-white border-slate-200 hover:shadow-md"
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      {/* Icon */}
+                      <div
+                        className="w-10 h-10 rounded-xl flex items-center justify-center text-white shrink-0 shadow-md"
+                        style={{
+                          backgroundColor: s.color,
+                          boxShadow: `0 4px 14px ${s.color}35`,
+                        }}
+                      >
+                        <IconComponent size={22} />
+                      </div>
+
+                      {/* Info */}
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center justify-between gap-1">
+                          <h3 className="text-xs sm:text-sm font-bold truncate leading-tight">
+                            {s.name}
+                          </h3>
+                          <span
+                            className="text-[11px] font-extrabold font-mono px-2 py-0.5 rounded-full shrink-0"
+                            style={{
+                              color: s.color,
+                              backgroundColor: `${s.color}15`,
+                            }}
+                          >
+                            {s.proficiency}%
+                          </span>
+                        </div>
+                        <p
+                          className={`text-[10px] sm:text-[11px] truncate mt-0.5 ${
+                            isDark ? "text-slate-400" : "text-slate-500"
+                          }`}
+                        >
+                          {s.category}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Progress Bar */}
+                    <div className="w-full h-1.5 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                      <div
+                        className="h-full rounded-full transition-all duration-1000"
+                        style={{
+                          width: `${s.proficiency}%`,
+                          backgroundColor: s.color,
+                        }}
+                      />
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </section>
+
+          {/* ── 4. THE STORY & JOURNEY CHAPTERS ─────────────────── */}
           <section id="story" className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-2xl mx-auto mb-16">
               <span className="text-blue-500 font-semibold text-xs uppercase tracking-wider">
@@ -540,95 +671,6 @@ export default function CreativePortfolio() {
                           </div>
                         ))}
                       </div>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </section>
-
-          {/* ── 4. SOFTWARE & TOOL MASTERY (COMPACT 100PX HEIGHT) ── */}
-          <section id="skills" className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-2xl mx-auto mb-10">
-              <span className="text-blue-500 font-semibold text-xs uppercase tracking-wider">
-                Creative Arsenal
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-bold mt-2">
-                Software & Tool Mastery
-              </h2>
-              <p
-                className={`mt-2 text-sm sm:text-base ${
-                  isDark ? "text-slate-400" : "text-slate-600"
-                }`}
-              >
-                Production-proven workflows across design, timeline pacing, and motion graphics.
-              </p>
-            </div>
-
-            {/* Compact Grid: 2 columns on mobile, 3x3 on PC fitting in single viewport */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 max-w-6xl mx-auto">
-              {software.map((s, index) => {
-                const IconComponent = softwareIcons[s.icon] || SiFigma;
-                return (
-                  <motion.div
-                    key={s.name}
-                    initial={{ opacity: 0, y: 15 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.3, delay: index * 0.04 }}
-                    className={`p-3.5 sm:p-4 rounded-2xl border transition-all hover:scale-[1.02] flex flex-col justify-between h-[96px] sm:h-[102px] ${
-                      isDark
-                        ? "bg-[#11192E] border-[#1E293B] hover:border-slate-700"
-                        : "bg-white border-slate-200 hover:shadow-md"
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      {/* Icon */}
-                      <div
-                        className="w-10 h-10 rounded-xl flex items-center justify-center text-white shrink-0 shadow-md"
-                        style={{
-                          backgroundColor: s.color,
-                          boxShadow: `0 4px 14px ${s.color}35`,
-                        }}
-                      >
-                        <IconComponent size={22} />
-                      </div>
-
-                      {/* Info */}
-                      <div className="min-w-0 flex-1">
-                        <div className="flex items-center justify-between gap-1">
-                          <h3 className="text-xs sm:text-sm font-bold truncate leading-tight">
-                            {s.name}
-                          </h3>
-                          <span
-                            className="text-[11px] font-extrabold font-mono px-2 py-0.5 rounded-full shrink-0"
-                            style={{
-                              color: s.color,
-                              backgroundColor: `${s.color}15`,
-                            }}
-                          >
-                            {s.proficiency}%
-                          </span>
-                        </div>
-                        <p
-                          className={`text-[10px] sm:text-[11px] truncate mt-0.5 ${
-                            isDark ? "text-slate-400" : "text-slate-500"
-                          }`}
-                        >
-                          {s.category}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Progress Bar */}
-                    <div className="w-full h-1.5 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
-                      <div
-                        className="h-full rounded-full transition-all duration-1000"
-                        style={{
-                          width: `${s.proficiency}%`,
-                          backgroundColor: s.color,
-                        }}
-                      />
                     </div>
                   </motion.div>
                 );
@@ -820,7 +862,7 @@ export default function CreativePortfolio() {
                   />
                 </div>
 
-                {/* Modal Description */}
+                {/* Modal Description & Action Links */}
                 <div className="p-6 sm:p-8 overflow-y-auto">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-blue-500/10 text-blue-500">
@@ -863,6 +905,26 @@ export default function CreativePortfolio() {
                       ))}
                     </div>
                   </div>
+
+                  {/* Modal Working Link Button */}
+                  {selectedItem.projectUrl && (
+                    <div className="mt-6 pt-2">
+                      <a
+                        href={selectedItem.projectUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center gap-2 w-full py-3.5 px-6 rounded-xl font-bold text-sm bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg shadow-blue-500/25 transition-all hover:scale-[1.01]"
+                      >
+                        {selectedItem.linkLabel?.includes("Figma") ? (
+                          <SiFigma size={18} />
+                        ) : (
+                          <SiInstagram size={18} />
+                        )}
+                        <span>{selectedItem.linkLabel}</span>
+                        <FiExternalLink size={16} />
+                      </a>
+                    </div>
+                  )}
                 </div>
               </motion.div>
             </div>

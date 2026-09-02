@@ -201,7 +201,9 @@
       "description": "Comprehensive visual architecture for IoT hardware startup Austrange Solutions and its flagship assistive device, e-Sight. Traces the entire design evolution from initial AI concept exploration to mathematical vector recreation in Figma. Includes light and dark mode badge lockups, corporate and high-contrast color palettes (electric blue, crimson, safety neon), typographic rules, and circular product iconography.",
       "tools": ["Figma", "AI Ideation", "Vector Design", "Design Systems"],
       "image": "/portfolio/branding/austrange-brand-identity-system.webp",
-      "aspectRatio": "16/9"
+      "aspectRatio": "16/9",
+      "projectUrl": "https://www.figma.com/design/BWGZmG7HDEuCyKccLHwgsG/Austrange?node-id=0-1&t=ofKypyu2sOUYMKWb-1",
+      "linkLabel": "Open in Figma"
     },
     {
       "id": "social-austrange-msins-award",
@@ -211,7 +213,9 @@
       "description": "High-impact social media announcement creative published across official channels in collaboration with Chetana's SFC, celebrating Austrange Solutions winning a ₹3 Lakh grant from the Maharashtra State Innovation Society. Directed visual post hierarchy, branded photo frame styling, avatar integrations, and celebratory corporate messaging.",
       "tools": ["Figma", "Photoshop", "Social Media Strategy", "Content Curation"],
       "image": "/portfolio/social/austrange-msins-grant-post.webp",
-      "aspectRatio": "4/5"
+      "aspectRatio": "4/5",
+      "projectUrl": "https://www.instagram.com/p/DJENSZfpUQh",
+      "linkLabel": "View on Instagram"
     },
     {
       "id": "social-austrange-techmania-win",
@@ -221,7 +225,9 @@
       "description": "Engaging social post creative designed for Austrange Solutions commemorating our team's win at TECHMANIA (L.S. Raheja College). Engineered with branded header lockup ('AUSTRANGE e-Sight'), official college badges, event date/venue pill metadata, and an inspiring community slogan ('Powered by passion, led by Teamwork!').",
       "tools": ["Figma", "Photoshop", "Brand Guidelines"],
       "image": "/portfolio/social/austrange-techmania-post.webp",
-      "aspectRatio": "4/5"
+      "aspectRatio": "4/5",
+      "projectUrl": "https://www.instagram.com/p/DJLnv6IsHq-",
+      "linkLabel": "View on Instagram"
     },
     {
       "id": "uiux-science-academy",
@@ -231,7 +237,9 @@
       "description": "Full-scale UI/UX design in Figma for 'The Science Academy' (TSA), an educational institute in Vasai. Features dual viewport architecture demonstrating seamless responsiveness across Desktop ('INDEX') and Mobile ('Android Index') viewports. Designed with chalkboard-textured hero photography, direct WhatsApp/Call lead-generation CTAs, and modular curriculum cards.",
       "tools": ["Figma", "Wireframing", "Responsive UI/UX", "Mobile-First Design"],
       "image": "/portfolio/uiux/the-science-academy-uiux.webp",
-      "aspectRatio": "16/9"
+      "aspectRatio": "16/9",
+      "projectUrl": "https://www.figma.com/design/vw163MEzM5rmL8WvymhjLn/TSA?node-id=1-1700&t=CfTIQbtlC7vB9r8f-1",
+      "linkLabel": "Open in Figma"
     },
     {
       "id": "uiux-dental-clinic",
@@ -241,7 +249,9 @@
       "description": "Modern healthcare digital interface designed in Figma centering on patient comfort and trust. Crafted with custom tooth vector iconography, interactive patient requirement selector ('HOW CAN WE HELP YOU TODAY?'), clinic photography, high-visibility booking buttons, and a patient loyalty profile indicator.",
       "tools": ["Figma", "UI/UX Design", "Component Design", "Healthcare Branding"],
       "image": "/portfolio/uiux/dental-care-landing-uiux.webp",
-      "aspectRatio": "16/9"
+      "aspectRatio": "16/9",
+      "projectUrl": "https://www.figma.com/design/s0D8fP2g4YOBBQCFyfxgft/Dental-Client?node-id=0-1&t=oasXCdysJzHADv5b-1",
+      "linkLabel": "Open in Figma"
     }
   ]
 }
