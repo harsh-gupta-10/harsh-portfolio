@@ -70,25 +70,25 @@ export const Overlay = ({ isDark, scrollYProgress }) => {
             >
                 <div className="text-center max-w-4xl mx-auto flex flex-col items-center">
                     <span
-                        className="mb-8 inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium bg-[#1E293B] text-[#60A5FA] border border-[#334155]"
+                        className="mb-8 inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium bg-white/10 text-emerald-300 border border-white/15 backdrop-blur-md"
                     >
-                    <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                    <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
                         Available for opportunities
                     </span>
-                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold tracking-tight mb-4 drop-shadow-[0_0_15px_rgba(0,0,0,0.8)]">
-                        Hi, I'm <br/><span className="name-shimmer">
+                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-extrabold tracking-tight mb-4 drop-shadow-[0_0_20px_rgba(0,0,0,0.9)]">
+                        Hi, I'm <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-[#ffbdd3]">
                         Harsh Gupta
                         </span>
                     </h1>
                     
                     {/* Typing animation */}
-                    <div className="mt-4 flex items-center justify-center gap-2 drop-shadow-[0_0_10px_rgba(0,0,0,0.8)]">
-                        <span className="text-xl md:text-2xl font-medium text-[#CBD5E1]">
+                    <div className="mt-4 flex items-center justify-center gap-2 drop-shadow-[0_0_12px_rgba(0,0,0,0.9)]">
+                        <span className="text-xl md:text-2xl font-medium text-slate-300">
                         I'm a{" "}
                         </span>
-                        <span className="text-xl md:text-2xl font-semibold text-[#3B82F6] min-w-[200px] text-left">
+                        <span className="text-xl md:text-2xl font-bold text-[#df37a7] min-w-[200px] text-left">
                             {text}
-                            <span className="typing-cursor text-[#1E3A8A]">|</span>
+                            <span className="typing-cursor text-[#df37a7]">|</span>
                         </span>
                     </div>
                 </div>
@@ -100,8 +100,8 @@ export const Overlay = ({ isDark, scrollYProgress }) => {
                 className="absolute inset-0 flex items-center justify-center md:justify-start p-8 md:p-24"
             >
                 <div className="max-w-xl text-center md:text-left">
-                    <h2 className="text-4xl md:text-6xl font-bold tracking-tight leading-tight drop-shadow-[0_0_15px_rgba(0,0,0,0.8)]">
-                        I build <span className="text-blue-400">digital interfaces</span>,<br/> embedded systems, <br/>and <span className="text-blue-400">physical products</span>.
+                    <h2 className="text-4xl md:text-6xl font-bold tracking-tight leading-tight drop-shadow-[0_0_20px_rgba(0,0,0,0.9)] text-white">
+                        I build <span className="text-[#ffbdd3]">digital interfaces</span>,<br/> embedded systems, <br/>and <span className="text-[#ffcb0f]">physical products</span>.
                     </h2>
                 </div>
             </motion.div>
@@ -115,13 +115,12 @@ export const Overlay = ({ isDark, scrollYProgress }) => {
                      Ready to <span className="text-blue-400">Collaborate?</span>
                 </h2>
                 {/* CTA Buttons - We make these pointer-events-auto so they can be clicked */}
-                <div className="flex flex-wrap justify-center items-center gap-6 pointer-events-auto">
+                <div className="flex flex-wrap justify-center items-center gap-5 pointer-events-auto">
                     <a
-                        href="#projects"
-                        onClick={(e) => handleScroll(e, "#projects")}
-                        className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#1E3A8A] to-[#3B82F6] text-white font-semibold rounded-xl hover:shadow-xl hover:shadow-blue-500/25 transition-all hover:scale-105 group text-lg"
+                        href="/projects"
+                        className="inline-flex items-center gap-2.5 px-8 py-4 bg-[#df37a7] hover:bg-[#b82586] text-white font-semibold rounded-xl shadow-lg shadow-[#df37a7]/25 transition-all hover:scale-105 group text-lg cursor-pointer"
                     >
-                        View Projects
+                        Explore All Projects
                         <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
                     </a>
                     
@@ -129,7 +128,7 @@ export const Overlay = ({ isDark, scrollYProgress }) => {
                         href="https://drive.google.com/drive/folders/1QsjDgQIb9rnn2SBt4W5WgHpdeZpqym1C?usp=sharing"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-8 py-4 font-semibold rounded-xl border-2 border-[#334155] text-white hover:bg-[#1E293B] transition-all hover:scale-105 text-lg cursor-pointer"
+                        className="inline-flex items-center gap-2 px-8 py-4 font-semibold rounded-xl border border-white/20 bg-white/5 backdrop-blur-sm text-white hover:bg-white/15 transition-all hover:scale-105 text-lg cursor-pointer"
                     >
                         <FiDownload size={20} />
                         Download Resume

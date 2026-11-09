@@ -34,6 +34,8 @@ import {
 import creativeData from "../../data/creativePortfolio.json";
 import { useDarkMode } from "../../hooks/useDarkMode";
 import { useSEO } from "../../hooks/useSEO";
+import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
 
 // Official Brand SVG Icons for KineMaster and CapCut
 function KineMasterIcon({ size = 22 }) {
@@ -122,84 +124,10 @@ export default function CreativePortfolio() {
           isDark ? "bg-[#0A0F1D] text-[#F1F5F9]" : "bg-[#F8FAFC] text-[#0F172A]"
         }`}
       >
-        {/* ── TOP NAVIGATION BAR ─────────────────────────────── */}
-        <header
-          className={`sticky top-0 z-40 backdrop-blur-xl border-b transition-all ${
-            isDark
-              ? "bg-[#0A0F1D]/85 border-[#1E293B]"
-              : "bg-white/85 border-[#E2E8F0] shadow-xs"
-          }`}
-        >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
-            {/* Back Button */}
-            <Link
-              to="/"
-              className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-medium transition-all ${
-                isDark
-                  ? "bg-[#1E293B] text-slate-300 hover:text-white hover:bg-[#334155]"
-                  : "bg-slate-100 text-slate-700 hover:text-slate-950 hover:bg-slate-200"
-              }`}
-            >
-              <FiArrowLeft size={16} />
-              <span className="hidden sm:inline">Main Portfolio</span>
-              <span className="sm:hidden">Back</span>
-            </Link>
+        {/* ── CONSISTENT NAVBAR ─────────────────────────────── */}
+        <Navbar />
 
-            {/* Title / Badge */}
-            <div className="flex items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-500 border border-blue-500/20">
-                <FiLayers size={13} />
-                <span>Creative Work</span>
-              </span>
-              <span
-                className={`hidden md:inline text-xs ${
-                  isDark ? "text-slate-400" : "text-slate-500"
-                }`}
-              >
-                Graphic Design & Video Editing
-              </span>
-            </div>
-
-            {/* Quick Actions */}
-            <div className="flex items-center gap-2 sm:gap-3">
-              <a
-                href="/Harsh_Gupta_Resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold border transition-all ${
-                  isDark
-                    ? "border-slate-700 text-slate-300 hover:bg-slate-800"
-                    : "border-slate-300 text-slate-700 hover:bg-slate-100"
-                }`}
-              >
-                <FiDownload size={14} />
-                <span>Resume / CV</span>
-              </a>
-
-              <a
-                href="mailto:harshgupta24716@gmail.com?subject=Job%20Opportunity%20-%20Graphic%20Designer%20%26%20Video%20Editor"
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-blue-600 text-white hover:bg-blue-700 shadow-md shadow-blue-600/20 transition-all hover:scale-105"
-              >
-                <FiMail size={15} />
-                <span>Hire Me</span>
-              </a>
-
-              <button
-                onClick={toggle}
-                aria-label="Toggle theme"
-                className={`p-2.5 rounded-xl border transition-colors ${
-                  isDark
-                    ? "bg-[#1E293B] border-[#334155] text-amber-400 hover:bg-[#334155]"
-                    : "bg-white border-slate-200 text-slate-700 hover:bg-slate-100"
-                }`}
-              >
-                {isDark ? <FiSun size={18} /> : <FiMoon size={18} />}
-              </button>
-            </div>
-          </div>
-        </header>
-
-        <main>
+        <main className="pt-20 sm:pt-24">
           {/* ── 1. HERO SECTION ─────────────────────────────────── */}
           <section className="relative pt-12 pb-16 sm:pt-16 sm:pb-24 overflow-hidden">
             {/* Background Glow */}
@@ -938,38 +866,8 @@ export default function CreativePortfolio() {
           )}
         </AnimatePresence>
 
-        {/* ── FOOTER ─────────────────────────────────────────── */}
-        <footer
-          className={`py-8 border-t text-center text-xs transition-colors ${
-            isDark
-              ? "bg-[#070B14] border-[#1E293B] text-slate-500"
-              : "bg-white border-slate-200 text-slate-400"
-          }`}
-        >
-          <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p>© {new Date().getFullYear()} Harsh Gupta • Graphic Designer & Video Editor</p>
-            <div className="flex items-center gap-4">
-              <Link to="/" className="hover:text-blue-500 transition-colors">
-                Main Portfolio
-              </Link>
-              <a
-                href={creator.channelUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-red-500 transition-colors inline-flex items-center gap-1"
-              >
-                <SiYoutube />
-                <span>@IzooG10</span>
-              </a>
-              <a
-                href="mailto:harshgupta24716@gmail.com"
-                className="hover:text-blue-500 transition-colors"
-              >
-                Contact
-              </a>
-            </div>
-          </div>
-        </footer>
+        {/* ── CONSISTENT FOOTER ─────────────────────────────────── */}
+        <Footer />
       </div>
     </div>
   );

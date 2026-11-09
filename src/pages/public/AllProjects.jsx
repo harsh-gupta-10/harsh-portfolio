@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import initialProjects from "../../data/allProjects.json";
 import { usePortfolioData } from "../../lib/localAdmin";
 import { useSEO } from "../../hooks/useSEO";
+import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
 
 const CATEGORY_TABS = [
   { id: "all", label: "All Works" },
@@ -171,27 +173,11 @@ export default function AllProjects() {
   }, [projectList, activeTab]);
 
   return (
-    <div className="min-h-screen bg-[#fdfafc] text-[#240029]">
-      {/* Top Header */}
-      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-[#d4ccd4] shadow-xs">
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-[#240029] hover:text-[#df37a7] transition-colors"
-          >
-            <FiArrowLeft size={16} />
-            Back to Home
-          </Link>
-          <div className="flex items-center gap-2">
-            <span className="font-mono text-xs font-semibold tracking-wider text-[#6d526d] uppercase">
-              14+ Production Builds
-            </span>
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen bg-[#fdfafc] text-[#240029] flex flex-col">
+      <Navbar />
 
       {/* Main Content */}
-      <main className="py-12 sm:py-18">
+      <main className="flex-1 pt-28 sm:pt-32 pb-20">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
           {/* Section Header */}
           <div className="mb-10 text-center sm:text-left">
@@ -256,6 +242,8 @@ export default function AllProjects() {
           </div>
         </div>
       </main>
+
+      <Footer />
     </div>
   );
 }

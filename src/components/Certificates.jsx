@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiX, FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { FiX, FiChevronLeft, FiChevronRight, FiExternalLink, FiCheckCircle } from "react-icons/fi";
 import Hammer from "hammerjs";
 import initialCertificatesData from "../data/certificates.json";
 import { usePortfolioData } from "../lib/localAdmin";
@@ -108,14 +108,21 @@ function ScrollingRow({ certificates, direction, isDark, onSelect }) {
               // Don't open modal if the user was dragging
               if (!isDraggingRef.current) onSelect(cert);
             }}
-            className="flex-shrink-0 w-72 h-48 card-outseta overflow-hidden cursor-pointer group bg-white"
+            className="flex-shrink-0 w-[320px] h-[220px] sm:w-[400px] sm:h-[275px] lg:w-[450px] lg:h-[310px] p-2 bg-white border border-[#d4ccd4] rounded-[16px] shadow-[0_2px_8px_rgba(36,0,41,0.06)] hover:border-[#df37a7] hover:shadow-lg transition-all duration-300 cursor-pointer group text-left relative overflow-hidden"
           >
-            <img
-              src={cert.image}
-              alt={cert.title}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              loading="lazy"
-            />
+            <div className="w-full h-full rounded-[10px] overflow-hidden bg-slate-50 flex items-center justify-center relative">
+              <img
+                src={cert.image}
+                alt={cert.title}
+                className="w-full h-full object-contain p-1 group-hover:scale-102 transition-transform duration-300"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#240029]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-end p-4">
+                <span className="text-white text-xs sm:text-sm font-semibold truncate drop-shadow-md">
+                  {cert.title}
+                </span>
+              </div>
+            </div>
           </button>
         ))}
       </div>
@@ -235,7 +242,7 @@ export default function Certificates({ isDark }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md"
             onClick={() => setSelected(null)}
           >
             <motion.div
@@ -243,67 +250,80 @@ export default function Certificates({ isDark }) {
               role="dialog"
               aria-modal="true"
               aria-label={selected.title}
-              initial={{ scale: 0.8, opacity: 0 }}
+              initial={{ scale: 0.92, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-              transition={{ type: "spring", stiffness: 300, damping: 25 }}
-              className={`relative max-w-4xl w-full max-h-[90vh] rounded-2xl overflow-hidden ${
-                isDark ? "bg-[#1E293B]" : "bg-white"
-              }`}
+              exit={{ scale: 0.92, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 350, damping: 28 }}
+              className="relative max-w-5xl w-full max-h-[94vh] rounded-2xl overflow-hidden bg-white shadow-2xl flex flex-col border border-[#d4ccd4]"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Close button */}
-              <button
-                onClick={() => setSelected(null)}
-                className={`absolute top-4 right-4 z-10 p-2 rounded-xl transition-colors ${
-                  isDark
-                    ? "bg-[#0F172A]/80 text-white hover:bg-[#334155]"
-                    : "bg-white/80 text-[#1E293B] hover:bg-[#F1F5F9]"
-                }`}
-                aria-label="Close"
-              >
-                <FiX size={20} />
-              </button>
+              {/* Modal Header */}
+              <div className="flex items-center justify-between px-5 sm:px-7 py-3.5 sm:py-4 bg-white border-b border-[#d4ccd4] z-10">
+                <div className="flex items-center gap-3 min-w-0 pr-4">
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#dcfce7] text-[#15803d] shrink-0 border border-[#bbf7d0]">
+                    <FiCheckCircle size={13} />
+                    Verified Credential
+                  </span>
+                  <h3 className="font-display font-bold text-sm sm:text-base text-[#240029] truncate">
+                    {selected.title}
+                  </h3>
+                </div>
 
-              {/* Prev / Next arrows */}
-              {allCerts.findIndex((c) => c.title === selected.title) > 0 && (
-                <button
-                  onClick={() => navigateModal(-1)}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-2.5 rounded-full bg-black/40 text-white hover:bg-black/60 transition-colors backdrop-blur-sm"
-                  aria-label="Previous certificate"
-                >
-                  <FiChevronLeft size={22} />
-                </button>
-              )}
-              {allCerts.findIndex((c) => c.title === selected.title) <
-                allCerts.length - 1 && (
-                <button
-                  onClick={() => navigateModal(1)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2.5 rounded-full bg-black/40 text-white hover:bg-black/60 transition-colors backdrop-blur-sm"
-                  aria-label="Next certificate"
-                >
-                  <FiChevronRight size={22} />
-                </button>
-              )}
+                <div className="flex items-center gap-2 shrink-0">
+                  <a
+                    href={selected.image}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-[#240029] bg-[#240029]/5 hover:bg-[#240029]/10 transition-colors"
+                  >
+                    <FiExternalLink size={13} />
+                    View Full Image
+                  </a>
+                  <button
+                    onClick={() => setSelected(null)}
+                    className="p-1.5 sm:p-2 rounded-lg text-[#240029] hover:bg-[#240029]/10 transition-colors cursor-pointer"
+                    aria-label="Close"
+                  >
+                    <FiX size={20} />
+                  </button>
+                </div>
+              </div>
 
-              {/* Certificate Image */}
-              <img
-                src={selected.image}
-                alt={selected.title}
-                className="w-full h-auto max-h-[80vh] object-contain"
-              />
+              {/* Certificate Image Viewport */}
+              <div className="relative bg-[#0d040f] flex items-center justify-center p-4 sm:p-8 overflow-auto max-h-[78vh]">
+                {/* Prev / Next arrows */}
+                {allCerts.findIndex((c) => c.title === selected.title) > 0 && (
+                  <button
+                    onClick={() => navigateModal(-1)}
+                    className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-white/20 hover:bg-white/40 text-white transition-all backdrop-blur-md shadow-lg cursor-pointer hover:scale-105"
+                    aria-label="Previous certificate"
+                  >
+                    <FiChevronLeft size={24} />
+                  </button>
+                )}
+                {allCerts.findIndex((c) => c.title === selected.title) < allCerts.length - 1 && (
+                  <button
+                    onClick={() => navigateModal(1)}
+                    className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-white/20 hover:bg-white/40 text-white transition-all backdrop-blur-md shadow-lg cursor-pointer hover:scale-105"
+                    aria-label="Next certificate"
+                  >
+                    <FiChevronRight size={24} />
+                  </button>
+                )}
 
-              {/* Title bar */}
-              <div
-                className={`px-6 py-4 border-t ${
-                  isDark
-                    ? "border-[#334155] text-white"
-                    : "border-[#E2E8F0] text-[#1E293B]"
-                }`}
-              >
-                <h3 className="font-display font-semibold text-lg text-center">
-                  {selected.title}
-                </h3>
+                <img
+                  src={selected.image}
+                  alt={selected.title}
+                  className="max-w-full max-h-[72vh] w-auto h-auto object-contain rounded-md shadow-2xl bg-white select-none"
+                />
+              </div>
+
+              {/* Modal Footer */}
+              <div className="px-5 sm:px-7 py-3 bg-[#fdfafc] border-t border-[#d4ccd4] flex items-center justify-between text-xs text-[#6d526d]">
+                <span>Use keyboard left/right arrow keys or swipe to navigate</span>
+                <span className="font-mono">
+                  {allCerts.findIndex((c) => c.title === selected.title) + 1} / {allCerts.length}
+                </span>
               </div>
             </motion.div>
           </motion.div>

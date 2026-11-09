@@ -17,12 +17,27 @@ export default function Footer() {
   const handleClick = (e, href) => {
     e.preventDefault();
 
+    if (href === "#home") {
+      if (window.location.pathname !== "/") {
+        navigate("/");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
     if (href.startsWith("/")) {
       navigate(href);
+      window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
 
     if (href.startsWith("#")) {
+      if (window.location.pathname !== "/") {
+        navigate("/" + href);
+        return;
+      }
       const el = document.querySelector(href);
       if (el) {
         const offset = 76;

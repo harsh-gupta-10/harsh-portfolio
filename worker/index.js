@@ -22,6 +22,63 @@ const PIXEL = Uint8Array.from([
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
+
+    if (url.pathname === "/sitemap.xml") {
+      const today = new Date().toISOString().slice(0, 10);
+      const host = url.host || "harshugupta.in";
+      const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://${host}/</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://${host}/projects</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://${host}/portfolio</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://${host}/snapmaker</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>`;
+      return new Response(xml, {
+        headers: {
+          "content-type": "application/xml; charset=UTF-8",
+          "cache-control": "public, max-age=3600",
+        },
+      });
+    }
+
+    if (url.pathname === "/robots.txt") {
+      const host = url.host || "harshugupta.in";
+      const robots = `User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /portfolio-admin
+Disallow: /api/
+
+Sitemap: https://${host}/sitemap.xml
+`;
+      return new Response(robots, {
+        headers: {
+          "content-type": "text/plain; charset=UTF-8",
+          "cache-control": "public, max-age=3600",
+        },
+      });
+    }
+
     if (!url.pathname.startsWith("/api/")) {
       return new Response(null, { status: 404 });
     }

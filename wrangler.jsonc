@@ -4,7 +4,8 @@
   "account_id": "b1d481965d10a5b83a86f3ba67c2e0ed",
   "compatibility_date": "2026-11-07",
   "routes": [
-    { "pattern": "harshugupta.in/*", "zone_name": "harshugupta.in" }
+    { "pattern": "harshugupta.in/*", "zone_name": "harshugupta.in" },
+    { "pattern": "www.harshugupta.in/*", "zone_name": "harshugupta.in" }
   ],
   "main": "./worker/index.js",
   "upload_source_maps": true,
@@ -19,7 +20,7 @@
   },
   "assets": {
     "not_found_handling": "single-page-application",
-    "run_worker_first": ["/api/*"]
+    "run_worker_first": ["/api/*", "/sitemap.xml", "/robots.txt"]
   },
   "d1_databases": [
     {
