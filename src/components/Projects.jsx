@@ -1,42 +1,68 @@
-import { motion } from "framer-motion";
+import { useState, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { FiExternalLink, FiGithub, FiStar, FiArrowRight } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import projects from "../data/projects.json";
+import initialProjects from "../data/projects.json";
+import { usePortfolioData } from "../lib/localAdmin";
 
-const categoryColors = {
-  "Embedded & IoT":
-    "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400",
-  "Front-End / UI":
-    "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
-  "Hardware & Prototyping":
-    "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400",
-  "Full Stack Web Dev":
-    "bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400",
-  "Front-End Web Dev":
-    "bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-400",
-  "UI/UX Design":
-    "bg-fuchsia-100 text-fuchsia-700 dark:bg-fuchsia-900/30 dark:text-fuchsia-400",
+const CATEGORY_TABS = [
+  { id: "all", label: "All" },
+  { id: "software-web", label: "Software/Web" },
+  { id: "iot-hardware", label: "IoT/Hardware" },
+  { id: "ui-ux", label: "UI/UX" },
+];
+
+function matchesCategory(projectCategory, tabId) {
+  if (tabId === "all") return true;
+  const cat = (projectCategory || "").toLowerCase();
+  if (tabId === "software-web") {
+    return (
+      cat.includes("software") ||
+      cat.includes("web") ||
+      cat.includes("full stack") ||
+      cat.includes("front-end")
+    );
+  }
+  if (tabId === "iot-hardware") {
+    return (
+      cat.includes("iot") ||
+      cat.includes("embedded") ||
+      cat.includes("hardware")
+    );
+  }
+  if (tabId === "ui-ux") {
+    return (
+      cat.includes("ui") ||
+      cat.includes("ux") ||
+      cat.includes("design")
+    );
+  }
+  return true;
+}
+
+const coverGradients = {
+  "Embedded & IoT": "from-emerald-500/30 to-cyan-500/20",
+  "Full Stack Web Dev": "from-indigo-500/30 to-blue-500/15",
+  "Front-End Web Dev": "from-sky-500/30 to-blue-500/15",
+  "UI/UX Design": "from-fuchsia-500/30 to-purple-500/15",
 };
 
 function ProjectCard({ project, isDark, index }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 36 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.4, delay: index * 0.1 }}
-      className={`group rounded-2xl border overflow-hidden transition-all hover:scale-[1.02] flex flex-col h-full ${
-        project.featured ? "lg:col-span-2" : ""
-      } ${
+      whileHover={{ y: -8 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ type: "spring", stiffness: 260, damping: 24, delay: index * 0.05 }}
+      className={`group rounded-2xl border overflow-hidden flex flex-col h-full ${
         isDark
-          ? "bg-[#1E293B] border-[#334155] hover:border-[#3B82F6]/30"
-          : "bg-white border-[#E2E8F0] hover:border-[#3B82F6]/30 hover:shadow-xl hover:shadow-blue-500/5"
+          ? "bg-[#1E293B] border-[#334155] hover:border-[#3B82F6]/40 hover:shadow-xl hover:shadow-blue-500/10"
+          : "bg-white border-[#E2E8F0] hover:border-[#3B82F6]/30 hover:shadow-xl hover:shadow-blue-500/10"
       }`}
     >
       {/* Image / Placeholder */}
-      <div
-        className="relative overflow-hidden aspect-video"
-      >
+      <div className="card-shine relative overflow-hidden aspect-video">
         {project.image ? (
           <img
             src={project.image}
@@ -46,13 +72,9 @@ function ProjectCard({ project, isDark, index }) {
         ) : (
           <>
             <div
-              className={`absolute inset-0 bg-gradient-to-br ${
-                project.category === "Embedded & IoT"
-                  ? "from-emerald-500/20 to-cyan-500/20"
-                  : project.category === "Front-End / UI"
-                    ? "from-blue-500/20 to-purple-500/20"
-                    : "from-orange-500/20 to-red-500/20"
-              } ${isDark ? "opacity-40" : "opacity-60"}`}
+              className={`cover-fallback absolute inset-0 bg-gradient-to-br ${
+                coverGradients[project.category] || "from-blue-500/20 to-indigo-500/20"
+              } ${isDark ? "opacity-80" : "opacity-100"}`}
             />
             <div className="absolute inset-0 flex items-center justify-center">
               <div
@@ -70,10 +92,21 @@ function ProjectCard({ project, isDark, index }) {
           </div>
         )}
         <div
-          className={`absolute top-4 right-4 px-3 py-1 text-xs font-medium rounded-full ${categoryColors[project.category] || ""}`}
+          className={`absolute top-4 right-4 px-3 py-1 text-xs font-semibold rounded-full shadow-sm ${
+            isDark ? "bg-[#0F172A]/92 text-[#BFDBFE]" : "bg-white/92 text-[#1E3A8A]"
+          }`}
         >
           {project.category}
         </div>
+        {project.year && (
+          <div
+            className={`absolute bottom-4 left-4 px-2.5 py-1 text-xs font-semibold rounded-full ${
+              isDark ? "bg-[#0F172A]/80 text-[#93C5FD]" : "bg-white/85 text-[#1E3A8A]"
+            }`}
+          >
+            {project.year}
+          </div>
+        )}
       </div>
 
       {/* Content */}
@@ -119,7 +152,7 @@ function ProjectCard({ project, isDark, index }) {
                 {project.liveDemoLabel || "Live Demo"}
               </a>
             )}
-            {project.showCode && (
+            {project.showCode && project.githubUrl && project.githubUrl !== "#" && (
               <a
                 href={project.githubUrl}
                 target="_blank"
@@ -142,6 +175,25 @@ function ProjectCard({ project, isDark, index }) {
 }
 
 export default function Projects({ isDark }) {
+  const [projectList] = usePortfolioData("projects", initialProjects);
+  const [activeTab, setActiveTab] = useState("all");
+
+  const counts = useMemo(() => {
+    return {
+      all: projectList.length,
+      "software-web": projectList.filter((p) => matchesCategory(p.category, "software-web")).length,
+      "iot-hardware": projectList.filter((p) => matchesCategory(p.category, "iot-hardware")).length,
+      "ui-ux": projectList.filter((p) => matchesCategory(p.category, "ui-ux")).length,
+    };
+  }, [projectList]);
+
+  const filteredProjects = useMemo(() => {
+    if (activeTab === "all") {
+      return projectList;
+    }
+    return projectList.filter((project) => matchesCategory(project.category, activeTab));
+  }, [projectList, activeTab]);
+
   return (
     <section
       id="projects"
@@ -154,7 +206,7 @@ export default function Projects({ isDark }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-16"
+          className="text-center mb-10"
         >
           <span className="text-[#3B82F6] font-semibold text-sm uppercase tracking-wider">
             Projects
@@ -170,22 +222,77 @@ export default function Projects({ isDark }) {
           <p
             className={`mt-4 max-w-2xl mx-auto ${isDark ? "text-[#94A3B8]" : "text-[#64748B]"}`}
           >
-            From responsive web applications to connected hardware — projects
-            that span the full stack and beyond.
+            From full-stack web applications and AI tools to custom embedded IoT hardware and UI/UX prototypes.
           </p>
         </motion.div>
 
+        {/* Category Tabs */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: 0.1 }}
+          className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-12"
+        >
+          {CATEGORY_TABS.map((tab) => {
+            const isActive = activeTab === tab.id;
+            const count = counts[tab.id];
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`relative inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 cursor-pointer ${
+                  isActive
+                    ? "bg-gradient-to-r from-[#1E3A8A] to-[#3B82F6] text-white shadow-lg shadow-blue-500/25 scale-[1.02]"
+                    : isDark
+                      ? "bg-[#1E293B] text-[#94A3B8] hover:text-white hover:bg-[#334155] border border-[#334155]"
+                      : "bg-[#F8FAFC] text-[#64748B] hover:text-[#1E293B] hover:bg-[#F1F5F9] border border-[#E2E8F0] shadow-sm"
+                }`}
+              >
+                <span>{tab.label}</span>
+                {count !== undefined && (
+                  <span
+                    className={`text-[11px] px-2 py-0.5 rounded-full font-medium transition-colors ${
+                      isActive
+                        ? "bg-white/20 text-white"
+                        : isDark
+                          ? "bg-[#0F172A] text-[#94A3B8]"
+                          : "bg-[#E2E8F0] text-[#475569]"
+                    }`}
+                  >
+                    {count}
+                  </span>
+                )}
+              </button>
+            );
+          })}
+        </motion.div>
+
         {/* Projects Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project, i) => (
-            <ProjectCard
-              key={project.title}
-              project={project}
-              isDark={isDark}
-              index={i}
-            />
-          ))}
-        </div>
+        <motion.div
+          layout
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.map((project, i) => (
+              <motion.div
+                key={project.title}
+                layout
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.25 }}
+                className="h-full"
+              >
+                <ProjectCard
+                  project={project}
+                  isDark={isDark}
+                  index={i}
+                />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
 
         {/* View All Button */}
         <motion.div

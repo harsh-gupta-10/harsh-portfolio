@@ -75,8 +75,7 @@ export default function EmailTracker() {
     }).select().single();
 
     if (!error && data) {
-      const baseUrl = import.meta.env.VITE_SUPABASE_URL;
-      const pixelUrl = `${baseUrl}/functions/v1/track?id=${trackingId}`;
+      const pixelUrl = `${window.location.origin}/api/track?id=${trackingId}`;
       const htmlSnippet = `<img src="${pixelUrl}" width="1" height="1" style="display:none; visibility:hidden;" alt="tracker" />`;
       setGeneratedHtml(htmlSnippet);
       setGeneratedUrl(pixelUrl);
@@ -110,8 +109,7 @@ export default function EmailTracker() {
   }
 
   function handleCopyRowUrl(trackingId) {
-    const baseUrl = import.meta.env.VITE_SUPABASE_URL;
-    const pixelUrl = `${baseUrl}/functions/v1/track?id=${trackingId}`;
+    const pixelUrl = `${window.location.origin}/api/track?id=${trackingId}`;
     navigator.clipboard.writeText(pixelUrl);
     setCopiedRowId(trackingId);
     setTimeout(() => setCopiedRowId(null), 2000);

@@ -76,7 +76,7 @@ export const Overlay = ({ isDark, scrollYProgress }) => {
                         Available for opportunities
                     </span>
                     <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold tracking-tight mb-4 drop-shadow-[0_0_15px_rgba(0,0,0,0.8)]">
-                        Hi, I'm <br/><span className="bg-gradient-to-r from-[#1E3A8A] to-[#3B82F6] bg-clip-text text-transparent">
+                        Hi, I'm <br/><span className="name-shimmer">
                         Harsh Gupta
                         </span>
                     </h1>

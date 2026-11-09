@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Plus, Pencil, Trash2, Save, X, Check } from "lucide-react";
 import initialData from "../../data/skills.json";
-import { saveDataFile } from "../../lib/localAdmin";
+import { usePortfolioData, savePortfolioData } from "../../lib/localAdmin";
 
 const ICON_KEYS = [
   "FiCode","FiTool","FiCpu","FiBox","FiPenTool","FiSmartphone","FiFileText","FiGrid","FiMonitor","FiLayers",
@@ -121,16 +121,16 @@ function CatModal({ cat, onSave, onClose }) {
 }
 
 export default function PASkills() {
-  const [categories, setCategories] = useState(initialData);
+  const [categories, setCategories, loading, reload] = usePortfolioData("skills", initialData);
   const [editing, setEditing] = useState(null);
   const [saved, setSaved] = useState(false);
 
   const persist = async (updated) => {
     try {
-      await saveDataFile("skills.json", updated);
+      await savePortfolioData("skills", updated);
       setCategories(updated);
       setSaved(true);
-      setTimeout(() => setSaved(false), 2000);
+      setTimeout(() => setSaved(false), 2500);
     } catch (e) { alert("❌ " + e.message); }
   };
 

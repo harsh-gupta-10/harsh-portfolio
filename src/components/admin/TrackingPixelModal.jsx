@@ -22,8 +22,7 @@ export default function TrackingPixelModal({ isOpen, onClose, recipientEmail, su
     }).select().single();
 
     if (!error && data) {
-      const baseUrl = import.meta.env.VITE_SUPABASE_URL;
-      const pixelUrl = `${baseUrl}/functions/v1/track?id=${trackingId}`;
+      const pixelUrl = `${window.location.origin}/api/track?id=${trackingId}`;
       const pixelSnippet = `<img src="${pixelUrl}" width="1" height="1" style="display:none; visibility:hidden;" alt="" />`;
 
       // Public shareable link — opens the branded view page in the client's browser

@@ -2,13 +2,8 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiX, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import Hammer from "hammerjs";
-import certificatesData from "../data/certificates.json";
-
-const rows = [
-  certificatesData.row1,
-  certificatesData.row2,
-  
-];
+import initialCertificatesData from "../data/certificates.json";
+import { usePortfolioData } from "../lib/localAdmin";
 
 function ScrollingRow({ certificates, direction, isDark, onSelect }) {
   const containerRef = useRef(null);
@@ -133,8 +128,10 @@ function ScrollingRow({ certificates, direction, isDark, onSelect }) {
 }
 
 export default function Certificates({ isDark }) {
+  const [certificatesData] = usePortfolioData("certificates", initialCertificatesData);
+  const rows = [certificatesData?.row1 || [], certificatesData?.row2 || []];
+  const allCerts = [...(certificatesData?.row1 || []), ...(certificatesData?.row2 || [])];
   const [selected, setSelected] = useState(null);
-  const allCerts = [...(certificatesData.row1 || []), ...(certificatesData.row2 || [])];
   const modalRef = useRef(null);
 
   // Close modal on Escape key

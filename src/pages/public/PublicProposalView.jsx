@@ -16,8 +16,7 @@ export default function PublicProposalView() {
 
   useEffect(() => {
     if (!token) return;
-    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-    fetch(`${supabaseUrl}/functions/v1/view-document?id=${token}`, {
+    fetch(`/api/public/document?id=${encodeURIComponent(token)}`, {
       headers: { "Content-Type": "application/json" },
     })
       .then((r) => r.json())

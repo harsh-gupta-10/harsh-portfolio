@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { Plus, Trash2, Save, X, Check, Pencil } from "lucide-react";
 import initialData from "../../data/about.json";
-import { saveDataFile } from "../../lib/localAdmin";
+import { usePortfolioData, savePortfolioData } from "../../lib/localAdmin";
 
 const ICON_KEYS = [
   "FiMonitor","FiCode","FiCpu","FiLayers","FiBox","FiTool","FiPenTool","FiSmartphone","FiGrid","FiFileText",
 ];
 
 export default function PAAbout() {
-  const [data, setData] = useState(JSON.parse(JSON.stringify(initialData)));
+  const [data, setData, loading, reload] = usePortfolioData("about", initialData);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
 
@@ -27,9 +27,9 @@ export default function PAAbout() {
   const handleSave = async () => {
     setSaving(true);
     try {
-      await saveDataFile("about.json", data);
+      await savePortfolioData("about", data);
       setSaved(true);
-      setTimeout(() => setSaved(false), 2000);
+      setTimeout(() => setSaved(false), 2500);
     } catch (e) { alert("❌ " + e.message); }
     finally { setSaving(false); }
   };

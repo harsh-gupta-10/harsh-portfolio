@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
-import categories from "../data/skills.json";
+import initialCategories from "../data/skills.json";
+import { usePortfolioData } from "../lib/localAdmin";
 import { getIcon } from "../lib/iconRegistry";
 
 export default function Skills({ isDark }) {
+  const [categories] = usePortfolioData("skills", initialCategories);
   return (
     <section
       id="skills"
@@ -72,9 +74,11 @@ export default function Skills({ isDark }) {
                   {cat.skills.map((skill) => {
                     const SkillIcon = getIcon(skill.iconKey);
                     return (
-                      <span
+                      <motion.span
                         key={skill.name}
-                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                        whileHover={{ y: -3, scale: 1.04 }}
+                        transition={{ type: "spring", stiffness: 420, damping: 18 }}
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium cursor-default ${
                           isDark
                             ? "bg-[#0F172A] text-[#94A3B8] hover:text-[#60A5FA]"
                             : "bg-[#F1F5F9] text-[#475569] hover:text-[#1E3A8A] hover:bg-[#EFF6FF]"
@@ -82,7 +86,7 @@ export default function Skills({ isDark }) {
                       >
                         <SkillIcon size={14} />
                         {skill.name}
-                      </span>
+                      </motion.span>
                     );
                   })}
                 </div>

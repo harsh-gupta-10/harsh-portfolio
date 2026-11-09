@@ -61,6 +61,10 @@ coverage
 # Supabase
 .supabase
 
+# Cloudflare
+.wrangler
+.dev.vars*
+
 # Misc
 .eslintcache
 .stylelintcache

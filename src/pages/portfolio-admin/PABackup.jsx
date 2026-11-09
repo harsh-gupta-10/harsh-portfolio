@@ -21,11 +21,26 @@ export default function PABackup() {
   const [restoring, setRestoring] = useState(false);
   const [restoreStatus, setRestoreStatus] = useState(null);
 
-  const handleExport = () => {
+  const handleExport = async () => {
+    let dataToExport = ALL_FILES;
+    try {
+      const res = await fetch("/api/portfolio");
+      if (res.ok) {
+        const live = await res.json();
+        dataToExport = {
+          "allProjects.json": live.projects || projectsData,
+          "experience.json": live.experience || experienceData,
+          "skills.json": live.skills || skillsData,
+          "about.json": live.about || aboutData,
+          "certificates.json": live.certificates || certData,
+        };
+      }
+    } catch {}
+
     const backup = {
       version: "1.0",
       exportedAt: new Date().toISOString(),
-      data: ALL_FILES,
+      data: dataToExport,
     };
     const blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);

@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
 import { FiBriefcase, FiMapPin } from "react-icons/fi";
-import experiences from "../data/experience.json";
+import initialExperiences from "../data/experience.json";
+import { usePortfolioData } from "../lib/localAdmin";
 
 export default function Experience({ isDark }) {
+  const [experiences] = usePortfolioData("experience", initialExperiences);
   return (
     <section
       id="experience"
@@ -32,14 +34,23 @@ export default function Experience({ isDark }) {
 
         {/* Timeline */}
         <div className="max-w-3xl mx-auto">
-          <div className="relative border-l-2 border-slate-200 dark:border-slate-800 space-y-12 ml-3 sm:ml-6">
+          <div className="relative space-y-12 ml-3 sm:ml-6">
+            <motion.div
+              aria-hidden
+              initial={{ scaleY: 0 }}
+              whileInView={{ scaleY: 1 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 1.05, ease: "easeOut" }}
+              className="absolute left-0 top-2 bottom-2 w-0.5 origin-top bg-gradient-to-b from-[#1E3A8A] via-[#3B82F6] to-transparent"
+            />
             {experiences.map((exp, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, x: -20 }}
+                initial={{ opacity: 0, x: -24 }}
                 whileInView={{ opacity: 1, x: 0 }}
+                whileHover={{ y: -4 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ type: "spring", stiffness: 260, damping: 24, delay: index * 0.08 }}
                 className="relative pl-8 md:pl-12"
               >
                 {/* Timeline Dot */}

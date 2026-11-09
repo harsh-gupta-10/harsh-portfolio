@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Plus, Pencil, Trash2, Save, X, Check, ChevronDown, ChevronUp } from "lucide-react";
 import initialData from "../../data/experience.json";
-import { saveDataFile } from "../../lib/localAdmin";
+import { usePortfolioData, savePortfolioData } from "../../lib/localAdmin";
 
 const EMPTY_EXP = {
   role: "",
@@ -132,16 +132,16 @@ function ExpModal({ exp, onSave, onClose }) {
 }
 
 export default function PAExperience() {
-  const [items, setItems] = useState(initialData);
+  const [items, setItems, loading, reload] = usePortfolioData("experience", initialData);
   const [editing, setEditing] = useState(null);
   const [saved, setSaved] = useState(false);
 
   const persist = async (updated) => {
     try {
-      await saveDataFile("experience.json", updated);
+      await savePortfolioData("experience", updated);
       setItems(updated);
       setSaved(true);
-      setTimeout(() => setSaved(false), 2000);
+      setTimeout(() => setSaved(false), 2500);
     } catch (e) {
       alert("❌ Save failed: " + e.message);
     }

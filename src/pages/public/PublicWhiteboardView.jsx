@@ -35,7 +35,7 @@ export default function PublicWhiteboardView() {
       else setVerifying(true);
       setPasswordError("");
 
-      const edgeUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/view-whiteboard?token=${token}`;
+      const edgeUrl = `/api/public/whiteboard?token=${encodeURIComponent(token)}`;
       const payload = pwd ? { password: pwd } : {};
       
       const response = await fetch(edgeUrl, {
@@ -71,7 +71,7 @@ export default function PublicWhiteboardView() {
 
   const saveWhiteboardData = async (snapshot) => {
     try {
-      const edgeUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/view-whiteboard?token=${token}`;
+      const edgeUrl = `/api/public/whiteboard?token=${encodeURIComponent(token)}`;
       const payload = { 
         action: "SAVE", 
         whiteboard_data: snapshot 

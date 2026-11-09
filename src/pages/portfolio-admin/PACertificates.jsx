@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Plus, Trash2, Save, X, Check } from "lucide-react";
 import initialData from "../../data/certificates.json";
-import { saveDataFile } from "../../lib/localAdmin";
+import { usePortfolioData, savePortfolioData } from "../../lib/localAdmin";
 import ImageUpload from "./components/ImageUpload";
 
 function CertCard({ cert, onDelete, showDelete }) {
@@ -70,7 +70,7 @@ function AddCertForm({ onAdd, onClose }) {
 }
 
 export default function PACertificates() {
-  const [data, setData] = useState(JSON.parse(JSON.stringify(initialData)));
+  const [data, setData, loading, reload] = usePortfolioData("certificates", initialData);
   const [saved, setSaved] = useState(false);
   const [saving, setSaving] = useState(false);
   const [showAdd, setShowAdd] = useState(null); // "row1" | "row2"
@@ -78,10 +78,10 @@ export default function PACertificates() {
   const persist = async (updated) => {
     setSaving(true);
     try {
-      await saveDataFile("certificates.json", updated);
+      await savePortfolioData("certificates", updated);
       setData(updated);
       setSaved(true);
-      setTimeout(() => setSaved(false), 2000);
+      setTimeout(() => setSaved(false), 2500);
     } catch (e) { alert("❌ " + e.message); }
     finally { setSaving(false); }
   };

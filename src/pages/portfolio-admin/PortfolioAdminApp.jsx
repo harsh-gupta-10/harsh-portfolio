@@ -14,7 +14,6 @@ import PACertificates from "./PACertificates";
 import PAMessages from "./PAMessages";
 import PABackup from "./PABackup";
 
-const ADMIN_PIN = "5678";
 const PIN_KEY = "pa_unlocked";
 
 const NAV = [
@@ -32,22 +31,57 @@ function PinLock({ onUnlock }) {
   const [pin, setPin] = useState("");
   const [error, setError] = useState(false);
   const [shake, setShake] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (pin === ADMIN_PIN) {
-      sessionStorage.setItem(PIN_KEY, "1");
-      onUnlock();
-    } else {
+  const verifyPin = async (candidate) => {
+    if (loading || !candidate) return;
+    setLoading(true);
+    setError(false);
+    try {
+      const res = await fetch("/api/auth/verify-portfolio-pin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pin: candidate }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.success) {
+        sessionStorage.setItem(PIN_KEY, data.token || "1");
+        onUnlock();
+      } else {
+        throw new Error(data.error || "Incorrect PIN");
+      }
+    } catch {
       setError(true);
       setShake(true);
       setPin("");
       setTimeout(() => { setError(false); setShake(false); }, 700);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const append = (d) => setPin((p) => p.length < 6 ? p + d : p);
-  const backspace = () => setPin((p) => p.slice(0, -1));
+  const handleSubmit = (e) => {
+    if (e) e.preventDefault();
+    if (pin.length >= 4) {
+      verifyPin(pin);
+    }
+  };
+
+  const append = (d) => {
+    if (loading) return;
+    setPin((p) => {
+      const next = p.length < 6 ? p + d : p;
+      if (next.length === 4) {
+        setTimeout(() => verifyPin(next), 50);
+      }
+      return next;
+    });
+  };
+
+  const backspace = () => {
+    if (loading) return;
+    setPin((p) => p.slice(0, -1));
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center" style={{ background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)" }}>
@@ -106,9 +140,10 @@ function PinLock({ onUnlock }) {
           </button>
           <button
             onClick={handleSubmit}
-            className="h-14 rounded-2xl bg-gradient-to-r from-blue-600 to-violet-600 text-white text-sm font-bold transition-all active:scale-95 hover:shadow-lg hover:shadow-blue-500/30"
+            disabled={loading}
+            className={`h-14 rounded-2xl bg-gradient-to-r from-blue-600 to-violet-600 text-white text-sm font-bold transition-all active:scale-95 hover:shadow-lg hover:shadow-blue-500/30 ${loading ? "opacity-70 cursor-not-allowed" : "cursor-pointer"}`}
           >
-            Enter
+            {loading ? "..." : "Enter"}
           </button>
         </div>
 

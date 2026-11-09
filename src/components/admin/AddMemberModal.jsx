@@ -2,14 +2,19 @@ import { useState } from "react";
 import { supabase } from "../../lib/supabase";
 import { X, UserPlus, Copy, Check, Loader2, Key } from "lucide-react";
 import { ROLE_COLORS, getPresetPermissions, MODULES } from "../../lib/permissions";
-import { createClient } from "@supabase/supabase-js";
+
+function randomPassword() {
+  const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789";
+  const bytes = crypto.getRandomValues(new Uint8Array(12));
+  return Array.from(bytes, (byte) => alphabet[byte % alphabet.length]).join("");
+}
 
 export default function AddMemberModal({ open, onClose, onAdded }) {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [role, setRole] = useState("manager");
   // Default generated password
-  const [password, setPassword] = useState(() => Math.random().toString(36).slice(-8));
+  const [password, setPassword] = useState(randomPassword);
 
   const [creating, setCreating] = useState(false);
   const [successData, setSuccessData] = useState(null);
@@ -23,41 +28,18 @@ export default function AddMemberModal({ open, onClose, onAdded }) {
     setCreating(true);
 
     try {
-      // 1. Initialize a detached client to prevent resetting the admin's session!
-      // DO NOT USE the main supabase client for signUp, it will log the admin out!
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-      const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-      
-      const detachedClient = createClient(supabaseUrl, supabaseKey, {
-        auth: {
-          persistSession: false,
-          autoRefreshToken: false,
-        }
+      const response = await fetch("/api/auth/create-member", {
+        method: "POST",
+        credentials: "include",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ email, password, full_name: name }),
       });
-
-      const { data: authData, error: signupErr } = await detachedClient.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            full_name: name
-          }
-        }
-      });
-
-      if (signupErr) throw signupErr;
+      const authData = await response.json().catch(() => ({ message: "Failed to create user account." }));
+      if (!response.ok) throw new Error(authData.message || "Failed to create user account.");
 
       const userId = authData.user?.id;
       if (!userId) throw new Error("Failed to create user account.");
 
-      if (authData.user?.identities?.length === 0) {
-          throw new Error("A user with this email already exists in the system.");
-      }
-
-      // At this point, `auth.users` row is created. 
-      // The Postgres Trigger `handle_new_user` will have fired, creating a profile with role 'manager'.
-      
-      // 2. Update the profile with the CORRECT role using our main authenticated client
       const { error: profileErr } = await supabase.from("profiles").update({
         full_name: name,
         role: role,
@@ -104,7 +86,7 @@ export default function AddMemberModal({ open, onClose, onAdded }) {
     setEmail("");
     setName("");
     setRole("manager");
-    setPassword(Math.random().toString(36).slice(-8));
+    setPassword(randomPassword());
     setSuccessData(null);
     setCopied(false);
     onClose();

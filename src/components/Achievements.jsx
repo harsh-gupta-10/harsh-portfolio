@@ -57,19 +57,22 @@ export default function Achievements({ isDark }) {
               key={item.title}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -8 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.1 }}
-              className={`w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] p-6 rounded-2xl border text-center transition-all hover:scale-105 ${
+              transition={{ type: "spring", stiffness: 280, damping: 22, delay: i * 0.08 }}
+              className={`w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] p-6 rounded-2xl border text-center ${
                 isDark
                   ? "bg-[#1E293B] border-[#334155] hover:border-[#3B82F6]/30"
                   : "bg-white border-[#E2E8F0] hover:border-[#3B82F6]/30 hover:shadow-xl hover:shadow-blue-500/5"
               }`}
             >
-              <div
+              <motion.div
+                whileHover={{ rotate: -8, scale: 1.06 }}
+                transition={{ type: "spring", stiffness: 320, damping: 16 }}
                 className={`w-14 h-14 mx-auto rounded-2xl bg-gradient-to-br ${item.color} flex items-center justify-center mb-4`}
               >
                 <item.icon size={24} className="text-white" />
-              </div>
+              </motion.div>
               <h3
                 className={`font-display font-bold ${isDark ? "text-white" : "text-[#1E293B]"}`}
               >

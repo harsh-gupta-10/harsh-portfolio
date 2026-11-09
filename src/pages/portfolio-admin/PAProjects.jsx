@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Plus, Pencil, Trash2, Save, X, Star, ExternalLink, GripVertical, Check } from "lucide-react";
+import { Plus, Pencil, Trash2, Save, X, Star, ExternalLink, GripVertical, Check, RefreshCw, Database } from "lucide-react";
 import { FiGithub as Github } from "react-icons/fi";
 import initialProjects from "../../data/allProjects.json";
-import { saveDataFile } from "../../lib/localAdmin";
+import { usePortfolioData, savePortfolioData } from "../../lib/localAdmin";
 import ImageUpload from "./components/ImageUpload";
 
 const CATEGORIES = ["Front-End Web Dev", "Full Stack Web Dev", "Embedded & IoT", "UI/UX Design", "Other"];
@@ -164,7 +164,7 @@ function ProjectModal({ project, onSave, onClose }) {
 }
 
 export default function PAProjects() {
-  const [projects, setProjects] = useState(initialProjects);
+  const [projects, setProjects, loading, reload] = usePortfolioData("projects", initialProjects);
   const [editing, setEditing] = useState(null);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -172,10 +172,10 @@ export default function PAProjects() {
   const persist = async (updated) => {
     setSaving(true);
     try {
-      await saveDataFile("allProjects.json", updated);
+      await savePortfolioData("projects", updated);
       setProjects(updated);
       setSaved(true);
-      setTimeout(() => setSaved(false), 2000);
+      setTimeout(() => setSaved(false), 2500);
     } catch (e) {
       alert("❌ Save failed: " + e.message);
     } finally {
@@ -217,13 +217,26 @@ export default function PAProjects() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white">Projects</h1>
+          <h1 className="text-2xl font-bold text-white flex items-center gap-2">
+            Projects
+            <span className="text-[11px] font-normal px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 flex items-center gap-1">
+              <Database size={11} /> Cloud D1
+            </span>
+          </h1>
           <p className="text-sm text-slate-400 mt-1">Manage your portfolio projects · {projects.length} total</p>
         </div>
         <div className="flex items-center gap-3">
+          <button
+            onClick={() => reload()}
+            disabled={loading}
+            className="p-2.5 rounded-xl border border-slate-700 hover:bg-white/5 text-slate-400 hover:text-white transition-all disabled:opacity-50"
+            title="Reload from database"
+          >
+            <RefreshCw size={15} className={loading ? "animate-spin text-blue-400" : ""} />
+          </button>
           {saved && (
             <span className="flex items-center gap-1.5 text-sm text-emerald-400 animate-pulse">
-              <Check size={14} /> Saved to disk
+              <Check size={14} /> Saved to database
             </span>
           )}
           <button

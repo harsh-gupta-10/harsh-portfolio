@@ -1,9 +1,166 @@
 [
   {
+    "title": "Arcion",
+    "description": "Premium 3D printing marketplace and on-demand fabrication platform across India, featuring automated STL slicing, custom CAD quotes, and DTC collectibles.",
+    "image": "/imgs/projects/arcion.gif",
+    "tags": [
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "3D Printing",
+      "E-Commerce"
+    ],
+    "category": "Full Stack Web Dev",
+    "year": "2026",
+    "featured": true,
+    "showLiveDemo": true,
+    "liveDemoLabel": "Site Live",
+    "liveUrl": "https://arcion.in/",
+    "showCode": true,
+    "githubUrl": "https://github.com/harsh-gupta-10/link-arcion"
+  },
+  {
+    "title": "BolKhata",
+    "description": "Voice and AI-first digital khata (ledger) for Bharat. Track credit (udhaar), customer balances, rent, and utility bills seamlessly in Hindi and Hinglish through voice or text.",
+    "image": "/imgs/projects/bolkhata.webp",
+    "tags": [
+      "Cloudflare Workers",
+      "React",
+      "AI",
+      "Voice",
+      "Tailwind CSS"
+    ],
+    "category": "Full Stack Web Dev",
+    "year": "2026",
+    "featured": true,
+    "showLiveDemo": true,
+    "liveDemoLabel": "App Live",
+    "liveUrl": "https://bolkhata.harshgupta24716.workers.dev/",
+    "showCode": false,
+    "githubUrl": "#"
+  },
+  {
+    "title": "Rewardlo",
+    "description": "A merchant-approved digital loyalty stamp card platform helping cafés, restaurants, salons, and local stores boost repeat visits without app downloads or SMS spam.",
+    "image": "/imgs/projects/rewardlo.gif",
+    "tags": [
+      "Next.js",
+      "TypeScript",
+      "Cloudflare Workers",
+      "Tailwind CSS"
+    ],
+    "category": "Full Stack Web Dev",
+    "year": "2026",
+    "featured": true,
+    "showLiveDemo": true,
+    "liveDemoLabel": "App Live",
+    "liveUrl": "https://rewardlo-app.harshgupta24716.workers.dev/",
+    "showCode": false,
+    "githubUrl": "#"
+  },
+  {
+    "title": "SolarSaathi",
+    "description": "India-first rooftop solar decision platform. It checks whether a roof is suitable, sizes a system, stacks central and state subsidies, and tracks the application. Built on AWS.",
+    "image": "/imgs/projects/solarsaathi.webp",
+    "tags": [
+      "TypeScript",
+      "Next.js",
+      "AWS"
+    ],
+    "category": "Full Stack Web Dev",
+    "year": "2026",
+    "featured": true,
+    "showLiveDemo": false,
+    "liveDemoLabel": "Live",
+    "liveUrl": "#",
+    "showCode": true,
+    "githubUrl": "https://github.com/harsh-gupta-10/SolarSaathi-AWS"
+  },
+  {
+    "title": "FestivAI",
+    "description": "An autonomous celebration planner. It builds an event plan with Next.js, Google Gemini, OpenAI, and Cloudflare Workers.",
+    "image": "/imgs/projects/festivai.webp",
+    "tags": [
+      "TypeScript",
+      "Next.js",
+      "Gemini",
+      "Cloudflare Workers"
+    ],
+    "category": "Full Stack Web Dev",
+    "year": "2026",
+    "featured": true,
+    "showLiveDemo": false,
+    "liveDemoLabel": "Live",
+    "liveUrl": "#",
+    "showCode": true,
+    "githubUrl": "https://github.com/harsh-gupta-10/FestivAI"
+  },
+  {
+    "title": "ReviewLinks",
+    "description": "QR and NFC review cards for businesses in India. A printed code stays permanent while the destination is retargeted from a mobile admin, running on Cloudflare Workers and D1.",
+    "image": "/imgs/projects/reviewlinks.webp",
+    "tags": [
+      "TypeScript",
+      "Cloudflare Workers",
+      "D1",
+      "React"
+    ],
+    "category": "Full Stack Web Dev",
+    "year": "2026",
+    "featured": false,
+    "showLiveDemo": false,
+    "liveDemoLabel": "Live",
+    "liveUrl": "#",
+    "showCode": true,
+    "githubUrl": "https://github.com/harsh-gupta-10/link-arcion"
+  },
+  {
+    "title": "GitoPrompt",
+    "description": "Turns a public GitHub repository into a context-aware AI prompt. It reads the file tree, caches the result, and refreshes when the repo changes.",
+    "image": "/imgs/projects/gitoprompt.gif",
+    "tags": [
+      "TypeScript",
+      "React",
+      "Vite",
+      "Tailwind"
+    ],
+    "category": "Full Stack Web Dev",
+    "year": "2026",
+    "featured": false,
+    "showLiveDemo": true,
+    "liveDemoLabel": "Live",
+    "liveUrl": "https://gitoprompt.vercel.app",
+    "showCode": true,
+    "githubUrl": "https://github.com/harsh-gupta-10/gitoprompt"
+  },
+  {
+    "title": "ThreadScout",
+    "description": "Watches public startup career pages and flags new or changed roles before they show up on generic job boards.",
+    "image": "/imgs/projects/threadscout.gif",
+    "tags": [
+      "TypeScript",
+      "Next.js"
+    ],
+    "category": "Full Stack Web Dev",
+    "year": "2026",
+    "featured": false,
+    "showLiveDemo": true,
+    "liveDemoLabel": "Live",
+    "liveUrl": "https://threadscout-nine.vercel.app",
+    "showCode": true,
+    "githubUrl": "https://github.com/harsh-gupta-10/ThreadScout"
+  },
+  {
     "title": "Macropad using Raspberry Pi Pico",
     "description": "A custom macropad built using Raspberry Pi Pico and CircuitPython, designed to execute programmable macros and system controls. Supports configurable key mappings, plug-and-play functionality, and future expansion for display and rotary inputs.",
     "image": "/imgs/projects/macropad.webp",
-    "tags": ["Raspberry Pi Pico", "CircuitPython", "HID", "Python", "Embedded Systems"],
+    "tags": [
+      "Raspberry Pi Pico",
+      "CircuitPython",
+      "HID",
+      "Python",
+      "Embedded Systems"
+    ],
     "category": "Embedded & IoT",
     "featured": true,
     "showLiveDemo": false,
@@ -15,8 +172,15 @@
   {
     "title": "Vishnushakti Foundation Website",
     "description": "A clean and fully responsive website developed as per client requirements, featuring a custom backend with an admin panel for managing content and data. Includes email integration and secure payment gateway services for seamless communication and online transactions.",
-    "image": "/imgs/projects/vishnushaktifoundation.webp",
-    "tags": ["PHP", "JavaScript", "CSS", "Figma Design", "UI/UX", "SQL"],
+    "image": "/imgs/projects/vishnushakti.gif",
+    "tags": [
+      "PHP",
+      "JavaScript",
+      "CSS",
+      "Figma Design",
+      "UI/UX",
+      "SQL"
+    ],
     "category": "Front-End Web Dev",
     "featured": false,
     "showLiveDemo": true,
@@ -29,7 +193,13 @@
     "title": "E-Kaathi – Smart Blind Stick",
     "description": "A smart assistive device for visually impaired users featuring obstacle detection, SOS alert functionality, GPS-based location sharing via mobile connectivity, and adjustable vibration feedback for different alert levels.",
     "image": "/imgs/projects/ekaathi.webp",
-    "tags": ["ESP32", "IoT", "GPS", "Assistive Technology", "Embedded Systems"],
+    "tags": [
+      "ESP32",
+      "IoT",
+      "GPS",
+      "Assistive Technology",
+      "Embedded Systems"
+    ],
     "category": "Embedded & IoT",
     "featured": true,
     "showLiveDemo": false,
@@ -41,8 +211,15 @@
   {
     "title": "A3Distributor Website",
     "description": "A business website for a water and cold drink distributor, featuring product listings, distributor information, inquiry forms, and a clean, mobile-friendly layout designed for local business operations.",
-    "image": "/imgs/projects/a3distributor-1.webp",
-    "tags": ["Next.js", "React","Tailwind CSS", "JavaScript", "Business Website", "UI/UX"],
+    "image": "/imgs/projects/a3distributor.gif",
+    "tags": [
+      "Next.js",
+      "React",
+      "Tailwind CSS",
+      "JavaScript",
+      "Business Website",
+      "UI/UX"
+    ],
     "category": "Full Stack Web Dev",
     "featured": false,
     "showLiveDemo": true,
@@ -55,7 +232,12 @@
     "title": "Coaching Class UI/UX Design",
     "description": "A comprehensive UI/UX design for a coaching class platform, focusing on seamless student-teacher interactions, course management, and an intuitive learning experience.",
     "image": "/imgs/projects/classes.webp",
-    "tags": ["Figma", "UI/UX Design", "EdTech", "Prototyping"],
+    "tags": [
+      "Figma",
+      "UI/UX Design",
+      "EdTech",
+      "Prototyping"
+    ],
     "category": "UI/UX Design",
     "featured": false,
     "showLiveDemo": true,
@@ -68,7 +250,12 @@
     "title": "Dental Clinic Website UI/UX Design",
     "description": "UI/UX design work for a dental clinic website, focusing on clean aesthetics, patient-friendly navigation, service clarity, and responsive layouts tailored for healthcare users.",
     "image": "/imgs/projects/dentaluiux.webp",
-    "tags": ["Figma", "UI/UX Design", "Healthcare Website", "Prototyping"],
+    "tags": [
+      "Figma",
+      "UI/UX Design",
+      "Healthcare Website",
+      "Prototyping"
+    ],
     "category": "UI/UX Design",
     "featured": false,
     "showLiveDemo": true,

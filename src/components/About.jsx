@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
-import aboutData from "../data/about.json";
+import initialAboutData from "../data/about.json";
+import { usePortfolioData } from "../lib/localAdmin";
 import { getIcon } from "../lib/iconRegistry";
 
 export default function About({ isDark }) {
-  const { bio, stats, highlights } = aboutData;
+  const [data] = usePortfolioData("about", initialAboutData);
+  const { bio = [], stats = [], highlights = [] } = data || {};
 
   return (
     <section
@@ -85,8 +87,9 @@ export default function About({ isDark }) {
                   key={item.label}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
+                  whileHover={{ y: -4 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.1 }}
+                  transition={{ type: "spring", stiffness: 280, damping: 22, delay: i * 0.08 }}
                   className={`flex items-center gap-5 p-5 rounded-2xl border transition-all hover:scale-[1.02] group ${
                     isDark
                       ? "bg-[#1E293B] border-[#334155] hover:border-[#3B82F6]/30"

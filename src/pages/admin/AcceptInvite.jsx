@@ -59,6 +59,7 @@ export default function AcceptInvite() {
       const { data: authData, error: signupErr } = await supabase.auth.signUp({
         email: invite.email,
         password: form.password,
+        options: { data: { invite_token: token, full_name: form.name } },
       });
       if (signupErr) throw signupErr;
 

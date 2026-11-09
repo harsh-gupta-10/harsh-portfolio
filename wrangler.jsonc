@@ -1,0 +1,46 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "harsh-portfolio",
+  "account_id": "b1d481965d10a5b83a86f3ba67c2e0ed",
+  "compatibility_date": "2026-11-07",
+  "routes": [
+    { "pattern": "harshugupta.in/*", "zone_name": "harshugupta.in" }
+  ],
+  "main": "./worker/index.js",
+  "upload_source_maps": true,
+  "observability": {
+    "enabled": true,
+    "traces": {
+      "enabled": true
+    }
+  },
+  "vars": {
+    "ADMIN_EMAIL": "harshgupta24716@gmail.com"
+  },
+  "assets": {
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "harsh-portfolio",
+      "database_id": "dcdece5d-b46a-4bfa-bd3a-8866f728ad74",
+      "migrations_dir": "d1/migrations"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "MEDIA",
+      "bucket_name": "harsh-portfolio-media"
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      { "name": "ROOMS", "class_name": "WhiteboardRoom" }
+    ]
+  },
+  "migrations": [
+    { "tag": "v1", "new_sqlite_classes": ["WhiteboardRoom"] }
+  ]
+}

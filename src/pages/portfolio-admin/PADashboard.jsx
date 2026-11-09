@@ -9,6 +9,12 @@ import certData from "../../data/certificates.json";
 export default function PADashboard() {
   const [unreadCount, setUnreadCount] = useState(null);
   const [totalMessages, setTotalMessages] = useState(null);
+  const [portfolioData, setPortfolioData] = useState({
+    projects: projectsData,
+    experience: experienceData,
+    skills: skillsData,
+    certificates: certData,
+  });
 
   useEffect(() => {
     supabase
@@ -20,14 +26,28 @@ export default function PADashboard() {
           setUnreadCount(data.filter((m) => !m.is_read).length);
         }
       });
+
+    fetch("/api/portfolio")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        if (d) {
+          setPortfolioData((prev) => ({
+            projects: d.projects || prev.projects,
+            experience: d.experience || prev.experience,
+            skills: d.skills || prev.skills,
+            certificates: d.certificates || prev.certificates,
+          }));
+        }
+      })
+      .catch(() => {});
   }, []);
 
-  const totalSkills = skillsData.reduce((acc, cat) => acc + cat.skills.length, 0);
-  const totalCerts = (certData.row1?.length || 0) + (certData.row2?.length || 0);
+  const totalSkills = (portfolioData.skills || []).reduce((acc, cat) => acc + (cat.skills?.length || 0), 0);
+  const totalCerts = (portfolioData.certificates?.row1?.length || 0) + (portfolioData.certificates?.row2?.length || 0);
 
   const stats = [
-    { icon: FolderKanban, label: "Projects", value: projectsData.length, color: "blue", link: "/portfolio-admin/projects" },
-    { icon: Briefcase, label: "Experiences", value: experienceData.length, color: "violet", link: "/portfolio-admin/experience" },
+    { icon: FolderKanban, label: "Projects", value: (portfolioData.projects || []).length, color: "blue", link: "/portfolio-admin/projects" },
+    { icon: Briefcase, label: "Experiences", value: (portfolioData.experience || []).length, color: "violet", link: "/portfolio-admin/experience" },
     { icon: Code2, label: "Skills", value: totalSkills, color: "emerald", link: "/portfolio-admin/skills" },
     { icon: Award, label: "Certificates", value: totalCerts, color: "amber", link: "/portfolio-admin/certificates" },
     {
@@ -54,7 +74,7 @@ export default function PADashboard() {
       {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-white">Dashboard</h1>
-        <p className="text-sm text-slate-400 mt-1">Overview of your portfolio content. All edits update local files instantly.</p>
+        <p className="text-sm text-slate-400 mt-1">Overview of your portfolio content. Connected to Cloudflare D1 database.</p>
       </div>
 
       {/* Stats Grid */}
