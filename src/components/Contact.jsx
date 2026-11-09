@@ -106,9 +106,8 @@ export default function Contact() {
               <span>LinkedIn</span>
             </a>
             <a
-              href="https://drive.google.com/drive/folders/1QsjDgQIb9rnn2SBt4W5WgHpdeZpqym1C?usp=sharing"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/Harsh_Gupta_Resume.pdf"
+              download="Harsh_Gupta_Resume.pdf"
               className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/5 border border-white/10 hover:bg-white/15 text-white transition-colors"
             >
               <FiDownload size={15} />

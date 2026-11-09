@@ -189,8 +189,7 @@ export default function CreativePortfolio() {
                   </a>
                   <a
                     href="/Harsh_Gupta_Resume.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    download="Harsh_Gupta_Resume.pdf"
                     className={`inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-sm border transition-all ${
                       isDark
                         ? "border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
@@ -731,8 +730,7 @@ export default function CreativePortfolio() {
 
                   <a
                     href="/Harsh_Gupta_Resume.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    download="Harsh_Gupta_Resume.pdf"
                     className={`inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-sm border transition-all ${
                       isDark
                         ? "border-slate-700 bg-slate-800 text-slate-200 hover:bg-slate-700"

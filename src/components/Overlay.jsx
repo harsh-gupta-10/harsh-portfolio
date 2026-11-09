@@ -125,9 +125,8 @@ export const Overlay = ({ isDark, scrollYProgress }) => {
                     </a>
                     
                     <a
-                        href="https://drive.google.com/drive/folders/1QsjDgQIb9rnn2SBt4W5WgHpdeZpqym1C?usp=sharing"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        href="/Harsh_Gupta_Resume.pdf"
+                        download="Harsh_Gupta_Resume.pdf"
                         className="inline-flex items-center gap-2 px-8 py-4 font-semibold rounded-xl border border-white/20 bg-white/5 backdrop-blur-sm text-white hover:bg-white/15 transition-all hover:scale-105 text-lg cursor-pointer"
                     >
                         <FiDownload size={20} />
