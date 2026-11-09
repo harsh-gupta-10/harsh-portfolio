@@ -108,11 +108,7 @@ function ScrollingRow({ certificates, direction, isDark, onSelect }) {
               // Don't open modal if the user was dragging
               if (!isDraggingRef.current) onSelect(cert);
             }}
-            className={`flex-shrink-0 w-72 h-48 rounded-2xl border overflow-hidden transition-all hover:scale-105 hover:shadow-xl cursor-pointer group ${
-              isDark
-                ? "bg-[#1E293B] border-[#334155] hover:border-[#3B82F6]/40"
-                : "bg-white border-[#E2E8F0] hover:border-[#3B82F6]/40 hover:shadow-blue-500/10"
-            }`}
+            className="flex-shrink-0 w-72 h-48 card-outseta overflow-hidden cursor-pointer group bg-white"
           >
             <img
               src={cert.image}
@@ -195,35 +191,21 @@ export default function Certificates({ isDark }) {
   return (
     <section
       id="certificates"
-      className={`py-24 ${isDark ? "bg-[#0F172A]" : "bg-white"}`}
+      className="py-24 bg-[#fdfafc] border-b border-[#d4ccd4]"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16"
-        >
-          <span className="text-[#3B82F6] font-semibold text-sm uppercase tracking-wider">
-            Certifications
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <span className="font-mono text-xs font-semibold tracking-[0.10em] text-[#240029] uppercase mb-3 block">
+            // 06 · CREDENTIALS & LICENSES
           </span>
-          <h2
-            className={`mt-3 text-3xl sm:text-4xl font-display font-bold ${isDark ? "text-white" : "text-[#1E293B]"}`}
-          >
-            Certificates &{" "}
-            <span className="bg-gradient-to-r from-[#1E3A8A] to-[#3B82F6] bg-clip-text text-transparent">
-              Credentials
-            </span>
+          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#240029] tracking-tight leading-tight">
+            Certificates & credentials.
           </h2>
-          <p
-            className={`mt-4 max-w-2xl mx-auto ${isDark ? "text-[#94A3B8]" : "text-[#64748B]"}`}
-          >
-            Professional certifications and credentials earned across various
-            technology domains. Swipe or drag to browse.
+          <p className="mt-4 text-base sm:text-lg text-[#6d526d] leading-relaxed">
+            Professional certifications and credentials earned across cloud, web, and hardware engineering.
           </p>
-        </motion.div>
+        </div>
       </div>
 
       {/* Scrolling Rows - full width */}

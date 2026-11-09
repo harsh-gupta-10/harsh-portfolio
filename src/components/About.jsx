@@ -3,118 +3,82 @@ import initialAboutData from "../data/about.json";
 import { usePortfolioData } from "../lib/localAdmin";
 import { getIcon } from "../lib/iconRegistry";
 
-export default function About({ isDark }) {
+export default function About() {
   const [data] = usePortfolioData("about", initialAboutData);
   const { bio = [], stats = [], highlights = [] } = data || {};
 
   return (
-    <section
-      id="about"
-      className={`py-24 ${isDark ? "bg-[#0F172A]" : "bg-white"}`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="about" className="py-24 bg-white border-b border-[#d4ccd4]">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16"
-        >
-          <span className="text-[#3B82F6] font-semibold text-sm uppercase tracking-wider">
-            About Me
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <span className="font-mono text-xs font-semibold tracking-[0.10em] text-[#240029] uppercase mb-3 block">
+            // 01 · ABOUT THE ENGINEER
           </span>
-          <h2
-            className={`mt-3 text-3xl sm:text-4xl font-display font-bold ${isDark ? "text-white" : "text-[#1E293B]"}`}
-          >
-            Building Complete Products,{" "}
-            <span className="bg-gradient-to-r from-[#1E3A8A] to-[#3B82F6] bg-clip-text text-transparent">
-              End to End
-            </span>
+          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#240029] tracking-tight leading-tight">
+            Building complete products, end to end.
           </h2>
-        </motion.div>
+        </div>
 
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
-          {/* Text Content */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.5 }}
-          >
-            <div
-              className={`space-y-5 text-base leading-relaxed ${isDark ? "text-[#94A3B8]" : "text-[#64748B]"}`}
-            >
+        <div className="grid lg:grid-cols-12 gap-12 items-start">
+          {/* Bio & Philosophy (7 cols) */}
+          <div className="lg:col-span-7 space-y-6">
+            <div className="space-y-4 text-base sm:text-lg leading-relaxed text-[#240029]/90 font-normal">
               {bio.map((paragraph, i) => (
-                <p key={i}>{paragraph}</p>
+                <p key={i} className="text-[#240029]/85">
+                  {paragraph}
+                </p>
               ))}
             </div>
 
-            {/* Quick Stats */}
-            <div className="mt-10 grid grid-cols-3 gap-4">
-              {stats.map((stat) => (
+            {/* Outseta Stats Row */}
+            <div className="pt-6 grid grid-cols-3 gap-4">
+              {stats.map((stat, idx) => (
                 <div
-                  key={stat.label}
-                  className={`text-center p-4 rounded-2xl ${
-                    isDark ? "bg-[#1E293B]" : "bg-[#F8FAFC]"
-                  }`}
+                  key={stat.label || idx}
+                  className="card-outseta p-5 text-center flex flex-col justify-center"
                 >
-                  <div className="text-2xl font-display font-bold text-[#3B82F6]">
+                  <div className="font-display font-extrabold text-3xl sm:text-4xl text-[#240029] tracking-tight">
                     {stat.num}
                   </div>
-                  <div
-                    className={`text-sm mt-1 ${isDark ? "text-[#94A3B8]" : "text-[#64748B]"}`}
-                  >
+                  <div className="text-xs sm:text-sm font-medium text-[#6d526d] mt-1.5">
                     {stat.label}
                   </div>
                 </div>
               ))}
             </div>
-          </motion.div>
+          </div>
 
-          {/* Highlight Cards */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.5 }}
-            className="space-y-4"
-          >
+          {/* Highlights / Specializations (5 cols) */}
+          <div className="lg:col-span-5 space-y-4">
+            <h3 className="font-display font-bold text-xl text-[#240029] mb-4">
+              Core Capabilities
+            </h3>
             {highlights.map((item, i) => {
               const ItemIcon = getIcon(item.iconKey);
               return (
-                <motion.div
-                  key={item.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  whileHover={{ y: -4 }}
-                  viewport={{ once: true }}
-                  transition={{ type: "spring", stiffness: 280, damping: 22, delay: i * 0.08 }}
-                  className={`flex items-center gap-5 p-5 rounded-2xl border transition-all hover:scale-[1.02] group ${
-                    isDark
-                      ? "bg-[#1E293B] border-[#334155] hover:border-[#3B82F6]/30"
-                      : "bg-white border-[#E2E8F0] hover:border-[#3B82F6]/30 hover:shadow-lg hover:shadow-blue-500/5"
-                  }`}
+                <div
+                  key={item.label || i}
+                  className="card-outseta p-4 flex items-center gap-4 group"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#1E3A8A]/10 to-[#3B82F6]/10 flex items-center justify-center flex-shrink-0 group-hover:from-[#1E3A8A]/20 group-hover:to-[#3B82F6]/20 transition-colors">
-                    <ItemIcon size={22} className="text-[#3B82F6]" />
+                  {/* Numbered / Icon indicator */}
+                  <div className="w-10 h-10 rounded-full bg-[#240029] text-white flex items-center justify-center shrink-0 shadow-xs">
+                    <ItemIcon size={18} className="text-white" />
                   </div>
-                  <div>
-                    <h3
-                      className={`font-semibold ${isDark ? "text-white" : "text-[#1E293B]"}`}
-                    >
+                  <div className="flex-1">
+                    <div className="font-semibold text-sm sm:text-base text-[#240029]">
                       {item.label}
-                    </h3>
-                    <p
-                      className={`text-sm ${isDark ? "text-[#94A3B8]" : "text-[#64748B]"}`}
-                    >
-                      {item.desc}
-                    </p>
+                    </div>
+                    {item.desc && (
+                      <div className="text-xs sm:text-sm text-[#6d526d] mt-0.5">
+                        {item.desc}
+                      </div>
+                    )}
                   </div>
-                </motion.div>
+                </div>
               );
             })}
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

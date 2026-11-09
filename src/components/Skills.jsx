@@ -1,96 +1,68 @@
-import { motion } from "framer-motion";
 import initialCategories from "../data/skills.json";
 import { usePortfolioData } from "../lib/localAdmin";
 import { getIcon } from "../lib/iconRegistry";
 
-export default function Skills({ isDark }) {
+export default function Skills() {
   const [categories] = usePortfolioData("skills", initialCategories);
-  return (
-    <section
-      id="skills"
-      className={`py-24 ${isDark ? "bg-[#0B1120]" : "bg-[#F8FAFC]"}`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16"
-        >
-          <span className="text-[#3B82F6] font-semibold text-sm uppercase tracking-wider">
-            Skills & Expertise
-          </span>
-          <h2
-            className={`mt-3 text-3xl sm:text-4xl font-display font-bold ${isDark ? "text-white" : "text-[#1E293B]"}`}
-          >
-            Technical{" "}
-            <span className="bg-gradient-to-r from-[#1E3A8A] to-[#3B82F6] bg-clip-text text-transparent">
-              Arsenal
-            </span>
-          </h2>
-          <p
-            className={`mt-4 max-w-2xl mx-auto ${isDark ? "text-[#94A3B8]" : "text-[#64748B]"}`}
-          >
-            A comprehensive toolkit spanning software development, hardware
-            engineering, and product design.
-          </p>
-        </motion.div>
 
-        {/* Skill Categories */}
-        <div className="flex flex-wrap justify-center gap-6">
+  return (
+    <section id="skills" className="py-24 bg-[#fdfafc] border-b border-[#d4ccd4]">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <span className="font-mono text-xs font-semibold tracking-[0.10em] text-[#240029] uppercase mb-3 block">
+            // 02 · TOOLKIT & STACK
+          </span>
+          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#240029] tracking-tight leading-tight">
+            Engineered with precision tools.
+          </h2>
+          <p className="mt-4 text-base sm:text-lg text-[#6d526d] leading-relaxed">
+            An end-to-end stack spanning modern web engines, edge serverless databases, microcontroller hardware, and CAD fabrication.
+          </p>
+        </div>
+
+        {/* Skill Category Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {categories.map((cat, catIndex) => {
             const CatIcon = getIcon(cat.iconKey);
             return (
-              <motion.div
-                key={cat.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: catIndex * 0.1 }}
-                className={`w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] p-6 rounded-2xl border transition-all hover:scale-[1.02] ${
-                  isDark
-                    ? "bg-[#1E293B] border-[#334155] hover:border-[#3B82F6]/30"
-                    : "bg-white border-[#E2E8F0] hover:border-[#3B82F6]/30 hover:shadow-xl hover:shadow-blue-500/5"
-                }`}
+              <div
+                key={cat.title || catIndex}
+                className="card-outseta p-6 flex flex-col justify-between bg-white"
               >
                 {/* Category Header */}
-                <div className="flex items-center gap-3 mb-6">
-                  <div
-                    className={`w-10 h-10 rounded-xl bg-gradient-to-br ${cat.color} flex items-center justify-center`}
-                  >
-                    <CatIcon size={20} className="text-white" />
+                <div>
+                  <div className="flex items-center gap-3 mb-5">
+                    <div className="w-10 h-10 rounded-[8px] bg-[#240029] text-white flex items-center justify-center shrink-0">
+                      <CatIcon size={20} className="text-white" />
+                    </div>
+                    <div>
+                      <h3 className="font-display font-bold text-base text-[#240029]">
+                        {cat.title}
+                      </h3>
+                      <span className="font-mono text-[11px] text-[#6d526d] tracking-wider uppercase">
+                        {cat.skills?.length || 0} Specializations
+                      </span>
+                    </div>
                   </div>
-                  <h3
-                    className={`font-display font-semibold text-sm ${isDark ? "text-white" : "text-[#1E293B]"}`}
-                  >
-                    {cat.title}
-                  </h3>
-                </div>
 
-                {/* Skills */}
-                <div className="flex flex-wrap gap-2">
-                  {cat.skills.map((skill) => {
-                    const SkillIcon = getIcon(skill.iconKey);
-                    return (
-                      <motion.span
-                        key={skill.name}
-                        whileHover={{ y: -3, scale: 1.04 }}
-                        transition={{ type: "spring", stiffness: 420, damping: 18 }}
-                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium cursor-default ${
-                          isDark
-                            ? "bg-[#0F172A] text-[#94A3B8] hover:text-[#60A5FA]"
-                            : "bg-[#F1F5F9] text-[#475569] hover:text-[#1E3A8A] hover:bg-[#EFF6FF]"
-                        }`}
-                      >
-                        <SkillIcon size={14} />
-                        {skill.name}
-                      </motion.span>
-                    );
-                  })}
+                  {/* Skills Pills */}
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    {cat.skills.map((skill) => {
+                      const SkillIcon = getIcon(skill.iconKey);
+                      return (
+                        <span
+                          key={skill.name}
+                          className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-[#d4ccd4] hover:border-[#6d526d] hover:bg-[#240029]/5 text-[#240029] rounded-full text-xs font-medium transition-colors"
+                        >
+                          <SkillIcon size={12} className="text-[#6d526d]" />
+                          {skill.name}
+                        </span>
+                      );
+                    })}
+                  </div>
                 </div>
-              </motion.div>
+              </div>
             );
           })}
         </div>

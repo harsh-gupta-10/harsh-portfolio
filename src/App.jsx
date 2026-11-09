@@ -61,23 +61,22 @@ const NoteEditor      = lazy(() => import("./pages/admin/NoteEditor"));
 
 // ── PORTFOLIO ─────────────────────────────────────
 function Portfolio() {
-  const { isDark, toggle } = useDarkMode();
   useSEO();
 
   return (
-    <div className={isDark ? "dark" : ""}>
-      <Navbar isDark={isDark} toggleDark={toggle} />
+    <div className="min-h-screen bg-white text-[#240029] antialiased">
+      <Navbar />
       <main>
-        <Hero isDark={isDark} />
-        <About isDark={isDark} />
-        <Skills isDark={isDark} />
-        <ErrorBoundary><Projects isDark={isDark} /></ErrorBoundary>
-        <Experience isDark={isDark} />
-        <ErrorBoundary><Achievements isDark={isDark} /></ErrorBoundary>
-        <ErrorBoundary><Certificates isDark={isDark} /></ErrorBoundary>
-        <Contact isDark={isDark} />
+        <Hero />
+        <About />
+        <Skills />
+        <ErrorBoundary><Projects /></ErrorBoundary>
+        <Experience />
+        <ErrorBoundary><Achievements /></ErrorBoundary>
+        <ErrorBoundary><Certificates /></ErrorBoundary>
+        <Contact />
       </main>
-      <Footer isDark={isDark} />
+      <Footer />
     </div>
   );
 }

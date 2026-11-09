@@ -1,51 +1,28 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiSun, FiMoon, FiMenu, FiX } from "react-icons/fi";
-import { useNavigate } from "react-router-dom";
+import { FiMenu, FiX, FiArrowRight } from "react-icons/fi";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const navLinks = [
-  { name: "Home", href: "#home" },
   { name: "About", href: "#about" },
   { name: "Skills", href: "#skills" },
-  { name: "Projects", href: "/projects" },
-  { name: "Design & Video", href: "/portfolio" },
+  { name: "Projects", href: "#projects" },
   { name: "Experience", href: "#experience" },
   { name: "Certificates", href: "#certificates" },
-  { name: "Contact", href: "#contact" },
+  { name: "All Works", href: "/projects" },
+  { name: "Creative", href: "/portfolio" },
 ];
 
-export default function Navbar({ isDark, toggleDark }) {
+export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("home");
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => setScrolled(window.scrollY > 15);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      { rootMargin: "-80px 0px -60% 0px", threshold: 0.1 },
-    );
-
-    navLinks.forEach(({ href }) => {
-      if (href.startsWith("#")) {
-        const el = document.querySelector(href);
-        if (el) observer.observe(el);
-      }
-    });
-
-    return () => observer.disconnect();
   }, []);
 
   const handleClick = (e, href) => {
@@ -58,9 +35,13 @@ export default function Navbar({ isDark, toggleDark }) {
     }
 
     if (href.startsWith("#")) {
+      if (location.pathname !== "/") {
+        navigate("/" + href);
+        return;
+      }
       const el = document.querySelector(href);
       if (el) {
-        const offset = 80;
+        const offset = 76;
         const top = el.getBoundingClientRect().top + window.scrollY - offset;
         window.scrollTo({ top, behavior: "smooth" });
       }
@@ -68,145 +49,107 @@ export default function Navbar({ isDark, toggleDark }) {
   };
 
   return (
-    <motion.nav
+    <nav
       aria-label="Main navigation"
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 border-b ${
         scrolled
-          ? isDark
-            ? "bg-[#0F172A]/90 backdrop-blur-xl shadow-lg shadow-black/10"
-            : "bg-white/90 backdrop-blur-xl shadow-lg shadow-black/5"
-          : "bg-transparent"
+          ? "bg-white/95 backdrop-blur-md border-[#d4ccd4] shadow-[0_1px_3px_rgba(36,0,41,0.04)]"
+          : "bg-white/80 backdrop-blur-sm border-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 md:h-18">
+          {/* Brand Mark & Name */}
           <a
             href="#home"
             onClick={(e) => handleClick(e, "#home")}
-            className="flex items-center gap-2 group"
+            className="flex items-center gap-3 group"
           >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1E3A8A] to-[#3B82F6] flex items-center justify-center text-white font-display font-bold text-lg group-hover:scale-105 transition-transform">
-              H
+            {/* Outseta concentric circle mark */}
+            <div className="w-8 h-8 rounded-full bg-[#240029] flex items-center justify-center text-white font-semibold text-xs transition-transform group-hover:scale-105 shadow-sm">
+              <span className="w-4 h-4 rounded-full border border-white/60 flex items-center justify-center">
+                <span className="w-1.5 h-1.5 bg-[#df37a7] rounded-full" />
+              </span>
             </div>
-            <span
-              className={`font-display font-semibold text-lg hidden sm:block ${isDark ? "text-white" : "text-[#1E293B]"}`}
-            >
-              Harsh<span className="text-[#3B82F6]">.</span>
-            </span>
+            <div className="flex flex-col">
+              <span className="font-display font-extrabold text-base tracking-tight text-[#240029] leading-tight">
+                Harsh Gupta
+              </span>
+              <span className="font-mono text-[10px] tracking-wider text-[#6d526d] uppercase hidden sm:block">
+                Screen · Solder · Code
+              </span>
+            </div>
           </a>
 
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-1">
+          {/* Desktop Nav Links */}
+          <div className="hidden md:flex items-center gap-6">
             {navLinks.map(({ name, href }) => (
               <a
                 key={name}
                 href={href}
                 onClick={(e) => handleClick(e, href)}
-                className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
-                  activeSection === href.slice(1)
-                    ? "text-[#1E3A8A] dark:text-[#60A5FA]"
-                    : isDark
-                      ? "text-[#94A3B8] hover:text-white"
-                      : "text-[#64748B] hover:text-[#1E293B]"
-                }`}
+                className="text-sm font-medium text-[#240029] hover:text-[#df37a7] transition-colors"
               >
                 {name}
-                {activeSection === href.slice(1) && (
-                  <motion.div
-                    layoutId="activeNav"
-                    className="absolute inset-0 bg-[#1E3A8A]/10 dark:bg-[#3B82F6]/10 rounded-lg"
-                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                  />
-                )}
               </a>
             ))}
           </div>
 
-          {/* Right side */}
+          {/* Primary Action Button */}
           <div className="flex items-center gap-3">
-            {/* Dark mode toggle */}
-            <button
-              onClick={toggleDark}
-              className={`p-2.5 rounded-xl transition-colors ${
-                isDark
-                  ? "bg-[#1E293B] text-yellow-400 hover:bg-[#334155]"
-                  : "bg-[#F1F5F9] text-[#64748B] hover:bg-[#E2E8F0]"
-              }`}
-              aria-label="Toggle dark mode"
-            >
-              {isDark ? <FiSun size={18} /> : <FiMoon size={18} />}
-            </button>
-
-            {/* Hire Me CTA */}
             <a
               href="#contact"
               onClick={(e) => handleClick(e, "#contact")}
-              className="hidden md:inline-flex items-center px-5 py-2.5 bg-gradient-to-r from-[#1E3A8A] to-[#3B82F6] text-white text-sm font-semibold rounded-xl hover:shadow-lg hover:shadow-blue-500/25 transition-all hover:scale-105"
+              className="btn-primary-fuchsia hidden sm:inline-flex items-center gap-2 px-5 py-2.5 text-sm"
             >
-              Hire Me
+              Let's Talk
+              <FiArrowRight size={14} />
             </a>
 
-            {/* Mobile menu button */}
+            {/* Mobile menu toggle */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className={`md:hidden p-2.5 rounded-xl transition-colors ${
-                isDark
-                  ? "bg-[#1E293B] text-white hover:bg-[#334155]"
-                  : "bg-[#F1F5F9] text-[#1E293B] hover:bg-[#E2E8F0]"
-              }`}
-              aria-label="Toggle menu"
+              className="md:hidden p-2 rounded-md text-[#240029] hover:bg-[#240029]/5 border border-[#d4ccd4] transition-colors"
+              aria-label="Toggle navigation"
             >
-              {mobileOpen ? <FiX size={20} /> : <FiMenu size={20} />}
+              {mobileOpen ? <FiX size={18} /> : <FiMenu size={18} />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Drawer */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className={`md:hidden border-t ${
-              isDark
-                ? "bg-[#0F172A]/95 border-[#1E293B]"
-                : "bg-white/95 border-[#E2E8F0]"
-            } backdrop-blur-xl`}
+            className="md:hidden bg-white border-b border-[#d4ccd4] px-4 py-4 space-y-2 shadow-lg"
           >
-            <div className="px-4 py-4 space-y-1">
-              {navLinks.map(({ name, href }) => (
-                <a
-                  key={name}
-                  href={href}
-                  onClick={(e) => handleClick(e, href)}
-                  className={`block px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
-                    activeSection === href.slice(1)
-                      ? "bg-[#1E3A8A]/10 text-[#1E3A8A] dark:bg-[#3B82F6]/10 dark:text-[#60A5FA]"
-                      : isDark
-                        ? "text-[#94A3B8] hover:text-white hover:bg-[#1E293B]"
-                        : "text-[#64748B] hover:text-[#1E293B] hover:bg-[#F1F5F9]"
-                  }`}
-                >
-                  {name}
-                </a>
-              ))}
+            {navLinks.map(({ name, href }) => (
+              <a
+                key={name}
+                href={href}
+                onClick={(e) => handleClick(e, href)}
+                className="block px-3 py-2 text-sm font-medium text-[#240029] hover:bg-[#240029]/5 rounded-md"
+              >
+                {name}
+              </a>
+            ))}
+            <div className="pt-2">
               <a
                 href="#contact"
                 onClick={(e) => handleClick(e, "#contact")}
-                className="block px-4 py-3 bg-gradient-to-r from-[#1E3A8A] to-[#3B82F6] text-white text-sm font-semibold rounded-xl text-center mt-2"
+                className="btn-primary-fuchsia flex items-center justify-center gap-2 w-full py-2.5 text-sm"
               >
-                Hire Me
+                Let's Talk
+                <FiArrowRight size={14} />
               </a>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.nav>
+    </nav>
   );
 }

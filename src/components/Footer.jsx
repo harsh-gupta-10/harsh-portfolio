@@ -1,17 +1,17 @@
-import { FiGithub, FiLinkedin, FiMail, FiHeart } from "react-icons/fi";
+import { FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
 const footerLinks = [
-  { name: "Home", href: "#home" },
   { name: "About", href: "#about" },
   { name: "Skills", href: "#skills" },
-  { name: "Projects", href: "/projects" },
-  { name: "Experience", href: "#experience" },
-  { name: "Certificates", href: "#certificates" },
+  { name: "Featured Projects", href: "#projects" },
+  { name: "All Works", href: "/projects" },
+  { name: "Creative Design", href: "/portfolio" },
+  { name: "3D Lab", href: "/snapmaker" },
   { name: "Contact", href: "#contact" },
 ];
 
-export default function Footer({ isDark }) {
+export default function Footer() {
   const navigate = useNavigate();
 
   const handleClick = (e, href) => {
@@ -25,7 +25,7 @@ export default function Footer({ isDark }) {
     if (href.startsWith("#")) {
       const el = document.querySelector(href);
       if (el) {
-        const offset = 80;
+        const offset = 76;
         const top = el.getBoundingClientRect().top + window.scrollY - offset;
         window.scrollTo({ top, behavior: "smooth" });
       }
@@ -33,103 +33,80 @@ export default function Footer({ isDark }) {
   };
 
   return (
-    <footer
-      className={`py-12 border-t ${isDark ? "bg-[#0F172A] border-[#1E293B]" : "bg-white border-[#E2E8F0]"}`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer className="py-14 bg-[#1b001f] text-[#d4ccd4] border-t border-white/10">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-          {/* Logo & tagline */}
+          {/* Logo & Tagline */}
           <div className="text-center md:text-left">
             <a
               href="#home"
               onClick={(e) => handleClick(e, "#home")}
-              className="flex items-center gap-2 justify-center md:justify-start group"
+              className="inline-flex items-center gap-2.5 group"
             >
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#1E3A8A] to-[#3B82F6] flex items-center justify-center text-white font-display font-bold text-sm">
+              <div className="w-7 h-7 rounded-full bg-[#df37a7] flex items-center justify-center text-white font-bold text-xs">
                 H
               </div>
-              <span
-                className={`font-display font-semibold ${isDark ? "text-white" : "text-[#1E293B]"}`}
-              >
+              <span className="font-display font-extrabold text-white text-base">
                 Harsh Gupta
               </span>
             </a>
-            <p
-              className={`mt-2 text-sm ${isDark ? "text-[#64748B]" : "text-[#94A3B8]"}`}
-            >
-              Front-End Developer &middot; UI/UX Designer &middot; Embedded &
-              IoT Engineer
+            <p className="mt-1.5 text-xs text-[#d4ccd4]/70 font-mono tracking-wide">
+              Engineering software & hardware products · Mumbai, India
             </p>
           </div>
 
-          {/* Nav Links */}
-          <nav aria-label="Footer navigation" className="flex flex-wrap items-center justify-center gap-6">
-            {footerLinks.map((link) => (
+          {/* Quick Links */}
+          <div className="flex flex-wrap items-center justify-center gap-6 text-xs font-medium text-[#d4ccd4]">
+            {footerLinks.map(({ name, href }) => (
               <a
-                key={link.name}
-                href={link.href}
-                onClick={(e) => handleClick(e, link.href)}
-                className={`text-sm cursor-pointer transition-colors ${
-                  isDark
-                    ? "text-[#64748B] hover:text-white"
-                    : "text-[#94A3B8] hover:text-[#1E293B]"
-                }`}
+                key={name}
+                href={href}
+                onClick={(e) => handleClick(e, href)}
+                className="hover:text-white transition-colors"
               >
-                {link.name}
-              </a>
-            ))}
-          </nav>
-
-          {/* Social Links */}
-          <div className="flex items-center gap-3">
-            {[
-              {
-                icon: FiGithub,
-                href: "https://github.com/harsh-gupta-10",
-                label: "GitHub",
-              },
-              {
-                icon: FiLinkedin,
-                href: "https://linkedin.com/in/harsh-gupta-2b41692b1",
-                label: "LinkedIn",
-              },
-              {
-                icon: FiMail,
-                href: "mailto:harshgupta24716@gmail.com",
-                label: "Email",
-              },
-            ].map((social) => (
-              <a
-                key={social.label}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={social.label}
-                className={`p-2.5 rounded-xl transition-all hover:scale-110 ${
-                  isDark
-                    ? "bg-[#1E293B] text-[#64748B] hover:text-white hover:bg-[#334155]"
-                    : "bg-[#F1F5F9] text-[#94A3B8] hover:text-[#1E293B] hover:bg-[#E2E8F0]"
-                }`}
-              >
-                <social.icon size={18} />
+                {name}
               </a>
             ))}
           </div>
+
+          {/* Social Icons */}
+          <div className="flex items-center gap-3">
+            <a
+              href="https://github.com/harsh-gupta-10"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-9 h-9 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white transition-colors"
+              aria-label="GitHub"
+            >
+              <FiGithub size={15} />
+            </a>
+            <a
+              href="https://linkedin.com/in/harsh-gupta-2b41692b1"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-9 h-9 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white transition-colors"
+              aria-label="LinkedIn"
+            >
+              <FiLinkedin size={15} />
+            </a>
+            <a
+              href="mailto:harshgupta24716@gmail.com"
+              className="w-9 h-9 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white transition-colors"
+              aria-label="Email"
+            >
+              <FiMail size={15} />
+            </a>
+          </div>
         </div>
 
-        {/* Bottom */}
-        <div
-          className={`mt-10 pt-6 border-t text-center text-sm ${
-            isDark
-              ? "border-[#1E293B] text-[#475569]"
-              : "border-[#F1F5F9] text-[#94A3B8]"
-          }`}
-        >
-          <p className="flex items-center justify-center gap-1">
-            &copy; {new Date().getFullYear()} Harsh Gupta. Built with
-            <FiHeart size={14} className="text-red-500" />
-            using React & Tailwind CSS.
-          </p>
+        {/* Bottom row */}
+        <div className="mt-10 pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] font-mono text-[#d4ccd4]/50">
+          <div>
+            &copy; {new Date().getFullYear()} Harsh Gupta. All rights reserved.
+          </div>
+          <div>
+            Built with React, Cloudflare Workers & D1 · Designed with Outseta Language
+          </div>
         </div>
       </div>
     </footer>

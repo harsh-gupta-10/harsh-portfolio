@@ -1,17 +1,16 @@
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiExternalLink, FiGithub, FiStar, FiArrowLeft, FiSun, FiMoon } from "react-icons/fi";
+import { FiExternalLink, FiGithub, FiArrowLeft } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import initialProjects from "../../data/allProjects.json";
 import { usePortfolioData } from "../../lib/localAdmin";
-import { useDarkMode } from "../../hooks/useDarkMode";
 import { useSEO } from "../../hooks/useSEO";
 
 const CATEGORY_TABS = [
-  { id: "all", label: "All" },
-  { id: "software-web", label: "Software/Web" },
-  { id: "iot-hardware", label: "IoT/Hardware" },
-  { id: "ui-ux", label: "UI/UX" },
+  { id: "all", label: "All Works" },
+  { id: "software-web", label: "Software / Web" },
+  { id: "iot-hardware", label: "IoT / Hardware" },
+  { id: "ui-ux", label: "UI / UX Design" },
 ];
 
 function matchesCategory(projectCategory, tabId) {
@@ -42,28 +41,11 @@ function matchesCategory(projectCategory, tabId) {
   return true;
 }
 
-const coverGradients = {
-  "Embedded & IoT": "from-emerald-500/30 to-cyan-500/20",
-  "Full Stack Web Dev": "from-indigo-500/30 to-blue-500/15",
-  "Front-End Web Dev": "from-sky-500/30 to-blue-500/15",
-  "UI/UX Design": "from-fuchsia-500/30 to-purple-500/15",
-};
-
-function ProjectCard({ project, isDark, index }) {
+function ProjectCard({ project }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 28 }}
-      animate={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -8 }}
-      transition={{ type: "spring", stiffness: 260, damping: 24, delay: Math.min(index * 0.04, 0.28) }}
-      className={`group rounded-2xl border overflow-hidden flex flex-col h-full ${
-        isDark
-          ? "bg-[#1E293B] border-[#334155] hover:border-[#3B82F6]/40 hover:shadow-xl hover:shadow-blue-500/10"
-          : "bg-white border-[#E2E8F0] hover:border-[#3B82F6]/30 hover:shadow-xl hover:shadow-blue-500/10"
-      }`}
-    >
-      {/* Image / Placeholder */}
-      <div className="card-shine relative overflow-hidden aspect-video">
+    <div className="card-outseta flex flex-col h-full bg-white overflow-hidden group">
+      {/* Image Container */}
+      <div className="aspect-[16/10] overflow-hidden bg-slate-100 relative">
         {project.image ? (
           <img
             src={project.image}
@@ -71,90 +53,79 @@ function ProjectCard({ project, isDark, index }) {
             loading="lazy"
             decoding="async"
             width="800"
-            height="450"
-            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            height="500"
+            className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300"
           />
         ) : (
-          <>
-            <div
-              className={`cover-fallback absolute inset-0 bg-gradient-to-br ${
-                coverGradients[project.category] || "from-blue-500/20 to-indigo-500/20"
-              } ${isDark ? "opacity-80" : "opacity-100"}`}
-            />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div
-                className={`text-6xl font-display font-bold ${isDark ? "text-white/10" : "text-[#1E293B]/10"}`}
-              >
-                {project.title.charAt(0)}
-              </div>
-            </div>
-          </>
-        )}
-        {project.featured && (
-          <div className="absolute top-4 left-4 inline-flex items-center gap-1.5 px-3 py-1 bg-gradient-to-r from-[#1E3A8A] to-[#3B82F6] text-white text-xs font-semibold rounded-full">
-            <FiStar size={12} />
-            Featured
+          <div className="w-full h-full flex items-center justify-center bg-[#fdfafc]">
+            <span className="font-display font-extrabold text-5xl text-[#240029]/15">
+              {project.title.charAt(0)}
+            </span>
           </div>
         )}
-        <div
-          className={`absolute top-4 right-4 px-3 py-1 text-xs font-semibold rounded-full shadow-sm ${
-            isDark ? "bg-[#0F172A]/92 text-[#BFDBFE]" : "bg-white/92 text-[#1E3A8A]"
-          }`}
-        >
-          {project.category}
+
+        {/* Badges */}
+        <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
+          {project.featured ? (
+            <span className="badge-success-outseta text-[11px] px-2.5 py-0.5 shadow-xs">
+              ● Featured
+            </span>
+          ) : (
+            <span />
+          )}
+
+          <span className="font-mono text-[10px] tracking-wider uppercase px-2 py-0.5 bg-white/90 border border-[#d4ccd4] text-[#240029] rounded-full shadow-xs">
+            {project.category}
+          </span>
         </div>
-        {project.year && (
-          <div
-            className={`absolute bottom-4 left-4 px-2.5 py-1 text-xs font-semibold rounded-full ${
-              isDark ? "bg-[#0F172A]/80 text-[#93C5FD]" : "bg-white/85 text-[#1E3A8A]"
-            }`}
-          >
-            {project.year}
-          </div>
-        )}
       </div>
 
-      {/* Content */}
+      {/* Body */}
       <div className="p-6 flex flex-col flex-1">
-        <h3
-          className={`text-lg font-display font-bold ${isDark ? "text-white" : "text-[#1E293B]"}`}
-        >
-          {project.title}
-        </h3>
-        <p
-          className={`mt-2 text-sm leading-relaxed ${isDark ? "text-[#94A3B8]" : "text-[#64748B]"}`}
-        >
+        <div className="flex items-start justify-between gap-2 mb-2">
+          <h3 className="font-display font-bold text-lg text-[#240029]">
+            {project.title}
+          </h3>
+          {project.year && (
+            <span className="font-mono text-xs text-[#6d526d] shrink-0 pt-0.5">
+              {project.year}
+            </span>
+          )}
+        </div>
+
+        <p className="text-sm leading-relaxed text-[#6d526d] line-clamp-3 mb-4">
           {project.description}
         </p>
 
         {/* Tags */}
-        <div className="mt-4 flex flex-wrap gap-2">
-          {project.tags?.map((tag) => (
+        <div className="mt-auto flex flex-wrap gap-1.5 pt-2">
+          {project.tags?.slice(0, 4).map((tag) => (
             <span
               key={tag}
-              className={`px-2.5 py-1 text-xs font-medium rounded-md ${
-                isDark
-                  ? "bg-[#0F172A] text-[#94A3B8]"
-                  : "bg-[#F1F5F9] text-[#475569]"
-              }`}
+              className="text-[11px] font-mono px-2 py-0.5 bg-[#240029]/5 text-[#240029] rounded-[4px]"
             >
               {tag}
             </span>
           ))}
+          {project.tags?.length > 4 && (
+            <span className="text-[11px] font-mono px-1.5 py-0.5 text-[#6d526d]">
+              +{project.tags.length - 4}
+            </span>
+          )}
         </div>
 
-        {/* Actions */}
+        {/* Action Row */}
         {(project.showLiveDemo || project.showCode) && (
-          <div className="mt-auto pt-6 flex items-center justify-center gap-3">
+          <div className="pt-5 mt-4 border-t border-[#d4ccd4]/60 flex items-center gap-3">
             {project.showLiveDemo && (
               <a
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-[#1E3A8A] to-[#3B82F6] text-white text-sm font-medium rounded-lg hover:shadow-lg hover:shadow-blue-500/25 transition-all"
+                className="btn-primary-fuchsia inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold"
               >
-                <FiExternalLink size={14} />
-                {project.liveDemoLabel || "Live Demo"}
+                <FiExternalLink size={13} />
+                {project.liveDemoLabel || "View Live"}
               </a>
             )}
             {project.showCode && project.githubUrl && project.githubUrl !== "#" && (
@@ -162,31 +133,26 @@ function ProjectCard({ project, isDark, index }) {
                 href={project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg border transition-colors ${
-                  isDark
-                    ? "border-[#334155] text-[#94A3B8] hover:text-white hover:border-[#475569]"
-                    : "border-[#E2E8F0] text-[#64748B] hover:text-[#1E293B] hover:border-[#CBD5E1]"
-                }`}
+                className="btn-ghost-aubergine inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-medium"
               >
-                <FiGithub size={14} />
-                Code
+                <FiGithub size={13} />
+                Source
               </a>
             )}
           </div>
         )}
       </div>
-    </motion.div>
+    </div>
   );
 }
 
 export default function AllProjects() {
-  const { isDark, toggle } = useDarkMode();
   const [projectList] = usePortfolioData("projects", initialProjects);
   const [activeTab, setActiveTab] = useState("all");
 
   useSEO({
     title: "All Projects & Engineering Portfolio | Harsh Gupta",
-    description: "Explore software and hardware engineering projects by Harsh Gupta, spanning React, Cloudflare Workers, IoT, embedded systems, and UI/UX design.",
+    description: "Explore 14+ software and hardware engineering projects by Harsh Gupta, spanning React, Cloudflare Workers, IoT, embedded systems, and UI/UX design.",
     canonical: "https://harshugupta.in/projects",
   });
 
@@ -205,62 +171,43 @@ export default function AllProjects() {
   }, [projectList, activeTab]);
 
   return (
-    <div className={`min-h-screen ${isDark ? "dark bg-[#0F172A]" : "bg-gray-50"}`}>
-      {/* Header */}
-      <header className={`sticky top-0 z-50 border-b backdrop-blur-xl ${isDark ? "bg-[#0F172A]/90 border-[#1E293B]" : "bg-white/90 border-[#E2E8F0]"}`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <div className="min-h-screen bg-[#fdfafc] text-[#240029]">
+      {/* Top Header */}
+      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-[#d4ccd4] shadow-xs">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <Link
             to="/"
-            className={`inline-flex items-center gap-2 font-medium transition-colors ${
-              isDark ? "text-[#94A3B8] hover:text-white" : "text-[#64748B] hover:text-[#1E293B]"
-            }`}
+            className="inline-flex items-center gap-2 text-sm font-semibold text-[#240029] hover:text-[#df37a7] transition-colors"
           >
-            <FiArrowLeft size={18} />
+            <FiArrowLeft size={16} />
             Back to Home
           </Link>
-          <div className="flex items-center gap-4">
-            <h1 className={`font-display font-bold text-lg hidden sm:block ${isDark ? "text-white" : "text-[#1E293B]"}`}>
-              All Projects
-            </h1>
-            <button
-              onClick={toggle}
-              className={`p-2.5 rounded-xl transition-colors cursor-pointer ${
-                isDark
-                  ? "bg-[#1E293B] text-yellow-400 hover:bg-[#334155]"
-                  : "bg-[#F1F5F9] text-[#64748B] hover:bg-[#E2E8F0]"
-              }`}
-              aria-label="Toggle dark mode"
-            >
-              {isDark ? <FiSun size={18} /> : <FiMoon size={18} />}
-            </button>
+          <div className="flex items-center gap-2">
+            <span className="font-mono text-xs font-semibold tracking-wider text-[#6d526d] uppercase">
+              14+ Production Builds
+            </span>
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="py-12 sm:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="mb-8"
-          >
-            <h2 className={`text-3xl sm:text-4xl font-display font-bold ${isDark ? "text-white" : "text-[#1E293B]"}`}>
-              My <span className="bg-gradient-to-r from-[#1E3A8A] to-[#3B82F6] bg-clip-text text-transparent">Complete Portfolio</span>
-            </h2>
-            <p className={`mt-3 max-w-2xl text-lg ${isDark ? "text-[#94A3B8]" : "text-[#64748B]"}`}>
-              A comprehensive list of all projects I've worked on, from hardware to full-stack applications.
+      <main className="py-12 sm:py-18">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Section Header */}
+          <div className="mb-10 text-center sm:text-left">
+            <span className="font-mono text-xs font-semibold tracking-[0.10em] text-[#240029] uppercase mb-2 block">
+              // COMPLETE ARCHIVE
+            </span>
+            <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#240029] tracking-tight">
+              All Engineering Projects
+            </h1>
+            <p className="mt-3 max-w-2xl text-base sm:text-lg text-[#6d526d] leading-relaxed">
+              Every production web application, IoT prototype, assistive device, and design system engineered end-to-end.
             </p>
-          </motion.div>
+          </div>
 
           {/* Category Tabs */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.1 }}
-            className="flex flex-wrap items-center gap-2 sm:gap-3 mb-12"
-          >
+          <div className="flex flex-wrap items-center gap-2.5 mb-10">
             {CATEGORY_TABS.map((tab) => {
               const isActive = activeTab === tab.id;
               const count = counts[tab.id];
@@ -268,23 +215,17 @@ export default function AllProjects() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`relative inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 cursor-pointer ${
+                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium cursor-pointer transition-all ${
                     isActive
-                      ? "bg-gradient-to-r from-[#1E3A8A] to-[#3B82F6] text-white shadow-lg shadow-blue-500/25 scale-[1.02]"
-                      : isDark
-                        ? "bg-[#1E293B] text-[#94A3B8] hover:text-white hover:bg-[#334155] border border-[#334155]"
-                        : "bg-white text-[#64748B] hover:text-[#1E293B] hover:bg-[#F8FAFC] border border-[#E2E8F0] shadow-sm"
+                      ? "bg-[#240029] text-white border border-[#240029] shadow-xs"
+                      : "bg-white text-[#240029] border border-[#d4ccd4] hover:border-[#6d526d] hover:bg-[#240029]/5"
                   }`}
                 >
                   <span>{tab.label}</span>
                   {count !== undefined && (
                     <span
-                      className={`text-[11px] px-2 py-0.5 rounded-full font-medium transition-colors ${
-                        isActive
-                          ? "bg-white/20 text-white"
-                          : isDark
-                            ? "bg-[#0F172A] text-[#94A3B8]"
-                            : "bg-[#E2E8F0] text-[#475569]"
+                      className={`text-[10px] px-2 py-0.5 rounded-full font-mono font-medium ${
+                        isActive ? "bg-white/20 text-white" : "bg-[#240029]/5 text-[#6d526d]"
                       }`}
                     >
                       {count}
@@ -293,33 +234,26 @@ export default function AllProjects() {
                 </button>
               );
             })}
-          </motion.div>
+          </div>
 
           {/* Projects Grid */}
-          <motion.div
-            layout
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-          >
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             <AnimatePresence mode="popLayout">
-              {filteredProjects.map((project, i) => (
+              {filteredProjects.map((project) => (
                 <motion.div
-                  key={project.title + i}
+                  key={project.title}
                   layout
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.25 }}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 15 }}
+                  transition={{ duration: 0.2 }}
                   className="h-full"
                 >
-                  <ProjectCard
-                    project={project}
-                    isDark={isDark}
-                    index={i}
-                  />
+                  <ProjectCard project={project} />
                 </motion.div>
               ))}
             </AnimatePresence>
-          </motion.div>
+          </div>
         </div>
       </main>
     </div>

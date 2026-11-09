@@ -1,16 +1,8 @@
 import { useState } from "react";
 import { supabase } from "../lib/supabase";
-import { motion } from "framer-motion";
-import {
-  FiMail,
-  FiGithub,
-  FiLinkedin,
-  FiMapPin,
-  FiSend,
-  FiCheck,
-} from "react-icons/fi";
+import { FiMail, FiGithub, FiLinkedin, FiMapPin, FiSend, FiCheck, FiArrowRight } from "react-icons/fi";
 
-export default function Contact({ isDark }) {
+export default function Contact() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -31,13 +23,15 @@ export default function Contact({ isDark }) {
 
     try {
       setErrorMsg("");
-      const { error } = await supabase.from("messages").insert([{
-        name: formData.name,
-        email: formData.email,
-        subject: formData.subject,
-        message: formData.message,
-        status: "new"
-      }]);
+      const { error } = await supabase.from("messages").insert([
+        {
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          status: "new",
+        },
+      ]);
 
       if (error) throw error;
 
@@ -45,279 +39,193 @@ export default function Contact({ isDark }) {
       setTimeout(() => {
         setSubmitted(false);
         setFormData({ name: "", email: "", subject: "", message: "" });
-      }, 3000);
+      }, 3500);
     } catch (err) {
       console.error("Error sending message:", err);
-      setErrorMsg("Failed to send message. Please try again later.");
+      setErrorMsg("Failed to send message. Please reach out directly at harshgupta24716@gmail.com");
     } finally {
       setIsSending(false);
     }
   };
 
   return (
-    <section
-      id="contact"
-      className={`py-24 ${isDark ? "bg-[#0B1120]" : "bg-[#F8FAFC]"}`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16"
-        >
-          <span className="text-[#3B82F6] font-semibold text-sm uppercase tracking-wider">
-            Get in Touch
-          </span>
-          <h2
-            className={`mt-3 text-3xl sm:text-4xl font-display font-bold ${isDark ? "text-white" : "text-[#1E293B]"}`}
-          >
-            Let's Build{" "}
-            <span className="bg-gradient-to-r from-[#1E3A8A] to-[#3B82F6] bg-clip-text text-transparent">
-              Something Together
-            </span>
-          </h2>
-          <p
-            className={`mt-4 max-w-2xl mx-auto ${isDark ? "text-[#94A3B8]" : "text-[#64748B]"}`}
-          >
-            Have a project in mind? Whether it's a web app, embedded system, or
-            physical product — I'd love to hear about it.
-          </p>
-        </motion.div>
+    <section id="contact" className="py-24 sm:py-32 bg-[#240029] text-white relative overflow-hidden">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          {/* Left Column: Heading, Pitch & Direct channels (6 cols) */}
+          <div className="lg:col-span-6 space-y-8">
+            <div>
+              <span className="font-mono text-xs font-semibold tracking-[0.10em] text-[#d4ccd4] uppercase mb-3 block">
+                // 07 · GET IN TOUCH
+              </span>
+              <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.08] mb-6">
+                Let's build something real together.
+              </h2>
+              <p className="text-base sm:text-lg text-[#d4ccd4] leading-relaxed max-w-xl font-normal">
+                Whether you need a high-speed web application, custom cloud workers, or embedded IoT hardware with rapid 3D physical prototyping — I'm ready to bring your vision into production.
+              </p>
+            </div>
 
-        <div className="grid lg:grid-cols-5 gap-12">
-          {/* Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.5 }}
-            className="lg:col-span-3"
-          >
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div className="grid sm:grid-cols-2 gap-5">
+            {/* Direct Channel Cards */}
+            <div className="space-y-3.5 pt-2 max-w-md">
+              <a
+                href="mailto:harshgupta24716@gmail.com"
+                className="flex items-center gap-4 p-4 rounded-[14px] bg-white/5 border border-white/10 hover:border-white/25 hover:bg-white/10 transition-all text-white group"
+              >
+                <div className="w-10 h-10 rounded-full bg-[#df37a7] flex items-center justify-center shrink-0 shadow-xs">
+                  <FiMail size={18} className="text-white" />
+                </div>
                 <div>
-                  <label
-                    htmlFor="name"
-                    className={`block text-sm font-medium mb-2 ${isDark ? "text-[#CBD5E1]" : "text-[#374151]"}`}
-                  >
-                    Name
+                  <div className="text-xs font-mono uppercase tracking-wider text-[#d4ccd4]">Direct Email</div>
+                  <div className="text-sm font-semibold text-white group-hover:text-[#ffbdd3] transition-colors">
+                    harshgupta24716@gmail.com
+                  </div>
+                </div>
+              </a>
+
+              <div className="flex items-center gap-4 p-4 rounded-[14px] bg-white/5 border border-white/10 text-white">
+                <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                  <FiMapPin size={18} className="text-[#ffbdd3]" />
+                </div>
+                <div>
+                  <div className="text-xs font-mono uppercase tracking-wider text-[#d4ccd4]">Location & Availability</div>
+                  <div className="text-sm font-semibold text-white">
+                    Mumbai, India · Available for Global Remote Contracts
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex gap-3 pt-2">
+                <a
+                  href="https://github.com/harsh-gupta-10"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 inline-flex items-center justify-center gap-2 py-3 px-4 rounded-[6px] border border-white/15 bg-white/5 hover:bg-white/10 text-sm font-medium text-white transition-colors"
+                >
+                  <FiGithub size={16} />
+                  GitHub Profile
+                </a>
+                <a
+                  href="https://linkedin.com/in/harsh-gupta-2b41692b1"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 inline-flex items-center justify-center gap-2 py-3 px-4 rounded-[6px] border border-white/15 bg-white/5 hover:bg-white/10 text-sm font-medium text-white transition-colors"
+                >
+                  <FiLinkedin size={16} />
+                  LinkedIn
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: Outseta Form Card (6 cols) */}
+          <div className="lg:col-span-6">
+            <div className="bg-white rounded-[14px] p-7 sm:p-9 text-[#240029] shadow-2xl border border-[rgba(41,0,41,0.15)]">
+              <div className="mb-6">
+                <h3 className="font-display font-bold text-2xl text-[#240029]">
+                  Send a Direct Message
+                </h3>
+                <p className="text-sm text-[#6d526d] mt-1">
+                  Leave a note with your project details or inquiries.
+                </p>
+              </div>
+
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="name" className="block text-xs font-semibold text-[#240029] uppercase tracking-wider mb-1.5 font-mono">
+                      Your Name
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      autoComplete="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      placeholder="e.g. Alex"
+                      className="w-full px-3.5 py-2.5 rounded-[3px] border border-[#767676] bg-white text-[#240029] text-sm placeholder-[#6d526d] focus:outline-none focus:border-[#df37a7] transition-colors"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="email" className="block text-xs font-semibold text-[#240029] uppercase tracking-wider mb-1.5 font-mono">
+                      Email Address
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      autoComplete="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      placeholder="alex@company.com"
+                      className="w-full px-3.5 py-2.5 rounded-[3px] border border-[#767676] bg-white text-[#240029] text-sm placeholder-[#6d526d] focus:outline-none focus:border-[#df37a7] transition-colors"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="subject" className="block text-xs font-semibold text-[#240029] uppercase tracking-wider mb-1.5 font-mono">
+                    Subject / Project Type
                   </label>
                   <input
                     type="text"
-                    id="name"
-                    name="name"
-                    autoComplete="name"
-                    value={formData.name}
+                    id="subject"
+                    name="subject"
+                    value={formData.subject}
                     onChange={handleChange}
                     required
-                    className={`w-full px-4 py-3 rounded-xl border text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-[#3B82F6]/50 ${
-                      isDark
-                        ? "bg-[#1E293B] border-[#334155] text-white placeholder-[#64748B] focus:border-[#3B82F6]"
-                        : "bg-white border-[#E2E8F0] text-[#1E293B] placeholder-[#94A3B8] focus:border-[#3B82F6]"
-                    }`}
-                    placeholder="Your name"
+                    placeholder="Web Development, IoT Hardware, Consulting"
+                    className="w-full px-3.5 py-2.5 rounded-[3px] border border-[#767676] bg-white text-[#240029] text-sm placeholder-[#6d526d] focus:outline-none focus:border-[#df37a7] transition-colors"
                   />
                 </div>
+
                 <div>
-                  <label
-                    htmlFor="email"
-                    className={`block text-sm font-medium mb-2 ${isDark ? "text-[#CBD5E1]" : "text-[#374151]"}`}
-                  >
-                    Email
+                  <label htmlFor="message" className="block text-xs font-semibold text-[#240029] uppercase tracking-wider mb-1.5 font-mono">
+                    Message
                   </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    autoComplete="email"
-                    value={formData.email}
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
                     onChange={handleChange}
                     required
-                    className={`w-full px-4 py-3 rounded-xl border text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-[#3B82F6]/50 ${
-                      isDark
-                        ? "bg-[#1E293B] border-[#334155] text-white placeholder-[#64748B] focus:border-[#3B82F6]"
-                        : "bg-white border-[#E2E8F0] text-[#1E293B] placeholder-[#94A3B8] focus:border-[#3B82F6]"
-                    }`}
-                    placeholder="your@email.com"
+                    rows={4}
+                    placeholder="Tell me what you're looking to build..."
+                    className="w-full px-3.5 py-2.5 rounded-[3px] border border-[#767676] bg-white text-[#240029] text-sm placeholder-[#6d526d] focus:outline-none focus:border-[#df37a7] transition-colors resize-none"
                   />
                 </div>
-              </div>
 
-              <div>
-                <label
-                  htmlFor="subject"
-                  className={`block text-sm font-medium mb-2 ${isDark ? "text-[#CBD5E1]" : "text-[#374151]"}`}
+                <button
+                  type="submit"
+                  disabled={isSending || submitted}
+                  className="btn-primary-fuchsia w-full py-3.5 px-6 text-sm font-semibold inline-flex items-center justify-center gap-2 mt-2 cursor-pointer"
                 >
-                  Subject
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  required
-                  className={`w-full px-4 py-3 rounded-xl border text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-[#3B82F6]/50 ${
-                    isDark
-                      ? "bg-[#1E293B] border-[#334155] text-white placeholder-[#64748B] focus:border-[#3B82F6]"
-                      : "bg-white border-[#E2E8F0] text-[#1E293B] placeholder-[#94A3B8] focus:border-[#3B82F6]"
-                  }`}
-                  placeholder="Project inquiry, collaboration, etc."
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="message"
-                  className={`block text-sm font-medium mb-2 ${isDark ? "text-[#CBD5E1]" : "text-[#374151]"}`}
-                >
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  rows={5}
-                  className={`w-full px-4 py-3 rounded-xl border text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-[#3B82F6]/50 resize-none ${
-                    isDark
-                      ? "bg-[#1E293B] border-[#334155] text-white placeholder-[#64748B] focus:border-[#3B82F6]"
-                      : "bg-white border-[#E2E8F0] text-[#1E293B] placeholder-[#94A3B8] focus:border-[#3B82F6]"
-                  }`}
-                  placeholder="Tell me about your project..."
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={isSending || submitted}
-                className={`inline-flex items-center gap-2 px-8 py-3.5 font-semibold rounded-xl transition-all ${
-                  submitted
-                    ? "bg-green-500 text-white"
-                    : isSending
-                    ? "bg-blue-400 text-white opacity-75 cursor-not-allowed"
-                    : "bg-gradient-to-r from-[#1E3A8A] to-[#3B82F6] text-white hover:shadow-xl hover:shadow-blue-500/25 hover:scale-105"
-                }`}
-              >
-                {submitted ? (
-                  <>
-                    <FiCheck size={18} />
-                    Message Sent!
-                  </>
-                ) : isSending ? (
-                  "Sending..."
-                ) : (
-                  <>
-                    <FiSend size={18} />
-                    Send Message
-                  </>
-                )}
-              </button>
-
-              {/* Inline Error Message */}
-              {errorMsg && (
-                <p className="mt-3 text-sm text-red-500 flex items-center gap-1.5" role="alert">
-                  <span className="shrink-0">⚠</span>
-                  {errorMsg}
-                </p>
-              )}
-            </form>
-          </motion.div>
-
-          {/* Contact Info */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.5 }}
-            className="lg:col-span-2 space-y-6"
-          >
-            {/* Info Cards */}
-            {[
-              {
-                icon: FiMail,
-                label: "Email",
-                value: "harshgupta24716@gmail.com",
-                href: "mailto:harshgupta24716@gmail.com",
-              },
-              {
-                icon: FiGithub,
-                label: "GitHub",
-                value: "github.com/harsh-gupta-10",
-                href: "https://github.com/harsh-gupta-10",
-              },
-              {
-                icon: FiLinkedin,
-                label: "LinkedIn",
-                value: "linkedin.com/in/harsh-gupta-2b41692b1",
-                href: "https://linkedin.com/in/harsh-gupta-2b41692b1",
-              },
-              {
-                icon: FiMapPin,
-                label: "Location",
-                value: "Mumbai, India",
-                href: null,
-              },
-            ].map((item) => (
-              <div
-                key={item.label}
-                className={`flex items-center gap-4 p-5 rounded-2xl border transition-all ${
-                  isDark
-                    ? "bg-[#1E293B] border-[#334155] hover:border-[#3B82F6]/30"
-                    : "bg-white border-[#E2E8F0] hover:border-[#3B82F6]/30 hover:shadow-lg hover:shadow-blue-500/5"
-                }`}
-              >
-                <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#1E3A8A]/10 to-[#3B82F6]/10 flex items-center justify-center flex-shrink-0">
-                  <item.icon size={20} className="text-[#3B82F6]" />
-                </div>
-                <div>
-                  <div
-                    className={`text-xs font-medium uppercase tracking-wider ${isDark ? "text-[#64748B]" : "text-[#94A3B8]"}`}
-                  >
-                    {item.label}
-                  </div>
-                  {item.href ? (
-                    <a
-                      href={item.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`text-sm font-medium hover:text-[#3B82F6] transition-colors ${isDark ? "text-white" : "text-[#1E293B]"}`}
-                    >
-                      {item.value}
-                    </a>
+                  {submitted ? (
+                    <>
+                      <FiCheck size={18} />
+                      Message Received!
+                    </>
+                  ) : isSending ? (
+                    "Sending Message..."
                   ) : (
-                    <span
-                      className={`text-sm font-medium ${isDark ? "text-white" : "text-[#1E293B]"}`}
-                    >
-                      {item.value}
-                    </span>
+                    <>
+                      <FiSend size={15} />
+                      Submit Inquiry
+                    </>
                   )}
-                </div>
-              </div>
-            ))}
+                </button>
 
-            {/* CTA Card */}
-            <div className="p-6 rounded-2xl bg-gradient-to-br from-[#1E3A8A] to-[#3B82F6] text-white">
-              <h3 className="font-display font-bold text-lg">
-                Ready to start a project?
-              </h3>
-              <p className="mt-2 text-sm text-blue-100 leading-relaxed">
-                I'm available for freelance work, full-time roles, and technical
-                consulting across software and hardware domains.
-              </p>
-              <a
-                href="mailto:harshgupta24716@gmail.com"
-                className="inline-flex items-center gap-2 mt-4 px-5 py-2.5 bg-white text-[#1E3A8A] text-sm font-semibold rounded-xl hover:bg-blue-50 transition-colors"
-              >
-                <FiMail size={16} />
-                Get in Touch
-              </a>
+                {errorMsg && (
+                  <p className="text-xs text-red-600 mt-2 font-medium" role="alert">
+                    {errorMsg}
+                  </p>
+                )}
+              </form>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
