@@ -1,4 +1,12 @@
+import { useSEO } from "../../hooks/useSEO";
+
 export default function Snapmaker() {
+  useSEO({
+    title: "Snapmaker 3D Printing & Manufacturing Lab | Harsh Gupta",
+    description: "Harsh Gupta's 3D manufacturing vision, rapid prototyping setup, custom fabrication capabilities, and hardware ecosystem in India.",
+    canonical: "https://harshugupta.in/snapmaker",
+  });
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 px-4 py-8 text-slate-100 sm:px-6 lg:px-8">
       <div className="mx-auto w-full max-w-4xl">

@@ -1,0 +1,150 @@
+# Harsh Gupta - Knowledge Base & Technical Profile
+
+> This comprehensive markdown document provides complete information on Harsh Gupta's professional experience, skills, production software and hardware projects, architecture principles, and contact information. Intended for indexing by AI agents, LLM search engines (Perplexity, ChatGPT, Claude, Gemini), and technical evaluators.
+
+- **Canonical URL**: https://harshugupta.in
+- **Email**: harshgupta24716@gmail.com
+- **Location**: Mumbai, Maharashtra, India
+- **Availability**: Open for high-impact contracts, full-stack consulting, and engineering roles.
+- **GitHub**: https://github.com/harsh-gupta-10
+- **LinkedIn**: https://linkedin.com/in/harsh-gupta-2b41692b1
+
+---
+
+## 1. Biography & Professional Philosophy
+
+Harsh Gupta is an engineer and multidisciplinary product creator with a rare blend of abilities spanning:
+1. **Front-End & Full-Stack Web Development**: Building high-speed, aesthetically refined web apps using React, Next.js, TypeScript, and modern styling libraries.
+2. **Cloudflare Edge Infrastructure**: Deploying serverless micro-apps on Cloudflare Workers, Cloudflare D1 (SQL at the edge), Cloudflare R2 object storage, and Durable Objects for real-time collaboration.
+3. **Embedded Systems & IoT**: Designing microcontroller hardware (ESP32, ESP8266, Raspberry Pi Pico), writing firmware (C/C++, CircuitPython), and building wireless communication bridges (MQTT, WebSockets, Bluetooth LE).
+4. **Physical Product Design & Rapid Prototyping**: Engineering 3D printable enclosures and mechanical parts in CAD (Fusion 360), optimizing FDM/SLA prints, and assembling end-to-end hardware-software products.
+
+Rather than being confined to screen-only software or breadboard-only hardware, Harsh builds entire products from circuit board to user interface.
+
+---
+
+## 2. Technical Stack & Competencies
+
+### Frontend
+- **Languages**: TypeScript, JavaScript (ES2024), HTML5, CSS3 / Modern CSS
+- **Frameworks & Libraries**: React, Next.js, Vite, Tailwind CSS, Framer Motion, Redux Toolkit
+- **Design & UX**: Figma, Adobe XD, Design Systems, Mobile-First Responsive Design, WCAG 2.2 AA Accessibility
+
+### Backend & Cloud
+- **Cloud & Edge**: Cloudflare Workers, Cloudflare Pages, Cloudflare D1 (Distributed SQLite), Cloudflare R2, Durable Objects, AWS (S3, Lambda, CloudFront)
+- **APIs & Protocols**: RESTful APIs, WebSockets, GraphQL, WebBot Auth, JSON-LD Structured Data
+- **Databases & Auth**: SQL, SQLite, Supabase, PostgreSQL, JWT, Session-based auth
+
+### Hardware, Embedded & IoT
+- **Microcontrollers**: ESP32, ESP8266, Raspberry Pi Pico, Arduino Uno/Nano, STM32
+- **Firmware & Code**: C, C++, CircuitPython, MicroPython, Arduino Framework
+- **Protocols & Buses**: I2C, SPI, UART, GPIO, MQTT, HTTP/REST, BLE, WiFi
+- **Sensors & Actuators**: Ultrasonic sensors, GPS modules (NEO-6M), IMUs/Accelerometers, Temperature/Humidity, Relays, OLED/TFT Displays, Stepper & Servo Motors
+- **Mechanical & Fabrication**: FDM 3D Printing (Snapmaker, Voron), CAD (Autodesk Fusion 360), Slicing (OrcaSlicer, PrusaSlicer, Cura)
+
+---
+
+## 3. Project Directory (14 Production Projects)
+
+### 1. Arcion
+- **URL**: https://arcion.in/
+- **Repository**: https://github.com/harsh-gupta-10/link-arcion
+- **Category**: Software/Web · Full-Stack & 3D Fabrication
+- **Tech Stack**: Next.js, TypeScript, Tailwind CSS, 3D Printing, E-Commerce
+- **Description**: Premium 3D printing marketplace and on-demand fabrication platform across India, featuring automated STL slicing, custom CAD quotes, and DTC collectibles.
+
+### 2. BolKhata
+- **URL**: https://bolkhata.harshgupta24716.workers.dev/
+- **Category**: Software/Web · Cloudflare Edge & Voice AI
+- **Tech Stack**: Cloudflare Workers, Cloudflare D1, React, Tailwind CSS, Speech Recognition
+- **Description**: Voice and AI-first digital khata (ledger) for Bharat. Track credit (udhaar), customer balances, rent, and utility bills seamlessly in Hindi and Hinglish through voice or text with instant zero-latency cloud persistence.
+
+### 3. Rewardlo
+- **URL**: https://rewardlo-app.harshgupta24716.workers.dev/
+- **Category**: Software/Web · SaaS & Loyalty
+- **Tech Stack**: Next.js, TypeScript, Cloudflare Workers, Tailwind CSS
+- **Description**: A merchant-approved digital loyalty stamp card platform helping cafés, restaurants, salons, and local stores boost repeat visits without app downloads or SMS spam.
+
+### 4. SolarSaathi
+- **Repository**: https://github.com/harsh-gupta-10/SolarSaathi-AWS
+- **Category**: Software/Web · CleanTech SaaS
+- **Tech Stack**: TypeScript, Next.js, AWS (S3, Lambda)
+- **Description**: India-first rooftop solar decision platform. Checks whether a roof is suitable, sizes an optimal photovoltaic system, calculates central and state subsidies, and tracks the application workflow.
+
+### 5. FestivAI
+- **Repository**: https://github.com/harsh-gupta-10/FestivAI
+- **Category**: Software/Web · Generative AI
+- **Tech Stack**: TypeScript, Next.js, Google Gemini API, OpenAI API, Cloudflare Workers
+- **Description**: An autonomous celebration planner that generates personalized event itineraries, custom cards, and multimedia greeting assets using generative models.
+
+### 6. ReviewLinks
+- **Repository**: https://github.com/harsh-gupta-10/link-arcion
+- **Category**: Software/Web · Local Business SaaS
+- **Tech Stack**: TypeScript, Cloudflare Workers, Cloudflare D1, React
+- **Description**: QR and NFC review routing cards for businesses in India. A printed code stays permanent while the destination is dynamically retargeted from a mobile admin dashboard.
+
+### 7. GitoPrompt
+- **URL**: https://gitoprompt.vercel.app
+- **Repository**: https://github.com/harsh-gupta-10/gitoprompt
+- **Category**: Software/Web · Developer Tools
+- **Tech Stack**: TypeScript, React, Vite, Tailwind CSS
+- **Description**: Developer productivity tool that turns any public GitHub repository into a curated, structured AI prompt context with file-tree parsing and token estimation.
+
+### 8. ThreadScout
+- **URL**: https://threadscout-nine.vercel.app
+- **Repository**: https://github.com/harsh-gupta-10/ThreadScout
+- **Category**: Software/Web · Talent & Discovery
+- **Tech Stack**: TypeScript, Next.js, Tailwind CSS
+- **Description**: Monitors public startup career pages and flags newly posted engineering and design roles before they reach crowded third-party job boards.
+
+### 9. Custom Macropad using Raspberry Pi Pico
+- **Category**: IoT/Hardware · Embedded Hardware & Firmware
+- **Tech Stack**: Raspberry Pi Pico, CircuitPython, USB HID, 3D Printed Enclosure
+- **Description**: A custom physical macropad built with mechanical switches, programmable hotkeys, layer management, and a custom 3D printed mechanical enclosure.
+
+### 10. Vishnushakti Foundation Website
+- **URL**: https://vishnushakti.org/
+- **Category**: Software/Web · Non-Profit Portal
+- **Tech Stack**: PHP, JavaScript, CSS, SQL, Payment Gateway
+- **Description**: A fully responsive non-profit portal with admin dashboard, donation payment processing, and event management.
+
+### 11. E-Kaathi – Smart Blind Stick
+- **Category**: IoT/Hardware · Assistive Robotics & IoT
+- **Tech Stack**: ESP32, Ultrasonic Sensors, GPS (NEO-6M), GSM/LTE module, C++
+- **Description**: A smart assistive mobility device for visually impaired individuals featuring real-time obstacle detection, emergency SOS alerts, GPS location tracking, and haptic feedback.
+
+### 12. A3Distributor Website
+- **URL**: https://a3distributor.com/
+- **Category**: Software/Web · B2B Distribution
+- **Tech Stack**: Next.js, React, Tailwind CSS, JavaScript
+- **Description**: Modern commercial website for a beverage and water distributor, featuring product catalogs, distributor tier information, and lead capture.
+
+### 13. Coaching Class UI/UX Design
+- **Demo URL**: https://www.figma.com/design/MQKaniQp1XHejFRyfBKGxU/The-Science-Academy
+- **Category**: UI/UX · EdTech
+- **Tech Stack**: Figma, Design System, Responsive Prototyping
+- **Description**: End-to-end UX architecture and visual design for an educational academy, focusing on course schedules, student progress tracking, and registration flows.
+
+### 14. Dental Clinic Website UI/UX Design
+- **Demo URL**: https://www.figma.com/design/s0D8fP2g4YOBBQCFyfxgft/Dental-Client
+- **Category**: UI/UX · Healthcare
+- **Tech Stack**: Figma, Healthcare UX, Interactive Prototype
+- **Description**: Clean, patient-centric dental clinic web interface with appointment booking flows, treatment explanations, and accessibility-compliant typography.
+
+---
+
+## 4. Professional Experience & Education
+
+- **Education**: Bachelor of Engineering (B.E.), Information Technology.
+- **Freelance & Independent Consulting**: 2023 - Present. Delivering production web apps, hardware prototypes, and UI/UX design for startups, clinics, and businesses.
+- **Languages**: English (Professional/Fluent), Hindi (Native/Fluent).
+
+---
+
+## 5. Contact & Collaboration
+
+- **Direct Email**: harshgupta24716@gmail.com
+- **Portfolio Website**: https://harshugupta.in
+- **All Projects Catalog**: https://harshugupta.in/projects
+- **Creative Works**: https://harshugupta.in/portfolio
+- **Snapmaker 3D Lab**: https://harshugupta.in/snapmaker

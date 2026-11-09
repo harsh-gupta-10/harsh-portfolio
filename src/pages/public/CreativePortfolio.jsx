@@ -33,6 +33,7 @@ import {
 
 import creativeData from "../../data/creativePortfolio.json";
 import { useDarkMode } from "../../hooks/useDarkMode";
+import { useSEO } from "../../hooks/useSEO";
 
 // Official Brand SVG Icons for KineMaster and CapCut
 function KineMasterIcon({ size = 22 }) {
@@ -102,6 +103,12 @@ export default function CreativePortfolio() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [selectedItem, setSelectedItem] = useState(null);
   const { creator, stats, software, storyMilestones, gallery } = creativeData;
+
+  useSEO({
+    title: "Creative Portfolio & Visual Design | Harsh Gupta",
+    description: "Creative design showcase by Harsh Gupta featuring UI/UX prototypes, branding, digital art, video editing, and motion design.",
+    canonical: "https://harshugupta.in/portfolio",
+  });
 
   const filteredGallery =
     activeCategory === "all"

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import initialProjects from "../../data/allProjects.json";
 import { usePortfolioData } from "../../lib/localAdmin";
 import { useDarkMode } from "../../hooks/useDarkMode";
+import { useSEO } from "../../hooks/useSEO";
 
 const CATEGORY_TABS = [
   { id: "all", label: "All" },
@@ -67,6 +68,10 @@ function ProjectCard({ project, isDark, index }) {
           <img
             src={project.image}
             alt={project.title}
+            loading="lazy"
+            decoding="async"
+            width="800"
+            height="450"
             className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
         ) : (
@@ -178,6 +183,12 @@ export default function AllProjects() {
   const { isDark, toggle } = useDarkMode();
   const [projectList] = usePortfolioData("projects", initialProjects);
   const [activeTab, setActiveTab] = useState("all");
+
+  useSEO({
+    title: "All Projects & Engineering Portfolio | Harsh Gupta",
+    description: "Explore software and hardware engineering projects by Harsh Gupta, spanning React, Cloudflare Workers, IoT, embedded systems, and UI/UX design.",
+    canonical: "https://harshugupta.in/projects",
+  });
 
   const counts = useMemo(() => {
     return {

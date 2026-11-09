@@ -6,6 +6,7 @@ import PageLoader from "./components/PageLoader";
 
 // ── EAGER (small, always needed) ──────────────────
 import { useDarkMode } from "./hooks/useDarkMode";
+import { useSEO } from "./hooks/useSEO";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
@@ -61,6 +62,7 @@ const NoteEditor      = lazy(() => import("./pages/admin/NoteEditor"));
 // ── PORTFOLIO ─────────────────────────────────────
 function Portfolio() {
   const { isDark, toggle } = useDarkMode();
+  useSEO();
 
   return (
     <div className={isDark ? "dark" : ""}>

@@ -1,5 +1,40 @@
+# Robots.txt for https://harshugupta.in
+# Technical SEO & AI Agent readiness policy
+
 User-agent: *
 Allow: /
-Disallow:
+Disallow: /portfolio-admin/
+Disallow: /admin/
+Disallow: /login
+Disallow: /api/
+Disallow: /view/
 
-Sitemap: https://harshgupta.dev/sitemap.xml
+# AI Search & Discovery crawlers
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /portfolio-admin/
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: Claude-SearchBot
+Allow: /
+Disallow: /portfolio-admin/
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /portfolio-admin/
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /portfolio-admin/
+Disallow: /admin/
+Disallow: /api/
+
+# Content signal & LLM discovery
+# Specification: https://harshugupta.in/llms.txt
+Content-Signal: search=yes, ai-input=yes, ai-train=no
+Sitemap: https://harshugupta.in/sitemap.xml

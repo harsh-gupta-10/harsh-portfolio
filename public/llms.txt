@@ -1,0 +1,55 @@
+# Harsh Gupta
+
+> Multi-disciplinary technologist and product engineer building complete real-world products end-to-end — from high-performance digital interfaces and edge cloud applications to custom embedded hardware, firmware, and rapid 3D physical fabrication.
+
+- **Website**: https://harshugupta.in
+- **Location**: Mumbai, India (Available for global remote work & contract roles)
+- **Email**: harshgupta24716@gmail.com
+- **GitHub**: https://github.com/harsh-gupta-10
+- **LinkedIn**: https://linkedin.com/in/harsh-gupta-2b41692b1
+- **Full Knowledge File**: https://harshugupta.in/llms-full.txt
+
+---
+
+## Core Specializations
+
+1. **Front-End & Full-Stack Web Development**:
+   - React, TypeScript, JavaScript (ESNext), Tailwind CSS, Framer Motion, HTML5, modern Web APIs.
+   - Cloudflare Workers, Cloudflare D1 (Serverless SQLite), Cloudflare R2, Durable Objects, WebSockets.
+   - Offline-first architectures, real-time synchronization, edge caching, responsive micro-interactions.
+
+2. **UI/UX & Digital Product Design**:
+   - Figma, design systems, interactive prototypes, accessibility (WCAG AA), user journey mapping.
+   - Conversion-focused SaaS layouts, dashboard interfaces, clean visual hierarchy.
+
+3. **Embedded Systems & IoT Engineering**:
+   - ESP32, ESP8266, Arduino, ARM Cortex, Raspberry Pi.
+   - Hardware sensor integration (environmental, electrical, optical), MQTT, HTTP/REST, BLE, WiFi.
+   - Circuit schematic design, PCB layout, low-power telemetry, custom firmware in C/C++.
+
+4. **Digital Fabrication & Rapid Prototyping**:
+   - FDM 3D printing (Snapmaker, Voron/CoreXY), CAD modeling (Fusion 360), slicing optimization.
+   - Enclosure design, functional prototypes, production jigs, and custom hardware housings.
+
+---
+
+## Featured Production Projects
+
+- [Arcion](https://arcion.in/): Modern CleanTech and IoT enterprise web platform designed with high-performance responsive UI, interactive telemetry, and dynamic product showcases.
+- [BolKhata](https://bolkhata.harshgupta24716.workers.dev/): A lightning-fast, edge-native bilingual ledger and business accounting application deployed globally on Cloudflare Workers and D1 database.
+- [Rewardlo](https://rewardlo-app.harshgupta24716.workers.dev/): Scalable customer loyalty and rewards engine featuring instant point redemption, automated merchant workflows, and edge database persistence.
+- [SolarSaathi](https://harshugupta.in/projects): Clean energy monitoring platform combining IoT hardware sensor telemetry with real-time web dashboards for solar power optimization.
+- [FestivAI](https://harshugupta.in/projects): AI-powered creative greeting and multimedia generation web application leveraging generative models and dynamic user customization.
+- [ReviewLinks](https://harshugupta.in/projects): SaaS platform automating verified customer review generation and distribution across Google and social channels.
+- [GitoPrompt](https://harshugupta.in/projects): Developer productivity tool streamlining multi-file codebase analysis and prompt engineering for Large Language Models.
+- [ThreadScout](https://harshugupta.in/projects): Intelligent discussion discovery tool tracking relevant industry threads across Reddit, X, and community forums.
+- [Custom Macropad & Hardware Prototypes](https://harshugupta.in/projects): Custom mechanical keyboard and productivity macropad featuring programmed hotkeys, QMK/custom firmware, and 3D printed mechanical enclosure.
+
+---
+
+## Public Pages & Resources
+
+- [Portfolio Homepage](https://harshugupta.in/): Interactive experience, about narrative, timeline, and direct contact.
+- [All Projects Directory](https://harshugupta.in/projects): Filterable catalog of 14+ software and hardware projects categorized by Software/Web, IoT/Hardware, and UI/UX.
+- [Creative Portfolio](https://harshugupta.in/portfolio): Creative visual work, video editing, graphics, and design assets.
+- [Snapmaker 3D Showcase](https://harshugupta.in/snapmaker): 3D manufacturing, fabrication vision, and technical equipment overview.
