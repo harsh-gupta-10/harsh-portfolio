@@ -127,7 +127,7 @@ export default function CreativePortfolio() {
         {/* ── CONSISTENT NAVBAR ─────────────────────────────── */}
         <Navbar />
 
-        <main className="pt-20 sm:pt-24">
+        <main className="pt-28 sm:pt-36">
           {/* ── 1. HERO SECTION ─────────────────────────────────── */}
           <section className="relative pt-12 pb-16 sm:pt-16 sm:pb-24 overflow-hidden">
             {/* Background Glow */}
@@ -201,7 +201,7 @@ export default function CreativePortfolio() {
                     <span>Download Resume</span>
                   </a>
                   <a
-                    href="mailto:harshgupta24716@gmail.com?subject=Job%20Opportunity%20-%20Graphic%20Designer%20%26%20Video%20Editor"
+                    href="mailto:info@harshugupta.in?subject=Job%20Opportunity%20-%20Graphic%20Designer%20%26%20Video%20Editor"
                     className={`inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-sm border transition-all ${
                       isDark
                         ? "border-blue-500/30 text-blue-400 bg-blue-500/10 hover:bg-blue-500/20"
@@ -649,7 +649,7 @@ export default function CreativePortfolio() {
                 </div>
 
                 <a
-                  href="mailto:harshgupta24716@gmail.com?subject=Creative%20Collaboration%20Inquiry"
+                  href="mailto:info@harshugupta.in?subject=Creative%20Collaboration%20Inquiry"
                   className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold bg-blue-600 text-white hover:bg-blue-700 transition-all shrink-0 hover:shadow-lg hover:shadow-blue-600/30"
                 >
                   <FiMail size={16} />
@@ -722,7 +722,7 @@ export default function CreativePortfolio() {
                 {/* Action CTAs */}
                 <div className="mt-8 flex flex-wrap items-center gap-4">
                   <a
-                    href="mailto:harshgupta24716@gmail.com?subject=Job%20Opportunity%20-%20Graphic%20Designer%20%26%20Video%20Editor"
+                    href="mailto:info@harshugupta.in?subject=Job%20Opportunity%20-%20Graphic%20Designer%20%26%20Video%20Editor"
                     className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl font-bold text-sm bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 shadow-lg shadow-blue-500/25 hover:scale-105 transition-all"
                   >
                     <FiMail size={17} />

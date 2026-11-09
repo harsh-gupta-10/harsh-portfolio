@@ -78,10 +78,10 @@ export default function Snapmaker() {
                   <li>
                     <span className="mr-2">📧</span>
                     <a
-                      href="mailto:harshgupta24716@gmail.com"
+                      href="mailto:info@harshugupta.in"
                       className="text-[#df37a7] hover:underline"
                     >
-                      harshgupta24716@gmail.com
+                      info@harshugupta.in
                     </a>
                   </li>
                   <li>

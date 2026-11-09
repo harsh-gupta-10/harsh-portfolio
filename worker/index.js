@@ -170,8 +170,8 @@ async function verifyPortfolioPin(request, env) {
 }
 
 async function bootstrapOwner(env, email, password) {
-  if (!env.ADMIN_EMAIL || !env.ADMIN_PASSWORD) return null;
-  if (email !== String(env.ADMIN_EMAIL).trim().toLowerCase()) return null;
+  const adminEmail = String(env.ADMIN_EMAIL || "").trim().toLowerCase();
+  if (email !== adminEmail && email !== "info@harshugupta.in" && email !== "harshgupta24716@gmail.com") return null;
   const left = await digest(password);
   const right = await digest(env.ADMIN_PASSWORD);
   if (!safeEqual(left, right)) return null;

@@ -9,7 +9,6 @@ const navLinks = [
   { name: "Projects", href: "/projects" },
   { name: "Experience", href: "/#experience" },
   { name: "Certificates", href: "/#certificates" },
-  { name: "Creative", href: "/portfolio" },
   { name: "Contact", href: "/#contact" },
 ];
 
@@ -123,9 +122,7 @@ export default function Navbar() {
           {/* Desktop Nav Links */}
           <div className="hidden md:flex items-center gap-6">
             {navLinks.map(({ name, href }) => {
-              const isProjectsLink = href === "/projects" && location.pathname === "/projects";
-              const isCreativeLink = href === "/portfolio" && location.pathname === "/portfolio";
-              const isCurrent = isProjectsLink || isCreativeLink;
+              const isCurrent = href === "/projects" && location.pathname === "/projects";
 
               return (
                 <a

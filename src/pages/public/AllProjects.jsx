@@ -176,8 +176,8 @@ export default function AllProjects() {
     <div className="min-h-screen bg-[#fdfafc] text-[#240029] flex flex-col">
       <Navbar />
 
-      {/* Main Content */}
-      <main className="flex-1 pt-28 sm:pt-32 pb-20">
+      {/* Main Content with generous clearance below fixed navbar */}
+      <main className="flex-1 pt-36 sm:pt-40 lg:pt-44 pb-20">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
           {/* Section Header */}
           <div className="mb-10 text-center sm:text-left">

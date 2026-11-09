@@ -3,7 +3,7 @@
 > This comprehensive markdown document provides complete information on Harsh Gupta's professional experience, skills, production software and hardware projects, architecture principles, and contact information. Intended for indexing by AI agents, LLM search engines (Perplexity, ChatGPT, Claude, Gemini), and technical evaluators.
 
 - **Canonical URL**: https://harshugupta.in
-- **Email**: harshgupta24716@gmail.com
+- **Email**: info@harshugupta.in
 - **Location**: Mumbai, Maharashtra, India
 - **Availability**: Open for high-impact contracts, full-stack consulting, and engineering roles.
 - **GitHub**: https://github.com/harsh-gupta-10
@@ -143,7 +143,7 @@ Rather than being confined to screen-only software or breadboard-only hardware, 
 
 ## 5. Contact & Collaboration
 
-- **Direct Email**: harshgupta24716@gmail.com
+- **Direct Email**: info@harshugupta.in
 - **Portfolio Website**: https://harshugupta.in
 - **All Projects Catalog**: https://harshugupta.in/projects
 - **Creative Works**: https://harshugupta.in/portfolio

@@ -3,7 +3,7 @@ import { FiMail, FiGithub, FiLinkedin, FiMapPin, FiCopy, FiCheck, FiArrowUpRight
 
 export default function Contact() {
   const [copied, setCopied] = useState(false);
-  const email = "harshgupta24716@gmail.com";
+  const email = "info@harshugupta.in";
 
   const handleCopy = () => {
     navigator.clipboard.writeText(email);

@@ -147,96 +147,47 @@ function ProjectCard({ project }) {
 
 export default function Projects() {
   const [projectList] = usePortfolioData("projects", initialProjects);
-  const [activeTab, setActiveTab] = useState("all");
-
-  const counts = useMemo(() => {
-    return {
-      all: projectList.length,
-      "software-web": projectList.filter((p) => matchesCategory(p.category, "software-web")).length,
-      "iot-hardware": projectList.filter((p) => matchesCategory(p.category, "iot-hardware")).length,
-      "ui-ux": projectList.filter((p) => matchesCategory(p.category, "ui-ux")).length,
-    };
+  const displayedProjects = useMemo(() => {
+    return projectList.slice(0, 4);
   }, [projectList]);
-
-  const filteredProjects = useMemo(() => {
-    if (activeTab === "all") return projectList;
-    return projectList.filter((project) => matchesCategory(project.category, activeTab));
-  }, [projectList, activeTab]);
 
   return (
     <section id="projects" className="py-24 bg-white border-b border-[#d4ccd4]">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-10">
+        <div className="text-center max-w-2xl mx-auto mb-12">
           <span className="font-mono text-xs font-semibold tracking-[0.10em] text-[#240029] uppercase mb-3 block">
             // 03 · FEATURED WORKS
           </span>
           <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#240029] tracking-tight leading-tight">
-            Shipping production systems.
+            Selected Production Builds.
           </h2>
           <p className="mt-4 text-base sm:text-lg text-[#6d526d] leading-relaxed">
-            Full-stack web software, voice ledgers, cloud workers, and custom embedded IoT prototypes.
+            Full-stack web software, voice ledgers, and custom embedded IoT prototypes engineered end-to-end.
           </p>
         </div>
 
-        {/* Category Pills (Outseta Style) */}
-        <div className="flex flex-wrap items-center justify-center gap-2.5 mb-12">
-          {CATEGORY_TABS.map((tab) => {
-            const isActive = activeTab === tab.id;
-            const count = counts[tab.id];
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium cursor-pointer transition-all ${
-                  isActive
-                    ? "bg-[#240029] text-white border border-[#240029] shadow-xs"
-                    : "bg-white text-[#240029] border border-[#d4ccd4] hover:border-[#6d526d] hover:bg-[#240029]/5"
-                }`}
-              >
-                <span>{tab.label}</span>
-                {count !== undefined && (
-                  <span
-                    className={`text-[10px] px-2 py-0.5 rounded-full font-mono font-medium ${
-                      isActive ? "bg-white/20 text-white" : "bg-[#240029]/5 text-[#6d526d]"
-                    }`}
-                  >
-                    {count}
-                  </span>
-                )}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Projects Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <AnimatePresence mode="popLayout">
-            {filteredProjects.map((project) => (
-              <motion.div
-                key={project.title}
-                layout
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 15 }}
-                transition={{ duration: 0.2 }}
-                className="h-full"
-              >
-                <ProjectCard project={project} />
-              </motion.div>
-            ))}
-          </AnimatePresence>
+        {/* 4 Projects Grid (2x2 layout) */}
+        <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
+          {displayedProjects.map((project) => (
+            <div key={project.title} className="h-full">
+              <ProjectCard project={project} />
+            </div>
+          ))}
         </div>
 
         {/* Bottom CTA to view all works */}
-        <div className="mt-14 flex justify-center">
+        <div className="mt-14 flex flex-col items-center justify-center gap-3">
           <Link
             to="/projects"
-            className="btn-ghost-aubergine inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold"
+            className="btn-primary-fuchsia inline-flex items-center gap-2.5 px-8 py-4 text-base font-semibold shadow-lg shadow-[#df37a7]/20 hover:scale-105 transition-all"
           >
-            Explore Complete Project Directory
-            <FiArrowRight size={14} />
+            Explore All Projects ({projectList.length})
+            <FiArrowRight size={18} />
           </Link>
+          <span className="text-xs font-mono text-[#6d526d]">
+            View complete archive with software, hardware & UI/UX filter tabs
+          </span>
         </div>
       </div>
     </section>

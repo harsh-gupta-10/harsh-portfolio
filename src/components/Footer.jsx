@@ -2,13 +2,12 @@ import { FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
 const footerLinks = [
-  { name: "About", href: "#about" },
-  { name: "Skills", href: "#skills" },
-  { name: "Featured Projects", href: "#projects" },
+  { name: "About", href: "/#about" },
+  { name: "Skills", href: "/#skills" },
+  { name: "Featured Projects", href: "/#projects" },
   { name: "All Works", href: "/projects" },
-  { name: "Creative Design", href: "/portfolio" },
   { name: "3D Lab", href: "/snapmaker" },
-  { name: "Contact", href: "#contact" },
+  { name: "Contact", href: "/#contact" },
 ];
 
 export default function Footer() {
@@ -105,7 +104,7 @@ export default function Footer() {
               <FiLinkedin size={15} />
             </a>
             <a
-              href="mailto:harshgupta24716@gmail.com"
+              href="mailto:info@harshugupta.in"
               className="w-9 h-9 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white transition-colors"
               aria-label="Email"
             >

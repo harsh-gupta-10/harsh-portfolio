@@ -41,7 +41,10 @@ export function AuthProvider({ children }) {
 
       if (!profile) {
         // No profile yet — auto-create for the owner email, otherwise block
-        if (email.toLowerCase() === "harshgupta24716@gmail.com") {
+        if (
+          email.toLowerCase() === "harshgupta24716@gmail.com" ||
+          email.toLowerCase() === "info@harshugupta.in"
+        ) {
           // Owner fallback: create profile if missing
           await supabase.from("profiles").upsert({
             id: data.user.id,
