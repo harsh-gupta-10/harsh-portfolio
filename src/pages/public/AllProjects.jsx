@@ -83,7 +83,7 @@ function ProjectCard({ project }) {
       </div>
 
       {/* Body */}
-      <div className="p-6 flex flex-col flex-1">
+      <div className="p-5 sm:p-6 flex flex-col flex-1">
         <div className="flex items-start justify-between gap-2 mb-2">
           <h3 className="font-display font-bold text-lg text-[#240029]">
             {project.title}
@@ -118,7 +118,7 @@ function ProjectCard({ project }) {
 
         {/* Action Row */}
         {(project.showLiveDemo || project.showCode) && (
-          <div className="pt-5 mt-4 border-t border-[#d4ccd4]/60 flex items-center gap-3">
+          <div className="pt-4 sm:pt-5 mt-4 border-t border-[#d4ccd4]/60 flex flex-wrap items-center gap-2.5 sm:gap-3">
             {project.showLiveDemo && (
               <a
                 href={project.liveUrl}
@@ -135,7 +135,7 @@ function ProjectCard({ project }) {
                 href={project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-ghost-aubergine inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-medium"
+                className="btn-ghost-aubergine inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium"
               >
                 <FiGithub size={13} />
                 Source
@@ -177,23 +177,23 @@ export default function AllProjects() {
       <Navbar />
 
       {/* Main Content with generous clearance below fixed navbar */}
-      <main className="flex-1 pt-36 sm:pt-40 lg:pt-44 pb-20">
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
+      <main className="flex-1 pt-28 sm:pt-36 lg:pt-40 pb-16 sm:pb-20">
+        <div className="max-w-[1200px] mx-auto px-5 sm:px-6 lg:px-8">
           {/* Section Header */}
-          <div className="mb-10 text-center sm:text-left">
+          <div className="mb-8 sm:mb-10 text-center sm:text-left">
             <span className="font-mono text-xs font-semibold tracking-[0.10em] text-[#240029] uppercase mb-2 block">
               // COMPLETE ARCHIVE
             </span>
-            <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#240029] tracking-tight">
+            <h1 className="font-display text-2xl sm:text-4xl lg:text-5xl font-extrabold text-[#240029] tracking-tight">
               All Engineering Projects
             </h1>
-            <p className="mt-3 max-w-2xl text-base sm:text-lg text-[#6d526d] leading-relaxed">
+            <p className="mt-2.5 sm:mt-3 max-w-2xl text-base sm:text-lg text-[#6d526d] leading-relaxed">
               Every production web application, IoT prototype, assistive device, and design system engineered end-to-end.
             </p>
           </div>
 
           {/* Category Tabs */}
-          <div className="flex flex-wrap items-center gap-2.5 mb-10">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 mb-8 sm:mb-10">
             {CATEGORY_TABS.map((tab) => {
               const isActive = activeTab === tab.id;
               const count = counts[tab.id];
@@ -201,7 +201,7 @@ export default function AllProjects() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium cursor-pointer transition-all ${
+                  className={`inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-full text-xs font-medium cursor-pointer transition-all ${
                     isActive
                       ? "bg-[#240029] text-white border border-[#240029] shadow-xs"
                       : "bg-white text-[#240029] border border-[#d4ccd4] hover:border-[#6d526d] hover:bg-[#240029]/5"
@@ -223,7 +223,7 @@ export default function AllProjects() {
           </div>
 
           {/* Projects Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
             <AnimatePresence mode="popLayout">
               {filteredProjects.map((project) => (
                 <motion.div

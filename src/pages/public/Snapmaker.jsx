@@ -13,19 +13,19 @@ export default function Snapmaker() {
     <div className="min-h-screen bg-[#fdfafc] text-[#240029] flex flex-col">
       <Navbar />
 
-      <main className="flex-1 pt-28 sm:pt-36 pb-20 px-4 sm:px-6 lg:px-8">
+      <main className="flex-1 pt-28 sm:pt-36 pb-16 sm:pb-20 px-5 sm:px-6 lg:px-8">
         <div className="mx-auto w-full max-w-4xl">
           <div className="card-outseta overflow-hidden bg-white shadow-xl">
-            <div className="border-b border-[#d4ccd4] bg-gradient-to-r from-[#ffbdd3]/30 via-[#fff1bd]/20 to-[#ffcb0f]/20 px-6 py-8 sm:px-10">
+            <div className="border-b border-[#d4ccd4] bg-gradient-to-r from-[#ffbdd3]/30 via-[#fff1bd]/20 to-[#ffcb0f]/20 px-5 py-6 sm:px-10 sm:py-8">
               <span className="font-mono text-xs font-semibold uppercase tracking-[0.15em] text-[#240029] mb-2 block">
                 // HARDWARE PARTNERSHIP · SNAPMAKER
               </span>
-              <h1 className="font-display text-3xl font-extrabold leading-tight text-[#240029] sm:text-4xl">
+              <h1 className="font-display text-2xl font-extrabold leading-tight text-[#240029] sm:text-4xl">
                 Welcome, Snapmaker Team!
               </h1>
             </div>
 
-            <div className="space-y-6 px-6 py-8 text-base leading-relaxed text-[#240029]/85 sm:px-10 sm:py-10">
+            <div className="space-y-5 sm:space-y-6 px-5 py-6 text-sm sm:text-base leading-relaxed text-[#240029]/85 sm:px-10 sm:py-10">
               <p>Thank you for taking the time to visit this page.</p>
 
               <p>

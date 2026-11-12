@@ -76,7 +76,7 @@ export default function Navbar() {
           : "bg-white/95 backdrop-blur-md border-[#d4ccd4] shadow-[0_1px_3px_rgba(36,0,41,0.04)] text-[#240029]"
       }`}
     >
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1200px] mx-auto px-5 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-18">
           {/* Brand Mark & Name */}
           <Link
@@ -157,14 +157,14 @@ export default function Navbar() {
             {/* Mobile menu toggle */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className={`md:hidden p-2 rounded-md border transition-colors ${
+              className={`md:hidden p-2.5 min-w-[42px] min-h-[42px] flex items-center justify-center rounded-lg border transition-colors ${
                 isDarkHeroState
                   ? "text-white border-white/20 hover:bg-white/10"
                   : "text-[#240029] border-[#d4ccd4] hover:bg-[#240029]/5"
               }`}
               aria-label="Toggle navigation"
             >
-              {mobileOpen ? <FiX size={18} /> : <FiMenu size={18} />}
+              {mobileOpen ? <FiX size={20} /> : <FiMenu size={20} />}
             </button>
           </div>
         </div>
@@ -177,26 +177,39 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white text-[#240029] border-b border-[#d4ccd4] px-4 py-4 space-y-2 shadow-lg"
+            className={`md:hidden border-b px-5 py-4 space-y-1.5 shadow-xl transition-colors ${
+              isDarkHeroState
+                ? "bg-[#180a1c] text-white border-white/10"
+                : "bg-white text-[#240029] border-[#d4ccd4]"
+            }`}
           >
-            {navLinks.map(({ name, href }) => (
-              <a
-                key={name}
-                href={href}
-                onClick={(e) => handleClick(e, href)}
-                className="block px-3 py-2 text-sm font-medium text-[#240029] hover:bg-[#240029]/5 rounded-md"
-              >
-                {name}
-              </a>
-            ))}
+            {navLinks.map(({ name, href }) => {
+              const isCurrent = href === "/projects" && location.pathname === "/projects";
+              return (
+                <a
+                  key={name}
+                  href={href}
+                  onClick={(e) => handleClick(e, href)}
+                  className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors ${
+                    isCurrent
+                      ? "bg-[#df37a7]/10 text-[#df37a7] font-semibold"
+                      : isDarkHeroState
+                      ? "text-white/90 hover:bg-white/10"
+                      : "text-[#240029] hover:bg-[#240029]/5"
+                  }`}
+                >
+                  {name}
+                </a>
+              );
+            })}
             <div className="pt-2">
               <a
                 href="/#contact"
                 onClick={(e) => handleClick(e, "/#contact")}
-                className="btn-primary-fuchsia flex items-center justify-center gap-2 w-full py-2.5 text-sm"
+                className="btn-primary-fuchsia flex items-center justify-center gap-2 w-full py-3.5 text-base font-semibold rounded-lg"
               >
                 Let's Talk
-                <FiArrowRight size={14} />
+                <FiArrowRight size={16} />
               </a>
             </div>
           </motion.div>

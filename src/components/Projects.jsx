@@ -80,7 +80,7 @@ function ProjectCard({ project }) {
       </div>
 
       {/* Card Body */}
-      <div className="p-6 flex flex-col flex-1">
+      <div className="p-5 sm:p-6 flex flex-col flex-1">
         <div className="flex items-start justify-between gap-2 mb-2">
           <h3 className="font-display font-bold text-lg text-[#240029]">
             {project.title}
@@ -115,7 +115,7 @@ function ProjectCard({ project }) {
 
         {/* Action Row */}
         {(project.showLiveDemo || project.showCode) && (
-          <div className="pt-5 mt-4 border-t border-[#d4ccd4]/60 flex items-center gap-3">
+          <div className="pt-4 sm:pt-5 mt-4 border-t border-[#d4ccd4]/60 flex flex-wrap items-center gap-2.5 sm:gap-3">
             {project.showLiveDemo && (
               <a
                 href={project.liveUrl}
@@ -152,23 +152,23 @@ export default function Projects() {
   }, [projectList]);
 
   return (
-    <section id="projects" className="py-24 bg-white border-b border-[#d4ccd4]">
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="projects" className="py-16 sm:py-24 bg-white border-b border-[#d4ccd4]">
+      <div className="max-w-[1200px] mx-auto px-5 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-12">
-          <span className="font-mono text-xs font-semibold tracking-[0.10em] text-[#240029] uppercase mb-3 block">
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+          <span className="font-mono text-xs font-semibold tracking-[0.10em] text-[#240029] uppercase mb-2.5 sm:mb-3 block">
             // 03 · FEATURED WORKS
           </span>
-          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#240029] tracking-tight leading-tight">
+          <h2 className="font-display text-2xl sm:text-4xl lg:text-5xl font-extrabold text-[#240029] tracking-tight leading-tight">
             Selected Production Builds.
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-[#6d526d] leading-relaxed">
+          <p className="mt-3 sm:mt-4 text-base sm:text-lg text-[#6d526d] leading-relaxed">
             Full-stack web software, voice ledgers, and custom embedded IoT prototypes engineered end-to-end.
           </p>
         </div>
 
-        {/* 4 Projects Grid (2x2 layout) */}
-        <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
+        {/* 4 Projects Grid (2x2 layout on desktop, 1 col on mobile) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
           {displayedProjects.map((project) => (
             <div key={project.title} className="h-full">
               <ProjectCard project={project} />
@@ -177,10 +177,10 @@ export default function Projects() {
         </div>
 
         {/* Bottom CTA to view all works */}
-        <div className="mt-14 flex flex-col items-center justify-center gap-3">
+        <div className="mt-10 sm:mt-14 flex flex-col items-center justify-center gap-3 px-2 text-center">
           <Link
             to="/projects"
-            className="btn-primary-fuchsia inline-flex items-center gap-2.5 px-8 py-4 text-base font-semibold shadow-lg shadow-[#df37a7]/20 hover:scale-105 transition-all"
+            className="btn-primary-fuchsia inline-flex items-center justify-center gap-2.5 px-6 sm:px-8 py-3.5 sm:py-4 text-base font-semibold shadow-lg shadow-[#df37a7]/20 hover:scale-105 transition-all w-full sm:w-auto max-w-xs sm:max-w-none text-center"
           >
             Explore All Projects ({projectList.length})
             <FiArrowRight size={18} />

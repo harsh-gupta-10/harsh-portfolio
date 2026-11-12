@@ -139,7 +139,7 @@ export default function CreativePortfolio() {
               }`}
             />
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 relative z-10">
               <div className="text-center max-w-3xl mx-auto">
                 <motion.div
                   initial={{ opacity: 0, y: 15 }}
@@ -249,7 +249,7 @@ export default function CreativePortfolio() {
           </section>
 
           {/* ── 2. CURATED DESIGN & VIDEO WORKS (DIRECTLY BELOW HERO) ── */}
-          <section id="gallery" className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <section id="gallery" className="py-16 max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
             <div className="text-center max-w-2xl mx-auto mb-10">
               <span className="text-blue-500 font-semibold text-xs uppercase tracking-wider">
                 Portfolio Showcase
@@ -427,7 +427,7 @@ export default function CreativePortfolio() {
           </section>
 
           {/* ── 3. SOFTWARE & TOOL MASTERY (BELOW CURATED WORKS) ── */}
-          <section id="skills" className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <section id="skills" className="py-16 max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
             <div className="text-center max-w-2xl mx-auto mb-10">
               <span className="text-blue-500 font-semibold text-xs uppercase tracking-wider">
                 Creative Arsenal
@@ -516,7 +516,7 @@ export default function CreativePortfolio() {
           </section>
 
           {/* ── 4. THE STORY & JOURNEY CHAPTERS ─────────────────── */}
-          <section id="story" className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <section id="story" className="py-20 max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
             <div className="text-center max-w-2xl mx-auto mb-16">
               <span className="text-blue-500 font-semibold text-xs uppercase tracking-wider">
                 The Narrative
@@ -613,7 +613,7 @@ export default function CreativePortfolio() {
           </section>
 
           {/* ── 5. NETWORK & CONNECTIONS (MOVED LAST BEFORE HIRE ME) ── */}
-          <section className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <section className="py-12 max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
             <div
               className={`rounded-3xl p-6 sm:p-8 border relative overflow-hidden ${
                 isDark
@@ -659,7 +659,7 @@ export default function CreativePortfolio() {
           </section>
 
           {/* ── 6. HIRE ME & CAREER OPPORTUNITIES SECTION ──────────── */}
-          <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <section className="py-16 max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
             <div
               className={`rounded-3xl p-8 sm:p-12 border relative overflow-hidden shadow-2xl ${
                 isDark

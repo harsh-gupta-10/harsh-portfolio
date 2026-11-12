@@ -33,17 +33,6 @@
   --color-border: #d4ccd4;
   --color-card: #ffffff;
   --color-surface: #ffffff;
-
-  /* Spacing */
-  --spacing-4: 4px;
-  --spacing-8: 8px;
-  --spacing-12: 12px;
-  --spacing-16: 16px;
-  --spacing-24: 24px;
-  --spacing-32: 32px;
-  --spacing-48: 48px;
-  --spacing-96: 96px;
-
   /* Border Radius */
   --radius-sm: 3px;
   --radius-md: 6px;
@@ -76,6 +65,8 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 body {
@@ -85,6 +76,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #ffffff;
   color: #240029;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 ::selection {

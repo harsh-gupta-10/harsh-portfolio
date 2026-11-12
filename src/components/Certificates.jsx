@@ -108,7 +108,7 @@ function ScrollingRow({ certificates, direction, isDark, onSelect }) {
               // Don't open modal if the user was dragging
               if (!isDraggingRef.current) onSelect(cert);
             }}
-            className="flex-shrink-0 w-[320px] h-[220px] sm:w-[400px] sm:h-[275px] lg:w-[450px] lg:h-[310px] p-2 bg-white border border-[#d4ccd4] rounded-[16px] shadow-[0_2px_8px_rgba(36,0,41,0.06)] hover:border-[#df37a7] hover:shadow-lg transition-all duration-300 cursor-pointer group text-left relative overflow-hidden"
+            className="flex-shrink-0 w-[280px] h-[195px] sm:w-[400px] sm:h-[275px] lg:w-[450px] lg:h-[310px] p-2 bg-white border border-[#d4ccd4] rounded-[16px] shadow-[0_2px_8px_rgba(36,0,41,0.06)] hover:border-[#df37a7] hover:shadow-lg transition-all duration-300 cursor-pointer group text-left relative overflow-hidden"
           >
             <div className="w-full h-full rounded-[10px] overflow-hidden bg-slate-50 flex items-center justify-center relative">
               <img
@@ -198,25 +198,25 @@ export default function Certificates({ isDark }) {
   return (
     <section
       id="certificates"
-      className="py-24 bg-[#fdfafc] border-b border-[#d4ccd4]"
+      className="py-16 sm:py-24 bg-[#fdfafc] border-b border-[#d4ccd4] overflow-hidden"
     >
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1200px] mx-auto px-5 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="font-mono text-xs font-semibold tracking-[0.10em] text-[#240029] uppercase mb-3 block">
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-16">
+          <span className="font-mono text-xs font-semibold tracking-[0.10em] text-[#240029] uppercase mb-2.5 sm:mb-3 block">
             // 06 · CREDENTIALS & LICENSES
           </span>
-          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#240029] tracking-tight leading-tight">
+          <h2 className="font-display text-2xl sm:text-4xl lg:text-5xl font-extrabold text-[#240029] tracking-tight leading-tight">
             Certificates & credentials.
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-[#6d526d] leading-relaxed">
+          <p className="mt-3 sm:mt-4 text-base sm:text-lg text-[#6d526d] leading-relaxed">
             Professional certifications and credentials earned across cloud, web, and hardware engineering.
           </p>
         </div>
       </div>
 
       {/* Scrolling Rows - full width */}
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         {rows.map((rowCerts, i) => (
           <motion.div
             key={i}
@@ -258,13 +258,14 @@ export default function Certificates({ isDark }) {
               onClick={(e) => e.stopPropagation()}
             >
               {/* Modal Header */}
-              <div className="flex items-center justify-between px-5 sm:px-7 py-3.5 sm:py-4 bg-white border-b border-[#d4ccd4] z-10">
-                <div className="flex items-center gap-3 min-w-0 pr-4">
+              <div className="flex items-center justify-between px-4 sm:px-7 py-3 sm:py-4 bg-white border-b border-[#d4ccd4] z-10">
+                <div className="flex items-center gap-2 sm:gap-3 min-w-0 pr-3">
                   <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#dcfce7] text-[#15803d] shrink-0 border border-[#bbf7d0]">
                     <FiCheckCircle size={13} />
-                    Verified Credential
+                    <span className="hidden xs:inline">Verified Credential</span>
+                    <span className="xs:hidden">Verified</span>
                   </span>
-                  <h3 className="font-display font-bold text-sm sm:text-base text-[#240029] truncate">
+                  <h3 className="font-display font-bold text-xs sm:text-base text-[#240029] truncate">
                     {selected.title}
                   </h3>
                 </div>
@@ -290,38 +291,38 @@ export default function Certificates({ isDark }) {
               </div>
 
               {/* Certificate Image Viewport */}
-              <div className="relative bg-[#0d040f] flex items-center justify-center p-4 sm:p-8 overflow-auto max-h-[78vh]">
+              <div className="relative bg-[#0d040f] flex items-center justify-center p-3 sm:p-8 overflow-auto max-h-[75vh]">
                 {/* Prev / Next arrows */}
                 {allCerts.findIndex((c) => c.title === selected.title) > 0 && (
                   <button
                     onClick={() => navigateModal(-1)}
-                    className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-white/20 hover:bg-white/40 text-white transition-all backdrop-blur-md shadow-lg cursor-pointer hover:scale-105"
+                    className="absolute left-2 sm:left-5 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-3 rounded-full bg-white/20 hover:bg-white/40 text-white transition-all backdrop-blur-md shadow-lg cursor-pointer hover:scale-105"
                     aria-label="Previous certificate"
                   >
-                    <FiChevronLeft size={24} />
+                    <FiChevronLeft size={20} className="sm:w-6 sm:h-6" />
                   </button>
                 )}
                 {allCerts.findIndex((c) => c.title === selected.title) < allCerts.length - 1 && (
                   <button
                     onClick={() => navigateModal(1)}
-                    className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-white/20 hover:bg-white/40 text-white transition-all backdrop-blur-md shadow-lg cursor-pointer hover:scale-105"
+                    className="absolute right-2 sm:right-5 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-3 rounded-full bg-white/20 hover:bg-white/40 text-white transition-all backdrop-blur-md shadow-lg cursor-pointer hover:scale-105"
                     aria-label="Next certificate"
                   >
-                    <FiChevronRight size={24} />
+                    <FiChevronRight size={20} className="sm:w-6 sm:h-6" />
                   </button>
                 )}
 
                 <img
                   src={selected.image}
                   alt={selected.title}
-                  className="max-w-full max-h-[72vh] w-auto h-auto object-contain rounded-md shadow-2xl bg-white select-none"
+                  className="max-w-full max-h-[70vh] w-auto h-auto object-contain rounded-md shadow-2xl bg-white select-none"
                 />
               </div>
 
               {/* Modal Footer */}
-              <div className="px-5 sm:px-7 py-3 bg-[#fdfafc] border-t border-[#d4ccd4] flex items-center justify-between text-xs text-[#6d526d]">
-                <span>Use keyboard left/right arrow keys or swipe to navigate</span>
-                <span className="font-mono">
+              <div className="px-4 sm:px-7 py-2.5 sm:py-3 bg-[#fdfafc] border-t border-[#d4ccd4] flex items-center justify-between text-[11px] sm:text-xs text-[#6d526d]">
+                <span className="truncate pr-2">Swipe or use arrow keys</span>
+                <span className="font-mono shrink-0">
                   {allCerts.findIndex((c) => c.title === selected.title) + 1} / {allCerts.length}
                 </span>
               </div>

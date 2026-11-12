@@ -47,9 +47,9 @@ export default function Footer() {
   };
 
   return (
-    <footer className="py-14 bg-[#1b001f] text-[#d4ccd4] border-t border-white/10">
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+    <footer className="py-10 sm:py-14 bg-[#1b001f] text-[#d4ccd4] border-t border-white/10">
+      <div className="max-w-[1200px] mx-auto px-5 sm:px-6 lg:px-8">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8">
           {/* Logo & Tagline */}
           <div className="text-center md:text-left">
             <a
@@ -70,13 +70,13 @@ export default function Footer() {
           </div>
 
           {/* Quick Links */}
-          <div className="flex flex-wrap items-center justify-center gap-6 text-xs font-medium text-[#d4ccd4]">
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 sm:gap-6 text-xs font-medium text-[#d4ccd4]">
             {footerLinks.map(({ name, href }) => (
               <a
                 key={name}
                 href={href}
                 onClick={(e) => handleClick(e, href)}
-                className="hover:text-white transition-colors"
+                className="hover:text-white transition-colors py-1"
               >
                 {name}
               </a>
@@ -114,7 +114,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom row */}
-        <div className="mt-10 pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] font-mono text-[#d4ccd4]/50">
+        <div className="mt-8 sm:mt-10 pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-center sm:text-left text-[11px] font-mono text-[#d4ccd4]/50">
           <div>
             &copy; {new Date().getFullYear()} Harsh Gupta. All rights reserved.
           </div>
