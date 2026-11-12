@@ -12,7 +12,7 @@ export default function Hero({ isDark }) {
 
   return (
     <section ref={container} id="home" className="relative h-[450vh] bg-[#121212]">
-      <div className="sticky top-0 h-screen w-full overflow-hidden">
+      <div className="sticky top-0 h-screen h-[100dvh] w-full overflow-hidden">
         <ScrollyCanvas scrollYProgress={scrollYProgress} />
         <Overlay isDark={isDark} scrollYProgress={scrollYProgress} />
       </div>
